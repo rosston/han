@@ -28,8 +28,8 @@ This file breaks down the [feature implementation plan](feature-implementation-p
 - **Technical note** — [artifacts/feature-technical-notes.md](artifacts/feature-technical-notes.md): T3 (internal-skill marker).
 
 **Acceptance criteria.**
-- [ ] The marker block appears byte-exact as the last frontmatter key in both repo-maintenance skills' SKILL.md files.
-- [ ] Each skill stops with a message naming the Han repository when run outside it.
+- [x] The marker block appears byte-exact as the last frontmatter key in both repo-maintenance skills' SKILL.md files.
+- [x] Each skill stops with a message naming the Han repository when run outside it.
 - [ ] The discovery set lists exactly 45 public plugin skills plus the 2 marked-internal repo skills, with the byte-exact marker on exactly those 2 (guard assertion 6).
 
 **Depends on.** None.

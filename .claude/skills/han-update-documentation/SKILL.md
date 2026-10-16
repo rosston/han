@@ -11,6 +11,8 @@ description: >
   /update-pr-description for PR bodies.
 argument-hint: "[optional context about what changed]"
 allowed-tools: Read, Write, Edit, Glob, Grep, Agent, Bash(git *), Bash(find *)
+metadata:
+  internal: true
 ---
 
 ## Pre-requisites
@@ -22,8 +24,8 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Agent, Bash(git *), Bash(find *)
 - agents directory:
   !`find . -maxdepth 2 -type d -name agents -path './han-*/agents' 2>/dev/null | sed 's|^\./||' | sort`
 
-**If any of the above are empty or read `not installed`:** this skill is intended to run inside the Han plugin
-repository. Tell the operator which marker is missing and stop. Do not attempt to operate on a different repo.
+**If any of the above are empty or read `not installed`:** this skill maintains Han's own repository. Tell the
+operator which marker is missing and stop. Do not attempt to operate on a different repo.
 
 ## Project Context
 

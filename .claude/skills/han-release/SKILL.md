@@ -12,6 +12,8 @@ argument-hint: "[pause before publishing] [draft] [optional release context]"
 allowed-tools:
   Read, Edit, Write, Glob, Grep, Agent, Bash(git *), Bash(gh *), Bash(jq *), Bash(which *), Bash(grep *), Bash(sed *),
   Bash(head *), Bash(command claude *)
+metadata:
+  internal: true
 ---
 
 <!--
@@ -28,10 +30,14 @@ works unlisted; it prompts once for permission.
 - jq: !`which jq 2>/dev/null || echo "not installed"`
 - claude CLI: !`which claude 2>/dev/null || echo "not installed"`
 - git repo: !`git rev-parse --is-inside-work-tree 2>/dev/null || echo NO`
+- han repo marker: !`find . -maxdepth 3 -name "plugin.json" -path "*/han-*/.claude-plugin/*" -type f`
 
 **If `gh`, `jq`, or `claude` reads `not installed`, or this is not a git repo:** tell the operator which prerequisite is
 missing and that it must be installed/configured before `/han-release` can run, then **immediately stop**. The skill
 cannot proceed without all four.
+
+**If the han repo marker is empty:** this skill maintains Han's own repository. Tell the operator that and stop. Do
+not attempt to operate on a different repo.
 
 The `claude` CLI is what creates the per-plugin tags in Step 10. Every invocation of it in this skill goes through the
 shell's `command` builtin (`command claude ...`), never a bare `claude`, because an operator's shell commonly wraps
