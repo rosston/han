@@ -46,3 +46,39 @@ marker_is_last_frontmatter_key() {
 @test "han-update-documentation stops when run outside the Han repository, naming the repository in the stop" {
   grep -Fq "maintains Han's own repository" .claude/skills/han-update-documentation/SKILL.md
 }
+
+# Reads `--list` rows (canonical_path<TAB>destination_path) on stdin. Fails on
+# the first destination that exists and differs from its canonical source, and
+# fails if no destination existed to compare — a check that compared nothing
+# would pass vacuously. Missing destinations are the W-3 vendoring's absence,
+# which this W-2 seed does not claim.
+check_vendored_identity() {
+  local src dst compared=0
+  while IFS="$(printf '\t')" read -r src dst; do
+    [ -e "$dst" ] || continue
+    compared=$((compared + 1))
+    if ! cmp -s "$src" "$dst"; then
+      printf 'differs from canonical: %s\n' "$dst" >&2
+      return 1
+    fi
+  done
+  [ "$compared" -gt 0 ]
+}
+
+@test "every managed vendored copy that exists on disk is byte-identical to its canonical source" {
+  bash scripts/sync-vendored-files.sh --list | check_vendored_identity
+}
+
+@test "the identity check fails on a drifted vendored copy it builds itself" {
+  root="$BATS_TEST_TMPDIR/drift"
+  mkdir -p "$root/han-core/references" "$root/han-coding/references"
+  printf 'CANONICAL CONFIG RULE\n' >"$root/han-core/references/config-rule.md"
+  printf 'DRIFTED COPY\n' >"$root/han-coding/references/config-rule.md"
+  if (
+    cd "$root"
+    bash "$BATS_TEST_DIRNAME/../scripts/sync-vendored-files.sh" --list | check_vendored_identity
+  ); then
+    echo "identity check passed on a drifted repository" >&2
+    false
+  fi
+}

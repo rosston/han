@@ -54,10 +54,10 @@ This file breaks down the [feature implementation plan](feature-implementation-p
 - **Spec section** — [feature-specification.md](feature-specification.md): D3 (self-contained skills).
 
 **Acceptance criteria.**
-- [ ] The sync script's Bats file is green under `npm test`.
-- [ ] The `--list` mode prints one line per managed copy in the grammar `canonical_path<TAB>destination_path`, repo-relative, LF line endings, sorted, no header.
-- [ ] The script refuses to overwrite an existing file that differs from its canonical source.
-- [ ] The packaging guard consumes `--list` output for its vendored-identity assertion (assertion 7).
+- [x] The sync script's Bats file is green under `npm test`.
+- [x] The `--list` mode prints one line per managed copy in the grammar `canonical_path<TAB>destination_path`, repo-relative, LF line endings, sorted, no header.
+- [x] The script refuses to overwrite an existing file that differs from its canonical source.
+- [x] The packaging guard consumes `--list` output for its vendored-identity assertion (assertion 7).
 
 **Depends on.** None.
 
