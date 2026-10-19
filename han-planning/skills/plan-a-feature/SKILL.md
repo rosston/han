@@ -26,6 +26,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Operating Principles
 
 - **Interview relentlessly, but explore first.** If a question can be answered by reading the codebase, project docs,
@@ -141,7 +152,7 @@ each one depicts, and note each item into the record's Visual Material Received 
 never made an item reachable as a file, name which items you could not keep and ask for them through the single stop,
 while they are still recoverable.
 
-Source the explanation standard by invoking `han-communication:explanation-guidance` before you write the confirmation
+Source the explanation standard by invoking `explanation-guidance` before you write the confirmation
 turn, and again before any escalation or stop later in the run.
 
 ## Step 2: Discover Before Asking
@@ -224,7 +235,7 @@ and the flush procedure are all in [t-note-protocol.md](./references/t-note-prot
 
 ## Step 5: Draft the Initial Feature Specification
 
-Before drafting, invoke `han-communication:readability-guidance` to source the shared readability standard into your
+Before drafting, invoke `readability-guidance` to source the shared readability standard into your
 context, then apply it as you write the prose sections, holding the named audience: the stakeholder or reviewer who reads
 the spec for approval. The frame governs how a fact is said, never whether a required fact appears — keep the behavioral
 precision the spec depends on.
@@ -365,7 +376,7 @@ same pass. Cut entries flow into Step 8's synthesis alongside everything else.
    of it. State how many questions are pending on the first one. Present more than one in a turn only when the user asks
    for that.
 
-   Source the explanation standard by invoking `han-communication:explanation-guidance` before writing the first one.
+   Source the explanation standard by invoking `explanation-guidance` before writing the first one.
 
    Grouping findings by the decision they affect stays: it is the order you work through them in, not a licence to put
    four of them in one turn.
@@ -486,5 +497,5 @@ planning.
 
 **Note for existing specs that predate this rule or need cleanup:** this skill authors new specifications from scratch.
 To clean an existing `feature-specification.md` against the current spec-content rule (for example, to extract
-implementation mechanics into a new `feature-technical-notes.md`), run `han-planning:iterative-plan-review` on the
+implementation mechanics into a new `feature-technical-notes.md`), run `iterative-plan-review` on the
 existing spec file. Its spec-aware mode applies the same rule and roster used here.

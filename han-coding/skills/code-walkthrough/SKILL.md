@@ -34,6 +34,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Operating Principles
 
 Read these before doing anything. They constrain every step below.
@@ -58,7 +69,7 @@ Read these before doing anything. They constrain every step below.
   the person the walkthrough is supposed to be teaching.
 - **Plain language, and the why before the what.** Explain each step as a problem being solved or a goal being served,
   then what the code does about it. Keep the explanation to a short paragraph a person could read aloud. Source the
-  standard by invoking `han-communication:explanation-guidance` (Step 3) and hold it for every turn of the session.
+  standard by invoking `explanation-guidance` (Step 3) and hold it for every turn of the session.
 - **Follow the flow, then name the rest.** The itinerary follows the execution path from the entry point through the
   change. Files off that path — tests, docs, index entries, config, mechanical renames — are named together in the
   closing step with one line each on why they changed. BECAUSE a flow the learner can follow is worth more than
@@ -165,7 +176,7 @@ exhausted at step 2 cannot finish the walk.
 
 ## Step 3: Build the Itinerary and Announce It
 
-Invoke `han-communication:explanation-guidance` to surface Han's standard for explaining technical work to a reader who
+Invoke `explanation-guidance` to surface Han's standard for explaining technical work to a reader who
 will not implement it. It runs inline and hands control straight back. That standard governs every turn of this session,
 BECAUSE every turn goes to a person who is trying to learn the code rather than write it.
 

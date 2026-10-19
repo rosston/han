@@ -21,6 +21,12 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 This skill has three modes. Pick the mode from how it was invoked, then follow only that mode's steps.
 
 - If the invocation argument is `init` or `initialize` (any case), run **Initialization Mode**.
@@ -70,8 +76,8 @@ guidance, with no dependency on this plugin remaining installed.
    paths rewritten to that vendored copy). It then writes the path-scoped rule index at
    `.claude/rules/plugin-building-guidance.md`. Capture its output.
 2. Report to the user what was written: the three vendored skills, the total file count, the rule index path, and the
-   `paths:` globs. Explain that the three skills are now available directly in the repo (`/plugin-guidance`,
-   `/plugin-skill-builder`, `/plugin-agent-builder`) and that the rule index is an index only — Claude Code loads it
+   `paths:` globs. Explain that the three skills are now available directly in the repo (`plugin-guidance`,
+   `plugin-skill-builder`, `plugin-agent-builder`) and that the rule index is an index only — Claude Code loads it
    when a matching skill or agent file is touched, and it points to the vendored guidance so only the documents the
    current file needs are loaded, not all of them.
 3. Do not commit. Leave the new files staged for the user to review.

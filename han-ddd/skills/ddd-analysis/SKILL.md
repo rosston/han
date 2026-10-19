@@ -29,6 +29,17 @@ read that returns no file is no personal configuration: continue silently. When 
 [config-rule.md](./references/config-rule.md), which governs precedence between the two files, relative-path
 resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Operating Principles
 
 Read these before dispatching anything. They constrain every step below.
@@ -38,8 +49,8 @@ Read these before dispatching anything. They constrain every step below.
   given.
 - **Discovery and context model only. No migration plans.** This skill characterizes what the domain structure is.
   It does not produce recommendations for service splits, migration steps, or refactoring work. When the context
-  model surfaces a decision the team wants to act on, the right next step is `han-planning:plan-a-feature` (to
-  specify a change) or `han-coding:architectural-analysis` (for a code-level view of a specific module). The
+  model surfaces a decision the team wants to act on, the right next step is `plan-a-feature` (to
+  specify a change) or `architectural-analysis` (for a code-level view of a specific module). The
   context model informs those steps; it does not replace them.
 - **Analysis surface partitions organize agent work, not context proposals.** The inventory step identifies
   tractable areas for structural and behavioral analysis. These partitions are analytical conveniences — they must
@@ -57,7 +68,7 @@ Read these before dispatching anything. They constrain every step below.
   that template by synthesizing agent output into each section following the template's placeholder instructions.
   It does not invent a structure inline.
 - **The synthesized prose is written for a named reader.** As the skill writes each section, it invokes
-  `han-communication:readability-guidance` and applies the shared standard, holding one audience above the
+  `readability-guidance` and applies the shared standard, holding one audience above the
   writing: the engineer or product manager reading the context model and deciding what to do next.
 
 # Run a DDD Analysis
@@ -343,7 +354,7 @@ report draft. Render rules:
 5. **Handle empty sections with their fallback text.** Do not omit a section entirely.
 6. **Write the Executive Summary last**, after every other section is complete.
 
-**Readability.** Invoke `han-communication:readability-guidance` to surface the shared readability standard into
+**Readability.** Invoke `readability-guidance` to surface the shared readability standard into
 your context. Apply it to every synthesized section as you write: main point first, descriptive headings, one
 idea per paragraph, and progressive disclosure. The finding IDs (BCM#, BCR#, DL#, CAP#, OWN#, S#, B#) and
 file-path references are citation identifiers; they survive any rewrite and self-check unchanged.
@@ -451,10 +462,10 @@ Present the rendered report directly in the conversation. Close by telling the u
 - The most consequential domain-expert question from the Questions for Domain Experts section.
 - Analysis Visuals: when visual generation succeeded, list the visual types generated and the
   `$run_folder/visuals/` path. When generation failed, note the failure and that the DDD model is unaffected.
-- What to run next: `han-coding:architectural-analysis` to examine a named module's code-level structure, or
-  a narrower `/ddd-analysis` restricted to a single focus area. If the team has gathered domain-expert input
+- What to run next: `architectural-analysis` to examine a named module's code-level structure, or
+  a narrower `ddd-analysis` restricted to a single focus area. If the team has gathered domain-expert input
   on the open questions above and wants to specify next steps for a confirmed boundary,
-  `han-planning:plan-a-feature` starts that conversation. If the contexts raise cross-service or integration
+  `plan-a-feature` starts that conversation. If the contexts raise cross-service or integration
   questions, `han-core:system-architect` provides a topology read after the team has confirmed which boundaries
   are real. Do not assert that any boundary violation can or should be fixed, prescribe a correction, or
   recommend extraction, refactoring, or migration in this closing message.

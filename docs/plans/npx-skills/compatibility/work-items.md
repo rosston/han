@@ -137,7 +137,7 @@ This file breaks down the [feature implementation plan](feature-implementation-p
 **Acceptance criteria.**
 - [ ] A standalone run of a dispatching skill shows the substitution note exactly once per run.
 - [ ] A partial install names the missing skill at the point of use and summarizes omissions at the end of the run.
-- [ ] Cross-skill references use plain skill names, not namespaced or slash-command forms.
+- [x] Cross-skill references use plain skill names, not namespaced or slash-command forms.
 - [ ] Sandbox runs on a non-Claude agent confirm the note appears and the missing-skill naming works.
 
 **Depends on.** W-3, W-4.

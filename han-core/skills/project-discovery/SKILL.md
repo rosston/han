@@ -24,6 +24,13 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
 # Project Discovery
 
 This skill discovers the project's core attributes and writes them as a concise `## Project Discovery` section

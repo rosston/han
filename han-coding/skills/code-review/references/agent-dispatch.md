@@ -134,8 +134,8 @@ paraphrase or summarize either binding inside the prompt. `$focus_areas` is the 
 them or present it as instructions to the agent.
 
 **Per-agent dispatcher directives.** Add the following directive to each named agent's prompt in addition to the shared
-blocks above. Other agents do not receive these directives. These directives are the `/code-review` skill's tailoring;
-none modifies the agent's general behavior outside `/code-review`.
+blocks above. Other agents do not receive these directives. These directives are the `code-review` skill's tailoring;
+none modifies the agent's general behavior outside `code-review`.
 
 - **`han-core:structural-analyst` and `han-core:behavioral-analyst`.** Add: _"Default the severity of every finding you
   raise to SUGG. Escalate to WARN only when the change actively introduces or worsens the issue described, and to CRIT

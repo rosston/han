@@ -22,6 +22,12 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Triage Approach
 
 - Work only from what the reporter wrote. Do not infer facts that are not stated. This is the single most important
@@ -34,7 +40,7 @@ between the two files, relative-path resolution, and what to do with a file that
   completes.
 - Project context (CLAUDE.md, project-discovery.md) is read only to identify Suspected Areas. Never use it to supply
   information the reporter omitted.
-- Source the standard by invoking `han-communication:readability-guidance` and apply it as you write the triage
+- Source the standard by invoking `readability-guidance` and apply it as you write the triage
   document. Hold its default audience frame: a capable reader who did not do this work and lacks the author's context.
 
 # Issue Triage
@@ -125,15 +131,15 @@ Decide the single recommendation using the issue type from Step 1 and the gaps f
 
 - **Bug, Regression, Performance, or Security** — if reproduction steps, environment details (OS, browser, version), or
   user-impact scope are missing, the recommendation is `Clarify with reporter before proceeding`. Otherwise it is
-  `/investigate`.
+  `investigate`.
 - **Feature Request** — if the Step 3 Missing Information names a problem-space gap (which options or approaches are in
   play, prior art, a build-vs-buy choice, or which direction to take) rather than a missing user-supplied fact, the
-  recommendation is `/research` — the problem space must be researched before the feature can be specified. Otherwise,
+  recommendation is `research` — the problem space must be researched before the feature can be specified. Otherwise,
   if the use case (job to be done) or success criteria are missing, the recommendation is
   `Clarify with reporter before proceeding`. Otherwise, if the feature is described but not yet specified, it is
-  `/plan-a-feature`; if requirements are already specified, it is `/plan-implementation`.
+  `plan-a-feature`; if requirements are already specified, it is `plan-implementation`.
 - **Question** — if the Step 3 Missing Information names a problem-space gap (options, approaches, prior art, a
-  build-vs-buy choice, or which direction to take), the recommendation is `/research`. Otherwise, if the report plus
+  build-vs-buy choice, or which direction to take), the recommendation is `research`. Otherwise, if the report plus
   project context is enough to answer it, the recommendation is `Answer the question directly; no han skill needed`; if
   not, it is `Clarify with reporter before proceeding`.
 - **Other** — the recommendation is `Clarify with reporter before proceeding`.
@@ -153,7 +159,7 @@ writing the Step 6 result verbatim into Recommended Next Step. Omit the Suspecte
 nothing is inferable, and omit Severity and Reproducibility per the Step 4 omit rule.
 
 Before presenting, run the standardized readability self-check (the shared standard is in your context from
-`han-communication:readability-guidance`) over the document's prose regions only — never inside code fences, diagram
+`readability-guidance`) over the document's prose regions only — never inside code fences, diagram
 bodies, or citation identifiers. This skill runs no rewrite pass, so this self-check is the fidelity guard on the
 output; the fidelity criterion is not optional. Confirm each criterion and fix any failure before presenting:
 
@@ -162,7 +168,7 @@ invocation above. Correct every failure before presenting. Its fidelity criterio
 how the content is said, and drops a required fact only when the reader asked for less and losing it would not change
 what they do next.
 
-Present the completed triage report to the user. When the Recommended Next Step is a han skill (`/investigate`,
-`/research`, `/plan-a-feature`, or `/plan-implementation`), state plainly that this triage report is the handoff
+Present the completed triage report to the user. When the Recommended Next Step is a han skill (`investigate`,
+`research`, `plan-a-feature`, or `plan-implementation`), state plainly that this triage report is the handoff
 document — the user passes the report itself to that skill rather than re-summarizing the issue. No separate brief is
 produced; the report already serves as the handoff.

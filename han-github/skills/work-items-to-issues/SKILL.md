@@ -22,9 +22,15 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 # Work Items to GitHub Issues
 
-Take an already-broken-down `work-items.md` file (produced by `/plan-work-items`) and publish each slice as a GitHub
+Take an already-broken-down `work-items.md` file (produced by `plan-work-items`) and publish each slice as a GitHub
 issue in its target repo.
 
 The breakdown work — drafting slices, assigning symbolic IDs, specifying dependencies, inventorying references — has
@@ -54,7 +60,7 @@ per-repo work-items file alongside the source, and run the publish pipeline.
 
 ### 1. Locate the work-items file
 
-If the path is not provided, ask for it. The input is a single `work-items.md` produced by `/plan-work-items`. Read it.
+If the path is not provided, ask for it. The input is a single `work-items.md` produced by `plan-work-items`. Read it.
 
 If the user named a target repo (or repos), a label, or an assignee, note them for Steps 2 and 6. By default, issues are
 created with **no label and no assignee** — only apply a label or assignee when the user explicitly asked for one.

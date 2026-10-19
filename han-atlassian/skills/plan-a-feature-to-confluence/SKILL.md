@@ -26,15 +26,26 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 # Plan a Feature to Confluence
 
-This skill builds a feature specification with the core `han-planning:plan-a-feature` skill, lets the user review the
+This skill builds a feature specification with the core `plan-a-feature` skill, lets the user review the
 result, and then publishes it to a Confluence location that **the user must specify**. It is a thin orchestrator: the
-planning work belongs to `han-planning:plan-a-feature`, and the publishing work belongs to
-`han-atlassian:markdown-to-confluence`. This skill only validates its inputs, runs the planning skill to a temporary
+planning work belongs to `plan-a-feature`, and the publishing work belongs to
+`markdown-to-confluence`. This skill only validates its inputs, runs the planning skill to a temporary
 folder, gets the user's review and publish choice, and hands each file to the publisher.
 
-`han-planning:plan-a-feature` produces a small **set** of files — the primary `feature-specification.md` plus companion
+`plan-a-feature` produces a small **set** of files — the primary `feature-specification.md` plus companion
 artifacts under `artifacts/` (the decision log, the team findings, and a lazily-created technical-notes file). This
 skill publishes the **spec as a parent page** and each companion artifact as a **child page** beneath it, so the whole
 plan lands in Confluence as one small page tree. The files cross-reference each other with relative links that do not
@@ -46,7 +57,7 @@ publishing to a **single create pass**: there is no separate relink-and-update p
 once.
 
 The six steps below are the whole skill. It does not resolve Confluence pages or call the Confluence MCP create/update
-tools itself; `han-atlassian:markdown-to-confluence` owns all of that.
+tools itself; `markdown-to-confluence` owns all of that.
 
 ## Step 1: Validate Inputs
 
@@ -57,23 +68,23 @@ Confirm the skill has everything it needs before spending effort producing a pla
    returns no accessible resources (typically an authentication or configuration problem), **stop immediately**. Tell
    the user this skill requires the Atlassian MCP server to be installed, configured, and authenticated, and that they
    can re-run it once it is connected. Do not fall back to a local-only run; for local-only planning, point them at
-   `han-planning:plan-a-feature`. This preflight runs first so a missing server fails before any planning work begins.
+   `plan-a-feature`. This preflight runs first so a missing server fails before any planning work begins.
 2. **A feature to plan.** Confirm the request names a feature, capability, or system behavior to specify. This —
    together with the `size` argument and any relevant conversation context — is forwarded to
-   `han-planning:plan-a-feature` verbatim in Step 2. If the request is too thin to start, let
-   `han-planning:plan-a-feature` run its own interview; do not pre-empt it here.
+   `plan-a-feature` verbatim in Step 2. If the request is too thin to start, let
+   `plan-a-feature` run its own interview; do not pre-empt it here.
 3. **A Confluence destination.** Confirm the request provides a target location: a **Confluence page URL** (to update
    that page, or create the spec as a child under it), or a **space** (key or name) plus an optional **parent page**. If
    none was provided, ask for one with `AskUserQuestion`, explaining plainly that the skill needs an exact destination
    because it does not search Confluence. Do not resolve the page tree here — only confirm a location was given. Carry
-   it through to Step 5; `han-atlassian:markdown-to-confluence` resolves it.
+   it through to Step 5; `markdown-to-confluence` resolves it.
 
 ## Step 2: Produce the Plan to a Temporary Folder
 
-Invoke the `han-planning:plan-a-feature` skill with the **Skill** tool, **forwarding all provided context** verbatim:
+Invoke the `plan-a-feature` skill with the **Skill** tool, **forwarding all provided context** verbatim:
 the `size` argument (if the user passed `small`, `medium`, or `large`), the feature description, any known constraints
 or entry points, and the relevant conversation context. Do not summarize, trim, or reinterpret the user's context; pass
-it through so `han-planning:plan-a-feature` runs exactly as it would on its own — interview, review team, finding
+it through so `plan-a-feature` runs exactly as it would on its own — interview, review team, finding
 resolution, and plan-synthesizer synthesis included — **except** add one explicit instruction: it must write its output
 folder under `/tmp/` (for example `/tmp/<feature-slug>/`) rather than into the repo's docs directory, and it should not
 prompt the user to choose or confirm an output location, because this skill owns that decision. This keeps the working
@@ -81,7 +92,7 @@ plan out of the repo until the user decides to publish it, and because the path 
 `output-directory` the project or personal `.han/config.md` supplies (see
 [./references/config-rule.md](./references/config-rule.md)).
 
-Let `han-planning:plan-a-feature` complete its full process. **Capture the exact `/tmp/` paths of every file it wrote:**
+Let `plan-a-feature` complete its full process. **Capture the exact `/tmp/` paths of every file it wrote:**
 
 - `/tmp/<feature-slug>/feature-specification.md` — the primary spec (always written).
 - `/tmp/<feature-slug>/artifacts/decision-log.md` — the decision history (always written).
@@ -164,24 +175,24 @@ publishing.
      published set (external URLs, code references).
 
 2. **Publish the tree in one create pass.** Use the **Skill** tool for every call, and apply the publish mode the user
-   chose in Step 4 to all of them — state it explicitly so `han-atlassian:markdown-to-confluence` does not re-ask.
+   chose in Step 4 to all of them — state it explicitly so `markdown-to-confluence` does not re-ask.
    - **Publish the spec (the parent page) first**, from its rewritten copy. Invoke
-     `han-atlassian:markdown-to-confluence`, forwarding the rewritten spec copy's path, the **Confluence destination**
+     `markdown-to-confluence`, forwarding the rewritten spec copy's path, the **Confluence destination**
      the user provided in Step 1 (passed through verbatim), the **publish mode** from Step 4, and the **spec title**
      decided above. **Capture the resulting spec page's URL and page ID** — the parent for the artifact pages, and
      needed for the final report.
    - **Publish each existing artifact as a child of the spec page**, from its rewritten copy. For each artifact file
      that exists (`decision-log.md`, `team-findings.md`, and `feature-technical-notes.md` only if it was created),
-     invoke `han-atlassian:markdown-to-confluence` again, forwarding the rewritten artifact copy's path, the **spec
+     invoke `markdown-to-confluence` again, forwarding the rewritten artifact copy's path, the **spec
      page's URL** as the destination with the intent to **create a new child page under it** (state this explicitly so
      the publisher does not ask whether to update the spec page), the same **publish mode**, and the artifact's
      **pre-decided title**. Publish the artifacts one at a time so each create resolves against the same parent.
 
-   `han-atlassian:markdown-to-confluence` owns location resolution, the create call, and Mermaid handling for each file.
+   `markdown-to-confluence` owns location resolution, the create call, and Mermaid handling for each file.
    Because every body already carries its final title-macro links, each page is created exactly once — there is no
    update pass.
 
-**Mermaid still posts as source.** As `han-atlassian:markdown-to-confluence` reports, Mermaid diagrams publish as fenced
+**Mermaid still posts as source.** As `markdown-to-confluence` reports, Mermaid diagrams publish as fenced
 code blocks, not rendered diagrams, unless the space has a Mermaid macro. This is not something to silently fix.
 
 Relay the result to the user: the spec parent page's URL, every artifact child page's URL, whether the tree went live or
@@ -199,7 +210,7 @@ Confirm the `/tmp/` originals are unchanged and intact either way.
 
 1. **Inputs validated:** the Atlassian server was reachable, a feature to plan was present, and a Confluence location
    was provided — or the skill stopped before doing any work.
-2. **Plan produced to /tmp:** `han-planning:plan-a-feature` ran with the full forwarded context and wrote its files
+2. **Plan produced to /tmp:** `plan-a-feature` ran with the full forwarded context and wrote its files
    under a `/tmp/` folder whose paths were captured, including whether the lazily-created technical-notes file exists.
 3. **User reviewed:** the `/tmp/` paths were shown to the user before any publish.
 4. **Explicit choice obtained:** the user chose draft, live, or local-only.

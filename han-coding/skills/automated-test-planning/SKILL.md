@@ -53,6 +53,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Step 1: Determine Scope
 
 Resolve project config: read CLAUDE.md's `## Project Discovery` section for test command (under
@@ -230,7 +241,7 @@ Combine findings from every dispatched agent into a unified, prioritized test pl
 
 ## Step 4: Generate Output
 
-Before generating, invoke `han-communication:readability-guidance` to source the shared readability standard into your
+Before generating, invoke `readability-guidance` to source the shared readability standard into your
 context, then apply it as you write the plan's plain-language spine (Summary, What Needs Testing and Why, What Each Test
 Covers), holding the named audience: the engineer who will implement the tests. The frame governs how a fact is said,
 never whether a required fact appears — keep the file:line references, test levels, and TP-IDs the plan depends on.
@@ -325,7 +336,7 @@ rule path. It must preserve every fact and operate on prose regions only — nev
 TP-NNN test identifiers, which must survive unchanged so they still resolve. Apply its rewrite to the plan.
 
 Then run the standardized readability self-check (the shared standard is in your context from
-`han-communication:readability-guidance`) over the plan's prose regions only — never inside code fences, tables, or the
+`readability-guidance`) over the plan's prose regions only — never inside code fences, tables, or the
 TP-NNN identifiers. Confirm each criterion and fix any failure before presenting:
 
 Run the readability rule's standardized self-check, which is already in your context from the `readability-guidance`

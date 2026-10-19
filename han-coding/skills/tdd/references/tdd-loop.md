@@ -1,6 +1,6 @@
 # The TDD Loop: Canon, Laws, and Gears
 
-This is the canonical reference for the red-green-refactor mechanics the `/tdd` skill enforces. It is the single source
+This is the canonical reference for the red-green-refactor mechanics the `tdd` skill enforces. It is the single source
 for the verbatim rules — the SKILL body links here rather than restating them.
 
 ## Robert C. Martin's Three Laws of TDD
@@ -40,7 +40,7 @@ clearly out-of-scope refactorings to a "later" list. A test you can think of tha
 
 "Committing sins" means duplication and poor structure are tolerated _temporarily_, to be removed in refactor. It does
 not mean writing code that violates an architectural boundary or a correctness contract — that is not a sin you clean up
-later, it is the wrong code. This is why the `/tdd` skill honors correctness and placement standards during green but
+later, it is the wrong code. This is why the `tdd` skill honors correctness and placement standards during green but
 defers stylistic and structural conformance to refactor.
 
 ## Two hats
@@ -54,7 +54,7 @@ structural change while a test is red is not a refactor.
 The single highest-value invariant, derived from Law 1 + Law 2 + Beck's test-first ordering: no production-code change
 is permitted unless a test has been run and observed to fail for the intended reason in this loop. A test that passes
 the first time it is ever run was never red — that is a process violation signal, not a success. Diagnose it with the
-three-cause check in the `/tdd` skill's Red step: the test does not exercise the behavior, the behavior already exists,
+three-cause check in the `tdd` skill's Red step: the test does not exercise the behavior, the behavior already exists,
 or — for a fix to broken behavior — the test asserts the current broken behavior (the error the bug raises) and so
 passes while the bug is still present.
 

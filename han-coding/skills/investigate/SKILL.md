@@ -25,6 +25,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Investigation Approach
 
 - Trace backward from symptoms — don't guess, follow the code.
@@ -43,7 +54,7 @@ between the two files, relative-path resolution, and what to do with a file that
 - Lazy-create the output sections. Include a section in the plan file only when the investigation produced meaningful
   content for it; omit any section that would be empty, and keep the sections that remain in the template's order. Never
   emit a heading with placeholder or "N/A" content.
-- Invoke `han-communication:readability-guidance` to source the shared readability standard into your context, then
+- Invoke `readability-guidance` to source the shared readability standard into your context, then
   apply it as you write the findings, holding the named audience: the engineer who will implement the fix and may be
   paged on the bug. Scope that frame per section so the technical specifics the engineer needs (function names, exact
   failing conditions, file:line citations) are preserved, never simplified away.
@@ -151,7 +162,7 @@ only — never inside code fences, function signatures in code blocks, diagram b
 Apply its rewrite to the plan file.
 
 Then run the standardized readability self-check (the shared standard is in your context from
-`han-communication:readability-guidance`) over the write-up's prose regions only — never inside code fences, function
+`readability-guidance`) over the write-up's prose regions only — never inside code fences, function
 signatures, diagram bodies, or file:line citation identifiers. Confirm each criterion and fix any failure before
 presenting:
 

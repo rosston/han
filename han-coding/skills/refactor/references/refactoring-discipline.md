@@ -1,6 +1,6 @@
 # Refactoring Discipline: the Canon
 
-The rules the `/refactor` skill enforces, with their provenance. Pull this file when a step needs the full rule, when a
+The rules the `refactor` skill enforces, with their provenance. Pull this file when a step needs the full rule, when a
 run feels off, or when the user asks why the skill refused to proceed.
 
 ## The definition
@@ -63,7 +63,7 @@ technique for legacy code, where legacy code is defined as code without tests):
    assert the actual observed outputs. Run each test, observe it pass, and lock the observed value in. Snapshot-style
    assertions are acceptable here.
 3. Do not fix bugs the characterization reveals. The tests pin current behavior, bugs included; a behavior change, even
-   a fix, is out of scope. Record discovered bugs in the summary for `/issue-triage`.
+   a fix, is out of scope. Record discovered bugs in the summary for `issue-triage`.
 4. Label these tests as characterization tests in their names or comments, and say in the final summary that the safety
    net is lower-confidence than intent-written tests: it proves "unchanged", not "correct", and its strength depends on
    input coverage you chose. Recommend replacing them with intent-written tests as the area gets real work.

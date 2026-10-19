@@ -1,6 +1,6 @@
 # Reference artifact inventory
 
-The breakdown work upstream (`/plan-work-items`) is responsible for inventorying artifacts and embedding them in each
+The breakdown work upstream (`plan-work-items`) is responsible for inventorying artifacts and embedding them in each
 slice's `**References.**` block. This skill's job is to **verify** those references are complete and correct before
 publishing, and to propose evidence-based fills when they are not.
 

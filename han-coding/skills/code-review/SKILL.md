@@ -29,6 +29,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Review Constraints
 
 Severity levels:
@@ -67,7 +78,7 @@ size and are advisory, not corrective.
 tools can't catch.
 
 **Readability standard:** The review report is a reader-facing deliverable. As it writes the finding prose and
-narrative, the skill sources the shared standard by invoking `han-communication:readability-guidance` (Step 8) and
+narrative, the skill sources the shared standard by invoking `readability-guidance` (Step 8) and
 applies it, holding the named audience: the author and reviewers of the change under review. The standard governs how
 each finding reads (lead with what to do and why, one idea per paragraph, short active sentences, plain words), and
 drops a required technical fact only when the reader asked for less and losing it would not change what they do next. It
@@ -389,8 +400,8 @@ source, so Step 9's rule against findings from undispatched agents is unaffected
 
 ## Step 8: Generate Review Output
 
-Before writing the output, invoke `han-communication:readability-guidance` to surface the shared readability standard,
-then invoke `han-communication:explanation-guidance` to surface Han's standard for explaining technical work to a reader
+Before writing the output, invoke `readability-guidance` to surface the shared readability standard,
+then invoke `explanation-guidance` to surface Han's standard for explaining technical work to a reader
 who will not implement it. Both run inline and hand control straight back; continue with this step as soon as they
 return. Draft the finding prose and narrative against both.
 
@@ -470,7 +481,7 @@ reported alongside the review as a caveat.
 
 Close with a short message in this fixed order. The answer leads and the run's own bookkeeping comes last, BECAUSE this
 message is the first thing the person reads and how the run was conducted is the last thing they need from it. Write it
-in the register `han-communication:explanation-guidance` surfaced at Step 8; it goes to someone who has not opened the
+in the register `explanation-guidance` surfaced at Step 8; it goes to someone who has not opened the
 report yet.
 
 1. **The recommendation**, in the words the report's own Review Recommendation uses.

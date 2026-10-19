@@ -20,6 +20,12 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 # HTML Summary
 
 Convert a stakeholder summary markdown file into a single self-contained HTML report tailored for executive readers —
@@ -56,7 +62,7 @@ produces one HTML file next to the source markdown and stops there.
 - **No superlatives in user-visible text.** Banned word lists and rewrite patterns live in
   `references/writing-conventions.md`. Verify before finishing.
 - **Apply the shared readability standard to prose.** Source the standard by invoking
-  `han-communication:readability-guidance` and apply it to the prose content this skill writes or transfers, holding the
+  `readability-guidance` and apply it to the prose content this skill writes or transfers, holding the
   named audience — the non-technical stakeholder. The report's visual layout stays governed by
   `references/layout-principles.md` and `references/report-style.md`.
 - **Preserve the source's plain-language framing.** Do not rewrite content to be more technical or more abstract. Keep
@@ -116,7 +122,7 @@ Write the HTML file to the output path. Required structure, in order:
    directives to the report palette per `references/report-style.md`.
 8. **Intentionally not in scope section** — `out-of-scope` list.
 
-**Readability of the prose.** Invoke `han-communication:readability-guidance` to surface the shared readability standard
+**Readability of the prose.** Invoke `readability-guidance` to surface the shared readability standard
 into your context; the text in these sections follows that standard — do not duplicate its text, apply it. Lead with the
 main point (bottom line up front, which the executive ordering already enforces), give each heading a descriptive name
 rather than a generic label, keep one idea per paragraph with the first sentence carrying it, number sequential steps
@@ -164,7 +170,7 @@ Open the file you just wrote and confirm:
 - No banned superlatives appear in user-visible text (see `references/writing-conventions.md`).
 
 Then run the standardized readability self-check (the shared standard is in your context from
-`han-communication:readability-guidance`) over the report's PROSE content only — never inside HTML tags, attributes,
+`readability-guidance`) over the report's PROSE content only — never inside HTML tags, attributes,
 class names, mermaid/diagram bodies, or code. The visual layout stays governed by the existing layout conventions. This
 skill runs no rewrite pass, so this self-check is the fidelity guard on the prose; the fidelity criterion is not
 optional. Confirm each criterion and fix any failure before finalizing:

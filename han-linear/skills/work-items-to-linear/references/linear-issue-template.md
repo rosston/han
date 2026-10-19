@@ -1,10 +1,10 @@
 # Slice issue format
 
 > Each slice in a `work-items.md` file follows this format. The skill's validation step checks it, and the create step
-> maps each field onto a Linear issue. This is the same slice format `/plan-work-items` emits; the mapping to Linear
+> maps each field onto a Linear issue. This is the same slice format `plan-work-items` emits; the mapping to Linear
 > fields is documented below.
 
-The format is what `/plan-work-items` emits. Required fields appear in the order shown. The `**References.**` block is
+The format is what `plan-work-items` emits. Required fields appear in the order shown. The `**References.**` block is
 required whenever the slice consumes any external artifact (HTTP endpoint, event payload, design frame, ADR, coding
 standard). Additional `**Bold paragraph.**` context blocks are allowed between required fields.
 

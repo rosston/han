@@ -26,6 +26,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Operating Principles
 
 - **Code-level names are the subject of this plan, not a leak into it.** Types, modules, files, methods, and public
@@ -142,7 +153,7 @@ Then take one confirmation turn before Step 2. It restates the recorded boundary
 reason recorded in Step 1, and asks whether the area named is the whole area the change may touch. This turn is a
 confirmation rather than an escalation, and the one turn that carries more than one ask.
 
-Source the explanation standard by invoking `han-communication:explanation-guidance` before you write the confirmation
+Source the explanation standard by invoking `explanation-guidance` before you write the confirmation
 turn, and again before any escalation later in the run.
 
 When the user hands you a work item that conflicts with the recorded one, surface the conflict in the confirmation turn
@@ -299,7 +310,7 @@ An item lands in one section or the other, never both, and never silently disapp
 
 ## Step 9: Write the Change Plan
 
-Invoke `han-communication:readability-guidance` to source the shared readability standard into your context, then apply
+Invoke `readability-guidance` to source the shared readability standard into your context, then apply
 it to the plan's prose. Hold the named audience: the engineer who will make the change. The standard governs how a fact
 is said, never whether a required fact appears — keep the type names, paths, and contracts the plan depends on.
 

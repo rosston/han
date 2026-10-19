@@ -21,6 +21,12 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 # Explanation Guidance
 
 You have invoked `explanation-guidance` to source the shared explanation standard before you talk to a person. This skill
@@ -36,7 +42,7 @@ It applies to what you say to a person in a turn: an escalation, an opening conf
 input, or any explanation of a technical consequence to someone who will not implement the work.
 
 It does not apply to the written deliverable you are producing. That is governed by the readability standard, which you
-source through `han-communication:readability-guidance`. A run often needs both, at different moments.
+source through `readability-guidance`. A run often needs both, at different moments.
 
 ## Step 1: Read the standard
 

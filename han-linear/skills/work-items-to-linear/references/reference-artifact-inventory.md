@@ -1,6 +1,6 @@
 # Reference artifact inventory
 
-The breakdown work upstream (`/plan-work-items`) inventories artifacts and embeds them in each slice's `**References.**`
+The breakdown work upstream (`plan-work-items`) inventories artifacts and embeds them in each slice's `**References.**`
 block. This skill's job is to **verify** those references are complete and correct before creating Linear issues, and to
 propose evidence-based fills when they are not.
 

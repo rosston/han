@@ -92,7 +92,7 @@ piece of content that is missing is missing; saying so in the message does not p
 ### Step 9.2: Readability self-check
 
 Run the standardized readability self-check (the shared standard is in your context from
-`han-communication:readability-guidance`) over the report's prose regions only — never inside task IDs, severity labels,
+`readability-guidance`) over the report's prose regions only — never inside task IDs, severity labels,
 `file_path:line_number` references, `EXPLOIT:` fields, category labels, the Review Summary table, or any code snippet.
 Confirm each criterion and fix any failure before presenting:
 

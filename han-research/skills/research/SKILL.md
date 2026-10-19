@@ -30,6 +30,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Operating Principles
 
 Read these before dispatching anything. They constrain every step below.
@@ -78,7 +89,7 @@ Read these before dispatching anything. They constrain every step below.
   analyst wrote it that way or a merge renumbered it into that shape. Every later step that checks a citation cites this
   invariant by name and does not restate it.
 - **Readability is applied while writing, held to the default audience frame.** The skill sources the standard by
-  invoking `han-communication:readability-guidance` and applies it as it writes the report, holding the default audience
+  invoking `readability-guidance` and applies it as it writes the report, holding the default audience
   frame: a capable reader who did not do this work and lacks the author's context. It operates on prose regions only, so
   code fences, diagram bodies, and the `A#`/`V#` citation identifiers survive unchanged and every cited `A#` still
   resolves.
@@ -317,7 +328,7 @@ Re-evaluate the recommendation against the validation findings. **If the recomme
 section into the "no clear winner" form with the deciding criteria — do not leave a recommendation standing above a
 validation section that contradicts it.**
 
-Invoke `han-communication:readability-guidance` to surface the shared readability standard into your context before you
+Invoke `readability-guidance` to surface the shared readability standard into your context before you
 render, then draft against it. Read [references/research-report-template.md](./references/research-report-template.md).
 Render it in the one fixed structure, top to bottom: a plain-language **Summary** (no jargon, no IDs — the answer in
 brief, one phrase on how solid it is, the formal High/Med/Low confidence rating on one labeled line, and the Web search
@@ -341,7 +352,7 @@ analyst and survives unchanged on the same terms as `A#`/`V#`) and to preserve e
 the report.
 
 **Readability self-check.** Run the standardized readability self-check (the shared standard is in your context from
-`han-communication:readability-guidance`) over the report's prose regions only — never inside code fences, diagram
+`readability-guidance`) over the report's prose regions only — never inside code fences, diagram
 bodies, or citation identifiers (`A#`/`V#` survive unchanged), and never over the `**Web search:**` bullet, which
 survives unchanged on the same terms. Confirm each criterion and fix any failure before presenting:
 
@@ -364,5 +375,5 @@ because the report carries it. Then give the size and roster used (and why), the
 exploratory), the count of options and artifacts, the recommendation (or "no clear winner" with deciding criteria) and
 what it rests on, and what validation changed. Then point to the natural next skill: name the sibling for a hybrid
 request, and for a pure research request whose recommendation is a starting point for specifying or building, point to
-`/plan-a-feature` as the next step. The user can accept the report, ask for specific revisions, or redirect the
+`plan-a-feature` as the next step. The user can accept the report, ask for specific revisions, or redirect the
 question.

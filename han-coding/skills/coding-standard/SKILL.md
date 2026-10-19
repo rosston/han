@@ -25,6 +25,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Step 1: Determine Mode
 
 Determine which mode to operate in based on the user's request:
@@ -182,7 +193,7 @@ When converting an existing document into a coding standard:
 
 ## Step 6: Write the Coding Standard
 
-Before writing, invoke `han-communication:readability-guidance` to source the shared readability standard into your
+Before writing, invoke `readability-guidance` to source the shared readability standard into your
 context, then apply it as you write the standard's prose (Purpose, Rationale, when-to-apply, when-not-to-apply, and
 example commentary), holding the named audience: the engineer who must follow the standard. The frame governs how a fact
 is said, never whether a required fact appears — keep the exact rules, thresholds, and anchors the standard commits to.
@@ -450,7 +461,7 @@ It must preserve every fact and operate on prose regions only — never inside t
 durable-reference anchors, which must survive unchanged so they still resolve. Apply its rewrite to the file.
 
 Then run the standardized readability self-check (the shared standard is in your context from
-`han-communication:readability-guidance`) over the same in-scope prose regions only — never inside the YAML frontmatter,
+`readability-guidance`) over the same in-scope prose regions only — never inside the YAML frontmatter,
 code fences, or durable-reference anchors. Confirm each criterion and fix any failure before presenting:
 
 Run the readability rule's standardized self-check, which is already in your context from the `readability-guidance`

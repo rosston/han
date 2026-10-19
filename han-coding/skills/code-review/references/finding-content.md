@@ -16,7 +16,7 @@ for confirming a finding's location when it came from a region read. The block f
 [template.md](./template.md).
 
 The register comes from Han's standard for explaining technical work to a non-implementer, sourced by invoking
-`han-communication:explanation-guidance` before any finding is drafted. Give a concrete outcome the reader could
+`explanation-guidance` before any finding is drafted. Give a concrete outcome the reader could
 observe, not the mechanism that produces it.
 
 ## Which findings carry it
@@ -80,7 +80,7 @@ Pick exactly one of three:
 | **restructure** | The behavior is right and the shape is wrong. The fix changes design without changing behavior.   | `restructure (\`/refactor\`)` |
 | **by hand**     | The fix is a small local edit. No skill is worth spinning up for it.                              | `by hand`                     |
 
-**The route is named, never started.** The review points at the route and stops. It does not invoke `/tdd`, `/refactor`,
+**The route is named, never started.** The review points at the route and stops. It does not invoke `tdd`, `refactor`,
 or anything else on the reader's behalf, BECAUSE the reader decides what to act on and in what order, and a review that
 starts fixing things stops being a review.
 

@@ -31,6 +31,12 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Constraints (read before anything else)
 
 This skill writes production and test code in your working tree. It is an execution skill, not a document generator.
@@ -87,7 +93,7 @@ its dependencies as outside it. Record the boundary; you will test list items an
 
 **Report scope, then proceed (no gate).** This skill runs autonomously after the initial request: it does not stop for
 confirmation. State to the user, in a few lines: the behavior or feature to be built, **whether this is net-new behavior
-or a fix to existing broken behavior** (a reported bug, a failing case, a fix being driven back in after `/investigate`,
+or a fix to existing broken behavior** (a reported bug, a failing case, a fix being driven back in after `investigate`,
 or code that already exhibits the error — recognize the fix case from those signals, not only from the word "bug"), the
 scope boundary you just recorded, the resolved test/lint/build commands, the standards and ADRs found (or that none
 were), the current branch, and that the skill will now write code in a red-green-refactor loop. If `current branch` from

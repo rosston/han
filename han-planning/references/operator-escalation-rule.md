@@ -73,7 +73,7 @@ neither the work item nor this conversation. When you reach for one, you have fo
 outcome goes instead.
 
 For the fuller treatment of explaining technical work to a reader who will not implement it, invoke
-`han-communication:explanation-guidance` before you write the turn.
+`explanation-guidance` before you write the turn.
 
 ## The opening confirmation turn is not an escalation
 

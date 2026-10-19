@@ -1,12 +1,12 @@
 # Work-items file format
 
-> This file describes the format the skill **reads** from `/plan-work-items`, and the format the skill **writes** when
+> This file describes the format the skill **reads** from `plan-work-items`, and the format the skill **writes** when
 > splitting per-repo. The publish scripts parse the per-repo files. Changes to the slice-body format require updating
 > `scripts/create-issues.sh` and `scripts/link-blockers.sh`.
 
 There are two file shapes to know:
 
-- **Source `work-items.md`** — one single file emitted by `/plan-work-items`, covering every repo touched by the plan.
+- **Source `work-items.md`** — one single file emitted by `plan-work-items`, covering every repo touched by the plan.
   The skill reads this.
 - **Per-repo `<repo-name>.work-items.md`** — filtered views the skill writes alongside the source. One file per affected
   repo. The publish scripts read these.
@@ -60,7 +60,7 @@ appear in any order — the skill does not reorder them when writing per-repo fi
 Both shapes are valid input:
 
 - **Single prefix across repos.** Every slice uses `W-N` (or any single prefix) regardless of target repo. The SYM→repo
-  map carries the repo assignment separately. This is what `/plan-work-items` currently emits.
+  map carries the repo assignment separately. This is what `plan-work-items` currently emits.
 - **Per-repo prefixes.** Different prefixes signal target repo at-a-glance — e.g., `V2-N` backend, `W-N` frontend,
   `EV-N` events.
 

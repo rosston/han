@@ -26,6 +26,12 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 # Markdown to Confluence
 
 This skill takes one local Markdown file and publishes it to a Confluence location that **the user must specify** —
@@ -34,7 +40,7 @@ itself: the MCP preflight, resolving the destination, reading the file, the crea
 result. It does not write the Markdown; the caller supplies an existing file.
 
 Callers that supply an explicit publish mode and location (for example
-`han-atlassian:project-documentation-to-confluence`) run this skill straight through without re-asking. Invoked on its
+`project-documentation-to-confluence`) run this skill straight through without re-asking. Invoked on its
 own with pieces missing, it asks for them and defaults to a safe unpublished draft.
 
 ## Step 0: Atlassian MCP Preflight (hard requirement)
@@ -57,7 +63,7 @@ file path was provided, or the path does not resolve to a readable file, ask the
 summarize, or restructure it.
 
 A body may legitimately contain embedded Confluence storage macros mixed into the Markdown — for example, an
-orchestrating skill such as `han-atlassian:plan-a-feature-to-confluence` rewrites its cross-page links into title-based
+orchestrating skill such as `plan-a-feature-to-confluence` rewrites its cross-page links into title-based
 page-link macros (the `<ac:link><ri:page ri:content-title="..."/>…</ac:link>` form, link body included) before handing
 the file over. Post these verbatim along with the rest of the body; do not strip or escape them.
 
@@ -90,7 +96,7 @@ duplicate or similarly-named pages, so guessing the destination is unreliable. T
 The publish mode controls whether the page goes live or is saved as an unpublished draft.
 
 - If the caller supplied an explicit mode (`draft` or `live`), use it. A caller that already confirmed the choice with
-  the user (such as `han-atlassian:project-documentation-to-confluence`) passes the mode through; do not ask again.
+  the user (such as `project-documentation-to-confluence`) passes the mode through; do not ask again.
 - If no mode was supplied, **default to `draft`** so nothing is published live unintentionally. The user can re-run for
   `live`, or you may confirm with `AskUserQuestion` whether to save a draft (recommended default) or publish live now.
 

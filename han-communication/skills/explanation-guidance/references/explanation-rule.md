@@ -78,7 +78,7 @@ make a decision about.
 ## How to apply this rule in a skill
 
 Source the standard at the point where the run talks to a person, not at drafting time. In practice that means invoking
-`han-communication:explanation-guidance` before writing an escalation, a confirmation turn, a stop, or any summary a
+`explanation-guidance` before writing an escalation, a confirmation turn, a stop, or any summary a
 non-implementer reads.
 
 The rule carries guidance only. There is no self-check step to add, so a skill that sources it gains no verification

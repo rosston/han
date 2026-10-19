@@ -2,7 +2,7 @@
 
 BDD is the reason this skill frames every test as a _behavior_. Dan North started replacing the word "test" with
 "behaviour" because almost every misunderstanding of TDD traced back to the word "test" — where to start, what to test,
-how much, what to name it, why a failure matters. The framing below is how `/tdd` answers those questions mechanically.
+how much, what to name it, why a failure matters. The framing below is how `tdd` answers those questions mechanically.
 
 ## Name tests for behavior, in the project's convention
 

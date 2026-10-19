@@ -33,6 +33,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Step 1: Validate Branch State
 
 Before generating a PR description, verify the branch has content to describe:
@@ -101,7 +112,7 @@ fresh-reviewer perspective is the asset here: by authoring the description with 
 project context, the result already anticipates what a reviewer needs to see, removing the need for a separate
 reviewer-context edit pass.
 
-This skill sources the standard by invoking `han-communication:readability-guidance` and applies it as it writes the PR
+This skill sources the standard by invoking `readability-guidance` and applies it as it writes the PR
 description, holding a named audience above the default: the reviewer evaluating the pull request, who will read the
 code. Scope that frame per section so the technical specifics a reviewer needs — a flag and its default, a migration's
 direction, the new vs. old behavior — are preserved rather than simplified away.
@@ -183,7 +194,7 @@ Use this prompt body (with the context above interpolated):
 >   risks in the order to read them — it is NOT a file list. Include it ONLY when the PR has more than ~8-10 files with
 >   significant (code) changes per the inclusion rule in the structure directive; otherwise omit the section, heading
 >   included.
-> - **Readability:** Apply the shared readability standard sourced via `han-communication:readability-guidance`. Lead
+> - **Readability:** Apply the shared readability standard sourced via `readability-guidance`. Lead
 >   each section with its main point, give sections descriptive headings, keep each paragraph to one idea carried by its
 >   first sentence, number anything sequential and bullet anything that is not, and reveal detail in layers (progressive
 >   disclosure). Do not simplify away a technical fact a reviewer needs, and do not disturb any required PR-template
@@ -219,7 +230,7 @@ condition or qualifier — with its precision intact, and to leave any required 
 headings unchanged. Apply its rewrite as the working description.
 
 Then run the standardized readability self-check (the shared standard is in your context from
-`han-communication:readability-guidance`) over the description's prose regions only — never inside code fences, diagram
+`readability-guidance`) over the description's prose regions only — never inside code fences, diagram
 bodies, or commit/PR/issue reference identifiers. Confirm each criterion and fix any failure before finalizing:
 
 Run the readability rule's standardized self-check, which is already in your context from the `readability-guidance`

@@ -24,6 +24,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Operating Principles
 
 - **Group outcomes only when the steps are identical.** A test verifies a single outcome, or a group of related
@@ -92,7 +103,7 @@ Turn the outcomes into a list of named tests:
 
 ## Step 4: Draft the Plan
 
-Invoke `han-communication:readability-guidance` to source the shared readability standard into your context, then
+Invoke `readability-guidance` to source the shared readability standard into your context, then
 draft the document using the template at [references/template.md](./references/template.md):
 
 - **Summary** — the executive summary: 2-4 short sentences on what the plan covers, who can run it, how many tests it
@@ -155,7 +166,7 @@ may not be technical. The editor reads han-communication's own canonical rule, s
 every fact — every step, expected outcome, test name, and category name must survive with its meaning intact.
 
 Then run the standardized readability self-check (the shared standard is in your context from
-`han-communication:readability-guidance`) over the document. Confirm each criterion and fix any failure:
+`readability-guidance`) over the document. Confirm each criterion and fix any failure:
 
 Run the readability rule's standardized self-check, which is already in your context from the `readability-guidance`
 invocation above. Correct every failure before presenting. Its fidelity criterion is not optional: the standard governs

@@ -1,12 +1,12 @@
 # Work-items file format
 
-> This file describes the format the skill **reads** from `/plan-work-items`. Like the Jira `work-items-to-jira` skill,
+> This file describes the format the skill **reads** from `plan-work-items`. Like the Jira `work-items-to-jira` skill,
 > this skill does **not** write per-repo split files: every slice becomes a Linear issue in a single target team, so
 > there is one input file and no derived files.
 
 There is one file shape to know:
 
-- **Source `work-items.md`** — one file emitted by `/plan-work-items`, covering every slice in the plan. The skill reads
+- **Source `work-items.md`** — one file emitted by `plan-work-items`, covering every slice in the plan. The skill reads
   it, creates one Linear issue per slice, and annotates each slice heading in place with the created issue's identifier.
 
 ## Source file shape (input)
@@ -45,7 +45,7 @@ dependency relations are made in a separate pass once every issue exists.
 
 Both shapes are valid input:
 
-- **Single prefix across the plan.** Every slice uses `W-N` (or any single prefix). This is what `/plan-work-items`
+- **Single prefix across the plan.** Every slice uses `W-N` (or any single prefix). This is what `plan-work-items`
   currently emits.
 - **Per-area prefixes.** Different prefixes (`V2-N` backend, `W-N` frontend, `EV-N` events) are accepted as-is.
 

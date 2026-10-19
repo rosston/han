@@ -25,9 +25,20 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Review Approach
 
-- **Source the shared readability standard early.** Invoke `han-communication:readability-guidance` before you edit, and
+- **Source the shared readability standard early.** Invoke `readability-guidance` before you edit, and
   apply it to any plan prose this review rewrites. Hold the named audience: the reader of the plan this review refines.
   The frame governs how a fact is said, never whether a required fact appears — keep the evidence citations, file:line
   references, and IDs the plan depends on.
@@ -80,7 +91,7 @@ coding-standards directories; fall back to project-discovery.md; fall back to Gl
 ### Spec-aware mode detection
 
 After reading the plan file, determine whether it is a `feature-specification.md` produced by (or compatible with)
-`han-planning:plan-a-feature`. Engage **spec-aware mode** when either signal holds:
+`plan-a-feature`. Engage **spec-aware mode** when either signal holds:
 
 - **Primary signal** — the plan's filename is exactly `feature-specification.md`.
 - **Fallback signal** — the file contains the canonical top-level headings of a feature spec: `## Outcome`,
@@ -406,7 +417,7 @@ overwriting.
 
 After both the lightweight loop (Step 4) and the team rounds (Step 5) have converged and the plan is final, run the
 standardized readability self-check **once** (the shared standard is in your context from
-`han-communication:readability-guidance`) over the plan prose regions this review authored or changed — not the whole
+`readability-guidance`) over the plan prose regions this review authored or changed — not the whole
 pre-existing plan, and never inside code fences, tables, the `F#`/`D#`/`T#`/`R#` citation identifiers, or the Review
 History companion links, which must survive unchanged so they still resolve. Run it here on the converged plan, not
 inside either loop. Confirm each criterion and fix any failure before presenting:

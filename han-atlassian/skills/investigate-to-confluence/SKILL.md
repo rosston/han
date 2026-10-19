@@ -25,22 +25,28 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 # Investigate to Confluence
 
-This skill runs an evidence-based investigation with the core `han-coding:investigate` skill, lets the user review the
+This skill runs an evidence-based investigation with the core `investigate` skill, lets the user review the
 resulting report, and then publishes it to a Confluence location that **the user must specify**. It is a thin
-orchestrator: the investigation work belongs to `han-coding:investigate`, and the publishing work belongs to
-`han-atlassian:markdown-to-confluence`. This skill only validates its inputs, runs the investigation to a temporary
+orchestrator: the investigation work belongs to `investigate`, and the publishing work belongs to
+`markdown-to-confluence`. This skill only validates its inputs, runs the investigation to a temporary
 file, gets the user's review and publish choice, and hands the file to the publisher.
 
-`han-coding:investigate` produces a **single** report file (the investigation plan: problem statement, evidence summary,
+`investigate` produces a **single** report file (the investigation plan: problem statement, evidence summary,
 root cause analysis, planned fix, validation results, and summary). It does not produce companion artifacts, so this
 skill publishes that one file as a single Confluence page — the single-page sibling of
-`han-atlassian:project-documentation-to-confluence`, not the parent-plus-children tree of
-`han-atlassian:plan-a-feature-to-confluence`.
+`project-documentation-to-confluence`, not the parent-plus-children tree of
+`plan-a-feature-to-confluence`.
 
 The five steps below are the whole skill. It does not resolve Confluence pages or call the Confluence MCP create/update
-tools itself; `han-atlassian:markdown-to-confluence` owns all of that.
+tools itself; `markdown-to-confluence` owns all of that.
 
 ## Step 1: Validate Inputs
 
@@ -51,35 +57,35 @@ Confirm the skill has everything it needs before spending effort on an investiga
    returns no accessible resources (typically an authentication or configuration problem), **stop immediately**. Tell
    the user this skill requires the Atlassian MCP server to be installed, configured, and authenticated, and that they
    can re-run it once it is connected. Do not fall back to a local-only run; for a local-only investigation, point them
-   at `han-coding:investigate`. This preflight runs first so a missing server fails before any investigation work
+   at `investigate`. This preflight runs first so a missing server fails before any investigation work
    begins.
 2. **A symptom or question to investigate.** Confirm the request names a bug, failure, error, integration, or unexpected
    behavior to investigate. This — together with any relevant conversation context — is forwarded to
-   `han-coding:investigate` verbatim in Step 2. If the request is too thin to start, let `han-coding:investigate` run
+   `investigate` verbatim in Step 2. If the request is too thin to start, let `investigate` run
    its own investigation rather than pre-empting it here.
 3. **A Confluence destination.** Confirm the request provides a target location: a **Confluence page URL** (to update
    that page, or create a child under it), or a **space** (key or name) plus an optional **parent page**. If none was
    provided, ask for one with `AskUserQuestion`, explaining plainly that the skill needs an exact destination because it
    does not search Confluence. Do not resolve the page tree here — only confirm a location was given. Carry it through
-   to Step 5; `han-atlassian:markdown-to-confluence` resolves it.
+   to Step 5; `markdown-to-confluence` resolves it.
 
 ## Step 2: Produce the Investigation Report to a Temporary File
 
-Invoke the `han-coding:investigate` skill with the **Skill** tool, **forwarding all provided context** verbatim: the
+Invoke the `investigate` skill with the **Skill** tool, **forwarding all provided context** verbatim: the
 symptom or question, any known reproduction steps or error messages, any suspected entry points, and the relevant
 conversation context. Do not summarize, trim, or reinterpret the user's context; pass it through so
-`han-coding:investigate` runs exactly as it would on its own (parallel investigators, conditional specialist analysts,
+`investigate` runs exactly as it would on its own (parallel investigators, conditional specialist analysts,
 adversarial validation, and the final report) — **except** add two explicit instructions:
 
 - It must write the resulting investigation report to a file under `/tmp/` (for example `/tmp/<symptom-slug>.md`) rather
   than into the project's docs or plans directory. This keeps the working report out of the repo until the user decides
   to publish it, and because the path is explicit input it outranks any `output-directory` the project or personal
   `.han/config.md` supplies (see [./references/config-rule.md](./references/config-rule.md)).
-- It must **stop after producing the report**. `han-coding:investigate` normally ends by presenting the plan for
+- It must **stop after producing the report**. `investigate` normally ends by presenting the plan for
   approval and can trigger the fix's implementation on approval; this skill wants the report only, so instruct it not to
   implement the fix or change any code — this skill publishes findings, it does not ship them.
 
-Let `han-coding:investigate` complete its full investigation process. **Capture the exact `/tmp/` file path it wrote.**
+Let `investigate` complete its full investigation process. **Capture the exact `/tmp/` file path it wrote.**
 That markdown file is the source content for Confluence. Proceed to Step 3 once it finishes.
 
 ## Step 3: Show the File for Review
@@ -104,15 +110,15 @@ to Confluence. Otherwise, record the chosen publish mode (draft or live) for Ste
 
 ## Step 5: Publish with markdown-to-confluence
 
-Invoke the `han-atlassian:markdown-to-confluence` skill with the **Skill** tool, forwarding:
+Invoke the `markdown-to-confluence` skill with the **Skill** tool, forwarding:
 
 - the **`/tmp/` markdown file path** captured in Step 2,
 - the **Confluence destination** the user provided in Step 1 (the page URL, or the space plus optional parent page),
   passed through verbatim, and
 - the **publish mode** the user chose in Step 4 (`draft` or `live`), stated explicitly so
-  `han-atlassian:markdown-to-confluence` does not re-ask.
+  `markdown-to-confluence` does not re-ask.
 
-`han-atlassian:markdown-to-confluence` resolves the location, reads the file, creates or updates the page in the chosen
+`markdown-to-confluence` resolves the location, reads the file, creates or updates the page in the chosen
 mode, handles Mermaid diagrams, and reports the resulting page URL. Relay its result to the user: the created or updated
 page's URL and whether it went live or was saved as a draft. If publishing fails, report the error and confirm the
 `/tmp/` markdown file is unchanged and intact.
@@ -121,9 +127,9 @@ page's URL and whether it went live or was saved as a draft. If publishing fails
 
 1. **Inputs validated:** the Atlassian server was reachable, a symptom or question to investigate was present, and a
    Confluence location was provided — or the skill stopped before doing any work.
-2. **Report produced to /tmp:** `han-coding:investigate` ran with the full forwarded context, wrote the investigation
+2. **Report produced to /tmp:** `investigate` ran with the full forwarded context, wrote the investigation
    report to a `/tmp/` file whose path was captured, and did not implement the fix or change any code.
 3. **User reviewed:** the `/tmp/` path was shown to the user before any publish.
 4. **Explicit choice obtained:** the user chose draft, live, or local-only.
-5. **Publish delegated and reported:** when the user chose to publish, `han-atlassian:markdown-to-confluence` created or
+5. **Publish delegated and reported:** when the user chose to publish, `markdown-to-confluence` created or
    updated the page in the chosen mode and its URL was relayed; when the user declined, only the `/tmp/` report exists.

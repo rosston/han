@@ -31,7 +31,7 @@ allowed-tools:
   single-source web claims that drive the chosen option; and when no evidence at any tier supports a claimed trade-off,
   label it rather than presenting it as a weak preference.
 - **The readability rule shapes the ADR's prose.** Source the standard by invoking
-  `han-communication:readability-guidance` and apply it as you write the ADR. Hold its default audience frame: a capable
+  `readability-guidance` and apply it as you write the ADR. Hold its default audience frame: a capable
   reader who did not make this decision and lacks your context. The frame governs how each section reads, never whether
   a required technical fact appears.
 
@@ -46,6 +46,17 @@ As your first action, use the Read tool on `.han/config.md` inside the `personal
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
+
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
 
 ## Step 1: Determine Mode
 
@@ -169,7 +180,7 @@ resolving silently.
    `superseded` when updating). Date Created / Last Updated: current date and time.
 
 5. **Fill each required section** following the template's HTML comments for guidance. **Readability:** invoke
-   `han-communication:readability-guidance` to surface the shared readability standard into your context, then write the
+   `readability-guidance` to surface the shared readability standard into your context, then write the
    prose in each section against it — lead with the main point, give each paragraph one idea carried by its first
    sentence, number sequential steps and bullet non-sequential items, and disclose detail in layers. Keep the template's
    prescribed section structure (Context, Decision Drivers, Considered Options, Decision, Consequences, Notes); the rule
@@ -216,7 +227,7 @@ Read back the ADR file and confirm:
 ## Step 7: Readability Self-Check
 
 Run the standardized readability self-check (the shared standard is in your context from
-`han-communication:readability-guidance`) over the ADR's prose regions only — never inside code fences, diagram bodies,
+`readability-guidance`) over the ADR's prose regions only — never inside code fences, diagram bodies,
 or citation identifiers. This skill runs no rewrite pass, so this self-check is the fidelity guard on the output; the
 fidelity criterion is not optional. Confirm each criterion and fix any failure before presenting:
 

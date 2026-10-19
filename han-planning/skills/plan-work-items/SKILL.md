@@ -25,6 +25,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 # Plan Work Items
 
 Break an implementation plan into vertical slices (tracer bullets) and write them as work items to a single
@@ -138,7 +149,7 @@ the direction-of-travel question with its subjects named from the work item you 
 you draft.
 
 Before writing that turn, or the single stop later in the run, source the explanation standard by invoking
-`han-communication:explanation-guidance`. Both turns go to someone who will not open the code, so each names a concrete
+`explanation-guidance`. Both turns go to someone who will not open the code, so each names a concrete
 outcome they could observe rather than a mechanism, and keeps paths and identifiers below the question or leaves them
 out.
 
@@ -222,7 +233,7 @@ without either is a question the builder answers alone, which is the failure mod
 
 ### 5. Draft the work items
 
-Source the shared readability standard by invoking `han-communication:readability-guidance`, and apply it to the
+Source the shared readability standard by invoking `readability-guidance`, and apply it to the
 work-item prose. Hold the named audience: the engineer who grabs a work item and implements it. The frame governs how a
 fact is said, never whether a required fact appears — keep the plan references, contract links, and dependencies each
 work item names.
@@ -305,7 +316,7 @@ shared-artifacts preamble, and the `## Cut for Scope` section when anything was 
 [references/work-item-template.md](./references/work-item-template.md).
 
 Before writing, run the standardized readability self-check (the shared standard is in your context from
-`han-communication:readability-guidance`) over the work-item prose regions only — never inside code fences, tables, the
+`readability-guidance`) over the work-item prose regions only — never inside code fences, tables, the
 W-N identifiers, the acceptance-criteria checkboxes, or the structured fields (Depends on, inline plan references,
 Justification, References, Design references), which must survive unchanged so they still resolve. Confirm each criterion
 and fix any failure before writing:

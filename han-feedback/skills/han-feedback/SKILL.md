@@ -21,6 +21,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 # Capture Feedback
 
 ## Operating Principles
@@ -49,8 +60,8 @@ regardless of whether it completed or was cancelled.
 **Han skills.** Look for invocations of skills namespaced to any `han-*` plugin. The namespace is the plugin name
 followed by a colon: `han-core:`, `han-planning:`, `han-coding:`, `han-github:`, `han-reporting:`, `han-feedback:`, and
 the same shape for any future `han-*` plugin (treat a bare `han:` prefix as Han too). Watch for slash-command
-invocations (like `/han-planning:plan-a-feature`), messages showing a skill launching (like "Launching skill:
-han-planning:plan-a-feature"), and any output that identifies a specific Han skill ran.
+invocations (like `plan-a-feature`), messages showing a skill launching (like "Launching skill:
+plan-a-feature"), and any output that identifies a specific Han skill ran.
 
 **Han agents.** Look for dispatches of agents from any `han-*` plugin. For example, an `Agent` tool call whose
 `subagent_type` is `han-core:adversarial-security-analyst`, or skill output naming a Han agent it launched
@@ -98,14 +109,14 @@ component the name does not mention; renaming it would break the path already re
 Otherwise compute the filename as `{TODAY}-{short-names}.md`, where:
 
 - Each component's short name is its plugin namespace stripped (everything up to and including the colon). For example
-  `han-planning:plan-a-feature` becomes `plan-a-feature`, `han-github:post-code-review-to-pr` becomes
+  `plan-a-feature` becomes `plan-a-feature`, `post-code-review-to-pr` becomes
   `post-code-review-to-pr`, and the agent `han-core:risk-analyst` becomes `risk-analyst`.
 - Join the short names of the **skills** being processed in this run with hyphens. Skills name the file because they are
   the unit of work; the agents are recorded inside the file.
 - When a session used Han agents directly with no Han skill, use the agent short names instead.
 - `{TODAY}` is today's date from Project Context.
 
-Example: a session with `han-planning:plan-a-feature` and `han-coding:code-review` on 2026-05-29 produces
+Example: a session with `plan-a-feature` and `code-review` on 2026-05-29 produces
 `2026-05-29-plan-a-feature-code-review.md`.
 
 ## Step 5: Read the format reference
@@ -191,7 +202,7 @@ what you were doing} **Outcome:** {one sentence describing what was produced}
 ```
 
 List every Han skill used on the `**Skills used:**` line and every Han agent used on the `**Agents used:**` line, each
-with its full plugin namespace (for example `han-github:update-pr-description`, `han-core:risk-analyst`). If no Han
+with its full plugin namespace (for example `update-pr-description`, `han-core:risk-analyst`). If no Han
 agents ran, write `**Agents used:** none`.
 
 Keep it honest and specific. Generic praise or criticism is not useful. Cite concrete moments from the session.

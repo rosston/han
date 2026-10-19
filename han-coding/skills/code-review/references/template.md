@@ -13,7 +13,7 @@ Warnings, Suggestions, YAGNI, Security Vulnerabilities, Remediation, What's Good
 is the authority on where a present section goes; a section absent from it has no defined
 position.
 
-READABILITY: the finding prose and narrative sections follow the shared readability standard (sourced via han-communication:readability-guidance)
+READABILITY: the finding prose and narrative sections follow the shared readability standard (sourced via readability-guidance)
 — each finding leads with what to do and why, one idea per paragraph, short active sentences,
 plain words. The standard governs prose only; it never rewrites task IDs, severities,
 file_path:line_number references, EXPLOIT fields, the fixed section headings and their order,
@@ -101,8 +101,8 @@ Agent dispatch was unavailable on this run, so no specialist read this change (m
 
 **{TASK-ID}** `{file_path:line_number}` {Plain-language explanation: what someone could observe going wrong, what has to
 be true for it to happen, and how likely that is. All three answered; an answer not in doubt is a clause, not a
-sentence.} {Description of issue, for the person who will open the file.} **Fix:** {test-first (`/tdd`) | restructure
-(`/refactor`) | by hand}.
+sentence.} {Description of issue, for the person who will open the file.} **Fix:** {test-first (`tdd`) | restructure
+(`refactor`) | by hand}.
 
 ```suggestion
 {Suggested fix}

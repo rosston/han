@@ -5,7 +5,7 @@
 
 <!--
 READABILITY. This report is written to the shared readability standard the skill
-sources via `han-communication:readability-guidance`, applied to prose regions only
+sources via `readability-guidance`, applied to prose regions only
 (never inside code fences, diagram bodies, or the `A#`/`V#` citation identifiers,
 which survive unchanged so they still resolve). Structural rules the standard
 enforces here: main point first, descriptive headings, one idea per paragraph

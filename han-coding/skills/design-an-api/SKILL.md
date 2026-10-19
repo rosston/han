@@ -32,6 +32,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Operating Principles
 
 Read these before dispatching anything. They constrain every step below.
@@ -68,7 +79,7 @@ Read these before dispatching anything. They constrain every step below.
   [references/api-design-template.md](./references/api-design-template.md).** The skill renders that template by filling
   its sections. It does not invent a structure inline.
 - **The document is written for a named reader.** As the skill writes the design document's synthesized prose, it
-  sources the shared standard by invoking `han-communication:readability-guidance` and applies it, holding one audience
+  sources the shared standard by invoking `readability-guidance` and applies it, holding one audience
   above the writing: the engineer who will implement this contract and the reviewer who will approve it. Scope that
   frame per section so the specifics that reader needs — exact signatures, types, precedence rules, file paths — are
   preserved, never simplified away.
@@ -261,7 +272,7 @@ as designed.
 
 ## Step 6: Human Gate — The User Picks an Option
 
-Before writing the question, invoke `han-communication:explanation-guidance` to source the shared explanation standard
+Before writing the question, invoke `explanation-guidance` to source the shared explanation standard
 into your context. After that skill returns, proceed immediately to the question below — do not stop there. The
 standard stays in context for Step 8, so do not invoke it a second time.
 
@@ -354,7 +365,7 @@ Read [references/api-design-template.md](./references/api-design-template.md) an
    chosen and what it was chosen over, the decisions the user made at each gate that ran, the validation outcome, and
    any signalled domain the band cap omitted.
 
-Then invoke `han-communication:readability-guidance` to source the shared readability standard into your context. After
+Then invoke `readability-guidance` to source the shared readability standard into your context. After
 that skill returns, proceed immediately to the rewrite below — do not stop there. Dispatch
 `han-communication:readability-editor` with one `Agent` call to audit and rewrite the document. Pass it the
 file path and the named audience: the engineer who will implement this contract and the reviewer who will approve it.

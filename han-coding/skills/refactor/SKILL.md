@@ -31,6 +31,12 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Constraints (read before anything else)
 
 This skill restructures existing production and test code in your working tree. It is an execution skill, not a document
@@ -52,7 +58,7 @@ when a step needs the full rule or a step feels off.
   files outside that scope, stop, report the spread, and let the user re-scope. Spreading edits are how a refactoring
   silently becomes a rewrite.
 - **Never alongside an active tdd loop.** If the working tree shows a red-green cycle in flight (failing tests, a
-  half-implemented behavior), do not run: the refactor step of `/tdd` owns cleanup inside the loop, and restructuring
+  half-implemented behavior), do not run: the refactor step of `tdd` owns cleanup inside the loop, and restructuring
   while a test is red violates the two-hats rule both skills share.
 - **Refactor-only changes.** No behavior fixes, no features, no drive-by bug fixes, even when you spot one. Record what
   you found and leave it. If the user asks for commits, each commit contains refactoring only.
@@ -66,7 +72,7 @@ when a step needs the full rule or a step feels off.
 ## Step 1: Bind the Target and Resolve Project Config
 
 **Bind the target.** Resolve the request to a named target: specific files or directories, a named code smell in a named
-place, or the refactoring findings in a provided document (a `/code-review` report, an `/architectural-analysis` report,
+place, or the refactoring findings in a provided document (a `code-review` report, an `architectural-analysis` report,
 or equivalent). When a findings document is given, extract only the refactoring-shaped findings (structural suggestions,
 duplication, naming, coupling) and record each finding's ID so the summary can trace back to it. If the request is
 open-ended ("clean up the codebase", "improve quality") with no named target, ask the user for one before doing
@@ -95,7 +101,7 @@ recommend committing it first so refactoring diffs stay clean, then proceed.
 
 **Run the full suite.** Run the resolved test command with Bash. **Paste the runner's summary line.** If anything is
 red, stop: a red suite is not a license to refactor. Report the failures and recommend fixing them first (via
-`/investigate` or `/tdd`), or re-scoping the target away from the broken area.
+`investigate` or `tdd`), or re-scoping the target away from the broken area.
 
 **Establish coverage of the target.** Confirm the target's observable behavior is exercised by the suite: find the tests
 that drive the target (Glob and Grep for the target's public symbols in test files), and run them scoped if the runner
@@ -161,8 +167,8 @@ Summarize for the user:
   used) and the files it touched.
 - Deferred items: the YAGNI deferrals with reopen triggers, any items deferred because they required behavior changes,
   and any stop-rule exits.
-- Anything spotted but deliberately left alone (bugs, smells outside scope), so it can feed `/issue-triage` or the next
-  `/code-review`.
+- Anything spotted but deliberately left alone (bugs, smells outside scope), so it can feed `issue-triage` or the next
+  `code-review`.
 - Which coding standards and ADRs the restructured code now conforms to.
 - Final test, lint, and build status, with output shown, not asserted.
 - If characterization tests were written, say so and recommend replacing them with intent-written tests over time.

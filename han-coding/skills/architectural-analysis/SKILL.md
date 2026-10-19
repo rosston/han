@@ -28,6 +28,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Operating Principles
 
 Read these before dispatching anything. They constrain every step below.
@@ -61,7 +72,7 @@ Read these before dispatching anything. They constrain every step below.
   skill renders that template by filling placeholders and removing the sections whose agent was not dispatched. It does
   not invent a structure inline.
 - **The synthesized report is written for a named reader.** As the skill writes the final report's synthesized prose, it
-  sources the shared standard by invoking `han-communication:readability-guidance` and applies it, holding one audience
+  sources the shared standard by invoking `readability-guidance` and applies it, holding one audience
   above the writing: the engineer weighing the module's design and deciding whether to change it. Scope that frame per
   section so the technical specifics that reader needs — file paths, finding IDs, exact conditions, pseudocode — are
   preserved, never simplified away.
@@ -266,7 +277,7 @@ Render it into the report draft; you present it after the readability pass in St
    critical findings across all dispatched dimensions, the highest-impact recommendations, and an explicit note on any
    dimension that was clean or any signalled domain omitted by the band cap.
 
-**Readability.** Invoke `han-communication:readability-guidance` to surface the shared readability standard into your
+**Readability.** Invoke `readability-guidance` to surface the shared readability standard into your
 context. As you write the report's synthesized prose — the Executive Summary, the "How to Read" frame, and the section
 prefaces — apply that standard: main point first, descriptive headings, one idea per paragraph with the first sentence
 carrying it, numbered lists for steps and bullets for non-sequential items, and progressive disclosure. Finding IDs and
@@ -286,7 +297,7 @@ spine (Steps 4–7).
 ## Step 10: Run the Readability Self-Check
 
 Run the standardized readability self-check (the shared standard is in your context from
-`han-communication:readability-guidance`) over the report's prose regions only — never inside code fences, pseudocode
+`readability-guidance`) over the report's prose regions only — never inside code fences, pseudocode
 sketches, diagram bodies, or finding-ID / `file:line` citation identifiers. Confirm each criterion and fix any failure
 before presenting:
 

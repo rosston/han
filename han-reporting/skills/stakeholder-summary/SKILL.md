@@ -23,6 +23,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Operating Principles
 
 - **Plain language only.** The stakeholder summary never contains file paths, line numbers, function or class names,
@@ -42,7 +53,7 @@ between the two files, relative-path resolution, and what to do with a file that
   engineering language. They ask stakeholders to confirm framing, scope, and trade-offs — not to make technical
   decisions.
 - **Apply the shared readability standard.** As it writes and refines the summary, the skill sources the standard by
-  invoking `han-communication:readability-guidance` and applies it, holding the named audience: the non-technical
+  invoking `readability-guidance` and applies it, holding the named audience: the non-technical
   stakeholder. The plain-language rules above are this skill's domain-specific supplement to the shared standard, not a
   replacement for it. The standard's dedicated `han-communication:readability-editor` rewrite pass (Step 5) is this
   skill's readability rewrite; it and the standardized self-check (Step 6, Pass B) take the place of the freehand
@@ -101,7 +112,7 @@ and direction, not technical correctness.
 
 ## Step 4: Draft the Stakeholder Summary
 
-Invoke `han-communication:readability-guidance` to surface the shared readability standard into your context, then draft
+Invoke `readability-guidance` to surface the shared readability standard into your context, then draft
 against it. Use the template at
 [`references/stakeholder-summary-template.md`](./references/stakeholder-summary-template.md). Write the file at the
 resolved output path, filling in each section in order:
@@ -239,7 +250,7 @@ run against the post-fix contents.
 
 **First, use the Read tool to load the output file from disk.** The readability-editor already rewrote the summary in
 Step 5; this pass confirms the standardized self-check (the shared standard is in your context from
-`han-communication:readability-guidance`) holds, over the document's prose regions only — never inside the Mermaid
+`readability-guidance`) holds, over the document's prose regions only — never inside the Mermaid
 diagram bodies. Apply any fix with Edit.
 
 Run the readability rule's standardized self-check, which is already in your context from the `readability-guidance`

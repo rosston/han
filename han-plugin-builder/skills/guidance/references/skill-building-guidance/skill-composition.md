@@ -35,11 +35,11 @@ sub-skill. The calling skill does almost no work of its own.
 
 Han ships two live examples, and they run reliably:
 
-- `han-atlassian:plan-a-feature-to-confluence` validates its inputs, runs `han-planning:plan-a-feature` to a temporary
-  folder, gets the user's review and publish choice, then hands every file to `han-atlassian:markdown-to-confluence` to
+- `plan-a-feature-to-confluence` validates its inputs, runs `plan-a-feature` to a temporary
+  folder, gets the user's review and publish choice, then hands every file to `markdown-to-confluence` to
   publish.
-- `han-atlassian:project-documentation-to-confluence` does the same shape with `han-documentation:project-documentation` feeding
-  `han-atlassian:markdown-to-confluence`.
+- `project-documentation-to-confluence` does the same shape with `project-documentation` feeding
+  `markdown-to-confluence`.
 
 These work because they follow a disciplined shape. If you compose skills, match it.
 

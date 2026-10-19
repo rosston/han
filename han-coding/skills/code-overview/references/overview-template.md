@@ -8,7 +8,7 @@ exactly as written.
 ## Shared rules (apply to both modes)
 
 - **Apply the shared readability standard to the prose.** Render the prose under the shared readability standard
-  (sourced via `han-communication:readability-guidance`): main point first, descriptive headings that name their
+  (sourced via `readability-guidance`): main point first, descriptive headings that name their
   content, one idea per paragraph with the first sentence carrying it, numbered lists for steps and bullets for
   non-sequential items, and detail revealed in layers. The rule governs the prose only; the Mermaid chart bodies, code
   fences, and file/symbol references are left exact. Do not restate the rule here; apply it.

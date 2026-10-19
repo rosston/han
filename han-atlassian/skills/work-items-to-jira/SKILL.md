@@ -29,9 +29,15 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 # Work Items to Jira Tickets
 
-Take an already-broken-down `work-items.md` file (produced by `/plan-work-items`) and publish each slice as a Jira
+Take an already-broken-down `work-items.md` file (produced by `plan-work-items`) and publish each slice as a Jira
 ticket in a single target project.
 
 The breakdown work — drafting slices, assigning symbolic IDs, specifying dependencies, inventorying references — has
@@ -78,7 +84,7 @@ project in Step 3.
 
 ### 1. Locate the work-items file
 
-If the path is not provided, ask for it. The input is a single `work-items.md` produced by `/plan-work-items`. Read it.
+If the path is not provided, ask for it. The input is a single `work-items.md` produced by `plan-work-items`. Read it.
 Its format is described in [references/work-items-file-format.md](./references/work-items-file-format.md).
 
 ### 2. Gather the run options

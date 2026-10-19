@@ -4,7 +4,7 @@
 > scripts (`scripts/create-issues.sh`, `scripts/link-blockers.sh`) parse it; the skill's Step 3 validation checks it.
 > Changes here require matching script changes.
 
-The format below is what `/plan-work-items` emits and what the publish pipeline reads. Required fields appear in the
+The format below is what `plan-work-items` emits and what the publish pipeline reads. Required fields appear in the
 order shown. The `**References.**` block is required whenever the slice consumes any external artifact (HTTP endpoint,
 event payload, design frame, ADR, coding standard) — omit it only when no external artifact applies. Additional
 `**Bold paragraph.**` context blocks are allowed between required fields when a slice needs them — common ones:

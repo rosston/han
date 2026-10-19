@@ -33,6 +33,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Step 1: Validate PR State
 
 If `changed files` is empty or reads `no pr`, or `gh pr view --json number,url` fails, inform the user no reviewable PR
@@ -40,10 +51,10 @@ exists for the current branch and stop.
 
 ## Step 2: Run Code Review
 
-Invoke the `/code-review` skill to perform the full code review. Pass along any user-provided focus areas or context
+Invoke the `code-review` skill to perform the full code review. Pass along any user-provided focus areas or context
 from the original arguments.
 
-`/code-review` writes its report to a file and names the path in its closing message; it does not print the review into
+`code-review` writes its report to a file and names the path in its closing message; it does not print the review into
 the conversation. **Capture that path** — Step 3 reads the report from it. After /code-review completes, proceed
 immediately to Step 3 — do not stop here.
 
@@ -75,7 +86,7 @@ themselves on the PR. Three sections are exempt from that length-matching and ar
 Summary table, the Review Recommendation, and the Review Coverage section. Review Coverage names no problem at any
 location by construction; it says which coverage the review did not have, and deleting it as filler would hide that from
 the widest audience the review reaches. Stay inside what the review covered: this step edits wording and severity, and
-never adds a finding `/code-review` did not raise.
+never adds a finding `code-review` did not raise.
 
 1. Write the draft review body to a temporary file (e.g., `/tmp/post-code-review-to-pr-draft.md`) using the Write tool.
 2. Launch a single `han-core:junior-developer` agent in artifact-review mode with the prompt: "You are reviewing the

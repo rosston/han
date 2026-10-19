@@ -1,12 +1,12 @@
 # Work-items file format
 
-> This file describes the format the skill **reads** from `/plan-work-items`. Unlike the GitHub `work-items-to-issues`
+> This file describes the format the skill **reads** from `plan-work-items`. Unlike the GitHub `work-items-to-issues`
 > skill, this skill does **not** write per-repo split files: every slice becomes a Jira ticket in a single target
 > project, so there is one input file and no derived files.
 
 There is one file shape to know:
 
-- **Source `work-items.md`** — one single file emitted by `/plan-work-items`, covering every slice in the plan. The
+- **Source `work-items.md`** — one single file emitted by `plan-work-items`, covering every slice in the plan. The
   skill reads this file, creates one Jira ticket per slice, and annotates each slice heading in place with the created
   ticket key.
 
@@ -31,7 +31,7 @@ Links the parent implementation plan and feature spec, and notes that work-item 
 
 ### 3. Cross-repo work order prose _(may be present; informational only for Jira)_
 
-A `/plan-work-items` file that spans more than one code repo includes a paragraph naming which SYMs ship to which repo.
+A `plan-work-items` file that spans more than one code repo includes a paragraph naming which SYMs ship to which repo.
 **This skill ignores the repo split for placement purposes** — every slice posts into the one Jira project you name,
 regardless of which repo implements it. The prose is still copied into ticket context where it clarifies cross-repo
 ordering, but it never changes which project a ticket lands in.
@@ -51,7 +51,7 @@ Slices may appear in any order; the skill preserves source order and creates tic
 
 Both shapes are valid input:
 
-- **Single prefix across the plan.** Every slice uses `W-N` (or any single prefix). This is what `/plan-work-items`
+- **Single prefix across the plan.** Every slice uses `W-N` (or any single prefix). This is what `plan-work-items`
   currently emits.
 - **Per-area prefixes.** Different prefixes (e.g., `V2-N` backend, `W-N` frontend, `EV-N` events) are accepted as-is.
   They have no effect on Jira placement; all slices go to the same project.

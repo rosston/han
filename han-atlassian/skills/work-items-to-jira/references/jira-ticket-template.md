@@ -1,10 +1,10 @@
 # Slice ticket format
 
 > Each slice in a `work-items.md` file must follow this format. The skill's validation step (Process Step 4) checks it,
-> and the create step (Step 6) maps each field onto a Jira ticket. This is the same slice format `/plan-work-items`
+> and the create step (Step 6) maps each field onto a Jira ticket. This is the same slice format `plan-work-items`
 > emits; the mapping to Jira fields is documented below.
 
-The format below is what `/plan-work-items` emits. Required fields appear in the order shown. The `**References.**`
+The format below is what `plan-work-items` emits. Required fields appear in the order shown. The `**References.**`
 block is required whenever the slice consumes any external artifact (HTTP endpoint, event payload, design frame, ADR,
 coding standard) — omit it only when no external artifact applies. Additional `**Bold paragraph.**` context blocks are
 allowed between required fields when a slice needs them.

@@ -25,6 +25,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Operating Principles
 
 - **The feature specification is the ground truth for _what_, but not for scope.** This skill plans _how_. Do not re-open
@@ -194,7 +205,7 @@ The specification's `Visual Reference` table, when it has one, tells you which m
 persisted. That material is already on disk and is not this run's to re-copy; this step covers what the user supplies to
 **this** run.
 
-Source the explanation standard by invoking `han-communication:explanation-guidance` before you write the confirmation
+Source the explanation standard by invoking `explanation-guidance` before you write the confirmation
 turn, and again before any escalation or stop later in the run.
 
 ## Step 2: Discover Implementation Context
@@ -328,7 +339,7 @@ For each iteration:
      considered, the reframing, and any paths or line numbers **below** the question, or leave them out. Capture the
      user's answer verbatim.
 
-     Source the explanation standard by invoking `han-communication:explanation-guidance` before writing the first one.
+     Source the explanation standard by invoking `explanation-guidance` before writing the first one.
 
      Present more than one question in a turn only when the user asks for that. A finding labeled `Unverified` in the
      ledger never leads an escalation as a blocker; say what could not be inspected as part of the question.
@@ -402,7 +413,7 @@ both and never silently dropped.
 
 ## Step 8: Plan Synthesis
 
-Before synthesis, invoke `han-communication:readability-guidance` to source the shared readability standard into your
+Before synthesis, invoke `readability-guidance` to source the shared readability standard into your
 context, then apply it to the plan's prose — both while directing the han-core:plan-synthesizer's synthesis and when you
 run the Step 8.5 self-check. Hold the named audience: the engineer who will build the feature. The frame governs how a
 fact is said, never whether a required fact appears — keep the technical precision the plan depends on.

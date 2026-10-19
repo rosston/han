@@ -32,6 +32,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Operating Principles
 
 Read these before doing anything. They constrain every step below.
@@ -53,7 +64,7 @@ Read these before doing anything. They constrain every step below.
   preserving every fact; the skill applies the validator's corrections and the editor's rewrite. The skill itself
   produces the grouping, the charts, the orientation, and the final rewrite.
 - **The overview applies the shared readability standard.** As it writes and refines the overview, the skill sources the
-  standard by invoking `han-communication:readability-guidance` (Step 5) and applies it, holding the default audience
+  standard by invoking `readability-guidance` (Step 5) and applies it, holding the default audience
   frame: a capable reader who did not do this work and lacks the author's context. The standard governs how the overview
   reads (main point first, descriptive headings, one idea per paragraph, progressive disclosure), never whether a
   required fact about the code appears. Its dedicated `han-communication:readability-editor` pass (Step 7) replaces the
@@ -219,8 +230,8 @@ the explorers cover the highest-signal areas; carry that into the coverage note 
 
 ## Step 5: Synthesize the Overview
 
-Invoke `han-communication:readability-guidance` to surface the shared readability standard into your context before you
-write. Then invoke `han-communication:explanation-guidance`, which surfaces Han's standard for explaining technical work
+Invoke `readability-guidance` to surface the shared readability standard into your context before you
+write. Then invoke `explanation-guidance`, which surfaces Han's standard for explaining technical work
 to a reader who will not implement it: that standard governs the closing restatement this step writes and the closing
 message Step 8 prints, BECAUSE both go to someone who will not open the code. Both run inline and hand control straight
 back; continue with this step as soon as they return. Then draft the overview against both. Read [references/overview-template.md](./references/overview-template.md) and
@@ -374,7 +385,7 @@ led by the why with everything flowing from it, minimal technical detail in the 
 entry points in the handoff section.
 
 **Readability self-check.** After the rewrite, run the standardized readability self-check (the shared standard is in
-your context from `han-communication:readability-guidance`) over the overview's prose regions only — never inside the
+your context from `readability-guidance`) over the overview's prose regions only — never inside the
 Mermaid chart bodies, code fences, screenshot markup, or file/symbol references. Confirm each criterion and fix any
 failure before presenting:
 

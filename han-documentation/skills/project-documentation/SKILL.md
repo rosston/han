@@ -26,10 +26,21 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 # Project Documentation
 
 **Readability.** As you write the documentation, source the standard by invoking
-`han-communication:readability-guidance` and apply it. The output is a committed file, so the standard applies at
+`readability-guidance` and apply it. The output is a committed file, so the standard applies at
 generation time. Hold a named audience above the default: a technically-literate reader who needs to understand the
 feature's behavior before reading or modifying its code. Scope that frame per section so the technical specifics the
 reader needs are not simplified away.
@@ -70,7 +81,7 @@ that combines all items, deduplicates files found by multiple agents, and resolv
 Use the template at [template.md](./references/template.md) as the structural guide. The template's HTML comments
 explain when to include each section and what to cover.
 
-**Readability.** Invoke `han-communication:readability-guidance` to surface the shared readability standard into your
+**Readability.** Invoke `readability-guidance` to surface the shared readability standard into your
 context, then draft into the template so the structure carries that standard: main point first, descriptive headings,
 one idea per paragraph with the first sentence carrying it, numbered lists for steps and bullets for non-sequential
 items, and progressive disclosure that reveals the core before the detail.
@@ -181,7 +192,7 @@ rewrite to the document.
 ## Step 9: Readability Self-Check
 
 Run the standardized readability self-check (the shared standard is in your context from
-`han-communication:readability-guidance`) over the document's prose regions only — never inside code fences, diagram
+`readability-guidance`) over the document's prose regions only — never inside code fences, diagram
 bodies, or rendered markup. Confirm each criterion and fix any failure before finalizing:
 
 Run the readability rule's standardized self-check, which is already in your context from the `readability-guidance`

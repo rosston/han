@@ -25,6 +25,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Operating Principles
 
 - **The `han-core:gap-analyzer` agent owns the primary analysis.** This skill does not classify gaps itself. It calls
@@ -72,7 +83,7 @@ between the two files, relative-path resolution, and what to do with a file that
   was designed by the `han-core:information-architect` agent. The skill renders the template by filling placeholders and
   removing the optional sections that were not requested or generated.
 - **The report is written to the shared readability standard.** The skill sources the standard by invoking
-  `han-communication:readability-guidance` and applies it as it writes the report, holding the default audience frame: a
+  `readability-guidance` and applies it as it writes the report, holding the default audience frame: a
   capable reader who did not do this work and lacks the author's context. The stable gap IDs (`G-NNN`) are citation
   identifiers and survive any rewrite or self-check unchanged.
 
@@ -372,7 +383,7 @@ placeholders and removing optional sections that do not apply.
     to start" block and the "Analysis caveats" subsection are conditional content inside existing sections, not
     top-level sections, so they do not get their own `sections_included` entries.
 
-**Readability.** Invoke `han-communication:readability-guidance` to surface the shared readability standard into your
+**Readability.** Invoke `readability-guidance` to surface the shared readability standard into your
 context, then draft every prose region to that standard: lead with the main point, give sections descriptive headings
 that name their content, keep one idea per paragraph with the first sentence carrying it, number sequential steps and
 bullet non-sequential items, and reveal detail in layers (Section 1 before 2, 2 before 3). Do not duplicate the rule's
@@ -393,7 +404,7 @@ to the report file. At small size and on the `no swarm` path this is the lightwe
 this dispatch; the template above and the self-check below still apply.
 
 **Self-check (all sizes, after any rewrite, before presenting).** Run the standardized readability self-check (the
-shared standard is in your context from `han-communication:readability-guidance`) over the report's prose regions only —
+shared standard is in your context from `readability-guidance`) over the report's prose regions only —
 never inside code fences, diagram bodies, or the `G-NNN` gap-ID citation identifiers. Confirm each criterion and fix any
 failure before presenting:
 

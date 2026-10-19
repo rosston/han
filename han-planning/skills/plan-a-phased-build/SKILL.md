@@ -24,6 +24,17 @@ that returns no file is no personal configuration: continue silently. When that 
 read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
+## Standalone degradation
+
+The specialist agents this skill names are part of the plugin install; the skills channel carries skills
+only. When a named agent is not available, perform the step yourself, inline, with your own judgment. At the
+first step you substitute, tell the developer once for the run which agent you are replacing and that the
+independent specialist review is replaced by your own judgment. No step fails for a missing agent.
+
+When a step uses another Han skill by name and that skill is not installed, name the missing skill at the
+point of use and continue with the parts of the run that do not need it. If no part of the run can proceed,
+stop and name the skill to install. At the end of a partial run, summarize what was omitted.
+
 ## Operating Principles
 
 - **Plain language is the default surface.** The build-phase outline never contains file paths, line numbers, function
@@ -159,7 +170,7 @@ not report it as passed, and do not fall back to walking the check by hand.
 the next skill in the chain reads the folder rather than this conversation. Put any text taken from the record inside a
 fenced block and keep it to a line.
 
-Source the explanation standard by invoking `han-communication:explanation-guidance` before you write the confirmation
+Source the explanation standard by invoking `explanation-guidance` before you write the confirmation
 turn, and again before the single stop if the run takes one. Both go to someone who will not open the code.
 
 ## Step 2: Read the Source and Project Context
@@ -271,7 +282,7 @@ it can be reflected in that phase's "why this is phase N" rationale.
 
 ## Step 6: Draft the Build-Phase Outline (Write Incrementally)
 
-Before drafting, invoke `han-communication:readability-guidance` to source the shared readability standard into your
+Before drafting, invoke `readability-guidance` to source the shared readability standard into your
 context, then apply it as you write the outline, holding the named audience captured in Step 3 (default: a mixed
 engineering, product, and leadership reader). The frame governs how a fact is said, never whether a required fact appears
 — keep the sequencing, dependencies, and demo steps each phase commits to.

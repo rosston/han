@@ -216,7 +216,7 @@ The following findings cross a service boundary, bounded-context seam, or trust 
 - {{repeat}}
 
 To get recommendations at that altitude, dispatch `system-architect` separately against this focus area, or re-run
-`/architectural-analysis` at `large` size so it is included automatically when a system-seam signal is present.
+`architectural-analysis` at `large` size so it is included automatically when a system-seam signal is present.
 
 ---
 
