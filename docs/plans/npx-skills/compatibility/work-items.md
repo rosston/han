@@ -212,8 +212,8 @@ This file breaks down the [feature implementation plan](feature-implementation-p
 - **Spec section** — [feature-specification.md](feature-specification.md): D8 (README documents both channels).
 
 **Acceptance criteria.**
-- [ ] The README names both install channels, the CLI's update command, and the internal-skills opt-in (guard assertion 8).
-- [ ] `npm run lint` is green.
+- [x] The README names both install channels, the CLI's update command, and the internal-skills opt-in (guard assertion 8).
+- [x] `npm run lint` is green.
 
 **Depends on.** W-6.
 

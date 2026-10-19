@@ -30,6 +30,19 @@ positioning and what it does not bring to the table.
 
 ## Installation
 
+Han installs over two channels. Pick one per agent: installing both leaves two copies of every skill on that
+agent, and which copy runs is the agent's decision, not Han's.
+
+| Channel        | Commands                                                                                       | What it carries                                                                                                               |
+| -------------- | ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Plugin channel | `/plugin install han@han` in Claude Code; `codex plugin add han-core@han` and friends in Codex | the full suite: skills, the specialist agent roster, shared scripts, commands, and hooks                                      |
+| Skills channel | `npx skills add testdouble/han`                                                                | skills only — each one a self-contained folder, on any agent the [skills CLI](https://github.com/vercel-labs/skills) supports |
+
+On the skills channel a skill that would dispatch a specialist agent performs the step inline instead, and says
+so once per run: the calling model judges its own work rather than getting an independent specialist review.
+Shared scripts do not travel either, and on agents that ignore tool-permission declarations, a skill's setup
+commands ask for approval per call.
+
 ### Claude Code
 
 Add the Test Double skills marketplace to Claude Code, then install the plugin:
@@ -92,6 +105,31 @@ codex plugin add han-reporting@han
 Install `han-feedback`, `han-atlassian`, `han-linear`, `han-ddd`, or `han-plugin-builder` separately when you want those
 opt-in packages. Because Codex resolves no dependencies, install `han-communication` alongside `han-atlassian` (its wrapped
 prose-producing skills source the shared readability standard from it).
+
+### Skills CLI
+
+List the catalog before installing, or install everything the CLI discovers:
+
+```
+npx skills add testdouble/han --list
+npx skills add testdouble/han
+```
+
+`--list` shows the 45 public skills grouped by package. The two repo-maintenance skills (`han-release`,
+`han-update-documentation`) stay hidden from the default listing and install only on explicit opt-in:
+
+```
+INSTALL_INTERNAL_SKILLS=1 npx skills add testdouble/han
+```
+
+Refresh installed skills from the same source with:
+
+```
+npx skills update
+```
+
+The channel carries skills only — what that costs on each agent, and why one channel per agent is the advice,
+are in the table under [Installation](#installation).
 
 ## Documentation
 

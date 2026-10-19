@@ -259,6 +259,34 @@ check_manifest_declarations() {
   fi
 }
 
+# Seed of release-guard assertion 8 (plan D-5, spec D8), landed by W-8 with the
+# section it guards: the README must name both install channels (the plugin
+# marker exists today and is guarded against regression; the skills marker is
+# the new commitment), the CLI's update command, and the internal-skills
+# opt-in. Takes a README path so a fixture runs the same code.
+check_readme_channels() {
+  local readme="$1" pattern bad=0
+  for pattern in '/plugin install han@han' 'npx skills add testdouble/han' 'npx skills update' 'INSTALL_INTERNAL_SKILLS=1'; do
+    if ! grep -qF -- "$pattern" "$readme"; then
+      printf 'README omits: %s\n' "$pattern" >&2
+      bad=1
+    fi
+  done
+  [ "$bad" -eq 0 ]
+}
+
+@test "the README names both install channels, the CLI's update command, and the internal-skills opt-in" {
+  check_readme_channels "$REPO_ROOT/README.md"
+}
+
+@test "the README check fails on a built fixture that omits the skills channel" {
+  printf '# Han\n\nInstall with /plugin install han@han.\n' >"$BATS_TEST_TMPDIR/README.md"
+  if check_readme_channels "$BATS_TEST_TMPDIR/README.md"; then
+    echo "README check passed on a fixture naming only the plugin channel" >&2
+    false
+  fi
+}
+
 # The one line allowed to carry a configuration-home literal, matched byte for
 # byte (spec D5, plan D-4). scripts/han-config-dir.bats is the pinner of this
 # literal in the 45 plugin skills; here it is the whitelist for assertion 5, so
