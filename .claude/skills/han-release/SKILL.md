@@ -164,7 +164,7 @@ first release and silently expand the changelog to the whole repository history.
 
 Enumerate the plugins from `plugins` in Project Context (one parent, plus each child). For **every** plugin, determine
 `baseline`, whether it changed in `{range}`, and its `target`. Classify changes against
-[`docs/semantic-versioning.md`](../../../docs/semantic-versioning.md). The governing rules:
+`docs/semantic-versioning.md`. The governing rules:
 
 - **The parent always bumps on every release.** Even when only one child changed, the parent gets a version bump,
   because every release is a release of the suite.
@@ -244,7 +244,7 @@ recovery is discarding the working-tree edits.
 ## Step 5: Update CHANGELOG.md
 
 Follow [references/changelog-rules.md](./references/changelog-rules.md) exactly, writing the narrative in the voice at
-[writing-voice.md](../../../han-communication/references/writing-voice.md). From `v3.0.0` onward, each release
+[writing-voice.md](./references/writing-voice.md). From `v3.0.0` onward, each release
 section is a parent `## v{parent target}` heading with one `### {plugin} v{version}` sub-heading per plugin that changed
 (the parent always appears; new and changed children appear; unchanged children are omitted), plus the release-level
 bookkeeping subsections. Every `@mention` in the changelog (narrative, PR bullets, issue bullets) is a markdown link to

@@ -23,7 +23,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Step 1: Determine Mode
@@ -57,8 +57,8 @@ If the proposed coding standard does not fall into these categories, proceed to 
 
 ### YAGNI check
 
-Apply the evidence-based YAGNI rule from [../../references/yagni-rule.md](../../references/yagni-rule.md) alongside the
-companion evidence rule in [../../references/evidence-rule.md](../../references/evidence-rule.md). A coding standard is
+Apply the evidence-based YAGNI rule from [./references/yagni-rule.md](./references/yagni-rule.md) alongside the
+companion evidence rule in [./references/evidence-rule.md](./references/evidence-rule.md). A coding standard is
 worth writing only when the project actually does the thing the standard governs _today_ and the standard solves a real,
 concrete problem the team is currently hitting. Standards about patterns the project doesn't use yet, "for future
 flexibility", "best practice says we should…", or symmetry with other standards ("we have one for backend, so we should

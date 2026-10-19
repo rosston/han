@@ -19,7 +19,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 # Capture Feedback

@@ -24,7 +24,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 # Code Overview to Confluence
@@ -77,7 +77,7 @@ the relevant conversation context. Do not summarize, trim, or reinterpret the us
 **except** add one explicit instruction: it must write the overview to an explicit scratch path this skill names (for
 example `${TMPDIR:-/tmp}/code-overview-<slug>.md`). Passing the path explicitly keeps the file where this skill expects
 it even when either `.han/config.md` configures an output directory, because explicit input outranks the config
-(see [../../references/config-rule.md](../../references/config-rule.md)). **Capture the exact scratch-file path it
+(see [./references/config-rule.md](./references/config-rule.md)). **Capture the exact scratch-file path it
 wrote.** That markdown file is the source content for Confluence. Proceed to Step 3 once it finishes.
 
 ## Step 3: Show the File for Review

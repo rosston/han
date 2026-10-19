@@ -29,7 +29,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Constraints (read before anything else)
@@ -57,7 +57,7 @@ when a step needs the full rule or a step feels off.
   while a test is red violates the two-hats rule both skills share.
 - **Refactor-only changes.** No behavior fixes, no features, no drive-by bug fixes, even when you spot one. Record what
   you found and leave it. If the user asks for commits, each commit contains refactoring only.
-- **YAGNI governs the plan.** Apply [../../references/yagni-rule.md](../../references/yagni-rule.md): every refactoring
+- **YAGNI governs the plan.** Apply [./references/yagni-rule.md](./references/yagni-rule.md): every refactoring
   in the plan needs evidence the code has a reason to change (a review finding, named duplication, a confusing read
   documented by the user, upcoming work in that area). Removing duplication is the job; adding speculative abstraction,
   configuration, or indirection is not. Defer evidence-free items with a reopen trigger.
@@ -136,7 +136,7 @@ Take the plan items in order. For each:
 
    **Running collaboratively.** When the request asks to review each named refactoring as it lands, which is what
    `pairing` does when it hands work here, stop at this point and hand control back instead of continuing. Present the
-   stop in the shape [collaborative-stop-rule.md](../../references/collaborative-stop-rule.md) specifies. Absent such a
+   stop in the shape [collaborative-stop-rule.md](./references/collaborative-stop-rule.md) specifies. Absent such a
    request, continue as below; an ordinary invocation is unchanged.
 
 4. **Red: revert this step.** When git is available and the tree was clean at start, `git checkout`/`git restore` the

@@ -23,7 +23,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Review Approach
@@ -40,7 +40,7 @@ between the two files, relative-path resolution, and what to do with a file that
 - Ask practical ambiguity questions — "Should this handle concurrent access?" is only useful if there's evidence
   concurrent access actually happens.
 - **YAGNI is a first-class review pillar.** Apply the evidence-based YAGNI rule from
-  [../../references/yagni-rule.md](../../references/yagni-rule.md) to every plan item the review touches — every
+  [./references/yagni-rule.md](./references/yagni-rule.md) to every plan item the review touches — every
   behavior, plan step, abstraction, configuration knob, runbook, observability hook, infrastructure component, test
   category, ADR clause, or coding-standard line. Items that fail the evidence test or have a strictly simpler version
   available are first-class findings (`Category: YAGNI candidate`), not polish. Resolution paths: cite missing evidence
@@ -48,7 +48,7 @@ between the two files, relative-path resolution, and what to do with a file that
   named. YAGNI candidates are surfaced visibly to the user — never silently dropped, never silently kept. Every plan
   item is ongoing maintenance and a pattern future agents will copy.
 - **Evidence quality is a first-class review pillar.** Apply the companion evidence rule from
-  [../../references/evidence-rule.md](../../references/evidence-rule.md) alongside the YAGNI gate. YAGNI asks whether a
+  [./references/evidence-rule.md](./references/evidence-rule.md) alongside the YAGNI gate. YAGNI asks whether a
   plan item has any evidence at all; the evidence rule asks how strong that evidence is. Specifically: name the trust
   class of each citation a plan item rests on (codebase, web, provided); apply the corroboration gate to web-source
   claims that drive a recommendation (single-source web claims get marked and cannot stand alone); and label claims with
@@ -126,7 +126,7 @@ subfolder when the first companion file is written):
 - `{plan-dir}/artifacts/review-iteration-history.md`
 - `{plan-dir}/artifacts/feature-technical-notes.md` — **spec-aware mode only, and lazily created.** Written only when
   the review produces at least one load-bearing `T#`. Follow the cross-reference invariants in
-  [feature-technical-notes-template.md](../plan-a-feature/references/feature-technical-notes-template.md) as applied by
+  [feature-technical-notes-template.md](./references/feature-technical-notes-template.md) as applied by
   `plan-a-feature`.
 
 For legacy reviews produced before the artifacts layout was introduced, the companion files may exist at
@@ -169,7 +169,7 @@ how much domain coverage a band actually buys.
 argument), use it: a band value is the size and skips the signal-based classification above, while `dynamic` forces the
 signal-based classification even when the project config sets a default band. If `$size` is empty and the project
 config supplies a band via `default-swarm-size` (per the config rule in
-[../../references/config-rule.md](../../references/config-rule.md)), use that band and skip the signal-based
+[./references/config-rule.md](./references/config-rule.md)), use that band and skip the signal-based
 classification. State the chosen size and mode to the user in one line with the justification (e.g., "Medium: 4 files,
 one auth surface", "Medium: passed via `$size`", or "Medium: from the project `.han/config.md` `default-swarm-size`", naming whichever of the two files supplied it). If the user
 asked for team review on a plan that would otherwise be small, honor the request and treat it as medium-or-larger. If
@@ -205,7 +205,7 @@ Surface any ambiguity as contextual questions that state the impact, describe th
 follow-up.
 
 **Self-review also runs the YAGNI sweep on every iteration.** Walk every plan item and apply the rule from
-[../../references/yagni-rule.md](../../references/yagni-rule.md): does the item cite accepted evidence (user-described
+[./references/yagni-rule.md](./references/yagni-rule.md): does the item cite accepted evidence (user-described
 need, named direct dependency, existing code path that breaks, applicable regulation, documented incident/metric)? When
 evidence applies, is there a strictly simpler version that satisfies the same evidence? Items that fail are raised as
 `Category: YAGNI candidate` findings with one of three resolution paths: cite missing evidence and keep, replace with
@@ -295,7 +295,7 @@ loop earlier whenever a round goes quiet, so the cap is a ceiling rather than a 
    - From round 2 onward: a summary of prior-round findings and how the plan was updated in response, so agents do not
      re-raise resolved issues.
    - **Every agent also receives the YAGNI brief**: Apply the YAGNI rule per
-     [../../references/yagni-rule.md](../../references/yagni-rule.md). For every plan item in your domain, ask: what
+     [./references/yagni-rule.md](./references/yagni-rule.md). For every plan item in your domain, ask: what
      evidence supports including it now (user-described need, named direct dependency, existing code path that breaks,
      applicable regulation, documented incident/metric)? When no accepted evidence applies, raise a
      `Category: YAGNI candidate` finding. When evidence applies but a strictly simpler version satisfies the same
@@ -356,7 +356,7 @@ loop earlier whenever a round goes quiet, so the cap is a ceiling rather than a 
 
 **Running collaboratively.** When the request asks to review each round as it lands, which is what `pairing` does when
 it hands work here, stop at the end of each round and hand control back instead of starting the next. Present the stop
-in the shape [collaborative-stop-rule.md](../../references/collaborative-stop-rule.md) specifies: the round's findings
+in the shape [collaborative-stop-rule.md](./references/collaborative-stop-rule.md) specifies: the round's findings
 are what the person can check, and the plan edits the round made are what changed. A redirect at such a stop does not
 consume a round against the cap, BECAUSE a round is a unit of review work and a redirect is not. Absent such a request,
 continue as below; an ordinary invocation is unchanged.
@@ -380,7 +380,7 @@ the skill makes to the plan's own structure. It records where the companion file
 - **Findings raised:** N — see [artifacts/review-findings.md](artifacts/review-findings.md). Break down by
   `Resolved by:` source (evidence / user input / deferred) if helpful.
 - **YAGNI candidates:** N — items raised as `Category: YAGNI candidate` per
-  [../../references/yagni-rule.md](../../references/yagni-rule.md). Break down by resolution: kept with cited evidence /
+  [./references/yagni-rule.md](./references/yagni-rule.md). Break down by resolution: kept with cited evidence /
   replaced with simpler version / deferred to the plan's `## Deferred (YAGNI)` section. Omit the line entirely when zero
   YAGNI findings were raised.
 - **Assumptions challenged across all passes:** one-line summary — full entries in
@@ -437,7 +437,7 @@ Use the legacy root-level paths when the companion files live at the plan folder
 **Check the plan for a contract nobody pinned**, once per iteration: run
 `${CLAUDE_SKILL_DIR}/scripts/check-contract-pinning.sh {plan-file} {plan-dir}` and capture its exit status and its
 output. What counts as pinned is in
-[contract-pinning-rule.md](../../references/contract-pinning-rule.md).
+[contract-pinning-rule.md](./references/contract-pinning-rule.md).
 
 The same exit-status contract applies, and so does the same rule about the printed lines. A `deferral-phrase:` line
 names a promise to author a form later. An `unresolved-open-item:` line names a resolution condition that restates its

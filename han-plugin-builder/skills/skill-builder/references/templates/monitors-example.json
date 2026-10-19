@@ -1,0 +1,25 @@
+[
+  {
+    "name": "deploy-status",
+    "command": "${CLAUDE_PLUGIN_ROOT}/scripts/poll-deploy.sh ${user_config.api_endpoint}",
+    "description": "Polls the deployment API for status changes and notifies Claude when a deploy completes or fails"
+  },
+  {
+    "name": "error-log",
+    "command": "tail -F ./logs/error.log",
+    "description": "Streams application error log entries so Claude can surface new errors in real time",
+    "when": "on-skill-invoke:debug"
+  },
+  {
+    "name": "build-watcher",
+    "command": "cd \"${CLAUDE_PLUGIN_ROOT}\" && ./scripts/watch-build.sh",
+    "description": "Watches the build system for failures and reports them as notifications",
+    "when": "on-skill-invoke:run-build"
+  },
+  {
+    "name": "data-dir-changes",
+    "command": "fswatch \"${CLAUDE_PLUGIN_DATA}\"",
+    "description": "Monitors the plugin persistent data directory for file changes between sessions",
+    "when": "always"
+  }
+]

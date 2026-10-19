@@ -53,7 +53,7 @@ round entry, naming each unpinned contract when the answer is `N`.
 Keep this check out of the gate's trip conditions. The gate counts findings from distinct specialists, and a binary
 condition bolted onto counted logic breaks it. An `N` instead becomes an `OQ-N` Open Question, which the Step 6 loop
 already knows how to settle by evidence, reframing, or escalation. What counts as pinned, and the phrases that never
-close a contract, are in [contract-pinning-rule.md](../../../references/contract-pinning-rule.md).
+close a contract, are in [contract-pinning-rule.md](./contract-pinning-rule.md).
 
 Run it on every round, including one where no specialist raised a contract finding. That is the point of it: an
 un-pinned contract is invisible to a review that nobody thought to point at it, so a check reading only the specialist

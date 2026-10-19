@@ -29,7 +29,7 @@ specialist is chosen, so counting seats would make the medium band identical to 
 argument), use it: a band value is the size and skips the signal-based classification above, while `dynamic` forces the
 signal-based classification even when the project config sets a default band. If `$size` is empty and the project
 config supplies a band via `default-swarm-size` (per the config rule in
-[../../../references/config-rule.md](../../../references/config-rule.md)), use that band and skip the signal-based
+[./config-rule.md](./config-rule.md)), use that band and skip the signal-based
 classification. The specialist cap and round cap still scale to the chosen size. State the chosen size, the recommended team,
 and the reason for the size choice to the user in one short message before launching agents (e.g., "Medium: two
 subsystems, small auth surface", "Medium: passed via `$size`", or "Medium: from the project `.han/config.md`
@@ -70,7 +70,7 @@ specialist rather than discovering a gap late. Unless the user specified a team 
 
 Extra agents named in the project config's `## Extra Agents` list join this specialist pool and compete under the same
 what-the-feature-touches selection and specialist caps, per
-[../../../references/config-rule.md](../../../references/config-rule.md): select one only when the feature touches its
+[./config-rule.md](./config-rule.md): select one only when the feature touches its
 stated specialty, count it against the specialist cap, and skip an entry that does not resolve to a dispatchable agent with
 a one-line note.
 
@@ -133,10 +133,10 @@ Give each agent:
   carries only a prose description, a field-name list, or the name of a document to be authored during the build.**
   Every specialist gets this, not only the data or architecture ones, because which specialist notices an un-pinned
   contract depends on which side of it their domain sits. The categories and what counts as pinned are in
-  [contract-pinning-rule.md](../../../references/contract-pinning-rule.md).
+  [contract-pinning-rule.md](./contract-pinning-rule.md).
 - A directive to return concrete, evidence-cited recommendations for the implementation plan — not behavioral rework of
   the spec.
-- A directive to apply the YAGNI rule from [../../../references/yagni-rule.md](../../../references/yagni-rule.md) to every
+- A directive to apply the YAGNI rule from [./yagni-rule.md](./yagni-rule.md) to every
   recommendation: each abstraction, interface, configuration knob, runbook, observability hook, dashboard, alert, SLO,
   feature flag, infrastructure component, schema column, index, partition, audit machinery, retention pipeline, or test
   category recommended must cite evidence per the rule's evidence test (named upstream finding the change resolves,

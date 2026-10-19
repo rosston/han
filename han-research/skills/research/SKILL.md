@@ -28,7 +28,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Operating Principles
@@ -146,7 +146,7 @@ smaller.
 **Apply the size override.** If `$size` is not `none provided`, use it: a band value is the band and skips the
 signal-based classification, while `dynamic` forces the signal-based classification even when the project config sets
 a default band. If `$size` is `none provided` and the project config supplies a band via `default-swarm-size` (per the
-config rule in [../../references/config-rule.md](../../references/config-rule.md)), use that band, skip the
+config rule in [./references/config-rule.md](./references/config-rule.md)), use that band, skip the
 signal-based classification, and announce the config as the source. In every case still pick angles by signal (a
 `large` band does not run a codebase angle when there is no codebase, or an option-comparison angle when there are no
 options). A conversational override ("research this broadly") is equivalent to `$size`.
@@ -176,7 +176,7 @@ option cluster plus `han-core:codebase-explorer`, then `han-core:adversarial-val
 option-comparison angle is skipped entirely for questions with no discrete alternatives.
 
 Extra agents named in the project config's `## Extra Agents` list join the candidate pool and compete under the same
-signal-based selection and band caps, per [../../references/config-rule.md](../../references/config-rule.md): add one
+signal-based selection and band caps, per [./references/config-rule.md](./references/config-rule.md): add one
 only when its stated specialty bears on the question, count it against the band's cap, and skip an entry that does not
 resolve to a dispatchable agent with a one-line note.
 
@@ -234,11 +234,11 @@ Consolidate every information source used that is relevant to the
 results into a single indexed Sources registry (`A1, A2, …`), merging duplicates. Each entry carries: a link or
 repository location the reader can independently check (a source URL for web, `repo/path:line` for codebase, a precise
 reference for provided material); a retrieval date for web sources; the trust class (codebase, web, or provided) per the
-canonical evidence rule in [`../../references/evidence-rule.md`](../../references/evidence-rule.md); a plain-language
+canonical evidence rule in [`../../references/evidence-rule.md`](./references/evidence-rule.md); a plain-language
 summary of what the source says that is relevant (a one-line cell by default; a full prose summary for the sources the
 recommendation rests on); and an evidence status.
 
-Apply the evidence rule defined in [`../../references/evidence-rule.md`](../../references/evidence-rule.md) for the
+Apply the evidence rule defined in [`../../references/evidence-rule.md`](./references/evidence-rule.md) for the
 trust-class vocabulary, the web-source corroboration gate, conflict surfacing between sources, the
 codebase-as-current-state-anchor rule, and the no-evidence labeling pattern. In exploratory mode an unevidenced
 reasoning step may inform the recommendation but is recorded as its own labeled entry, never disguised as a sourced

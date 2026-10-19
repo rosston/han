@@ -17,7 +17,7 @@ allowed-tools:
 ## Operating Principles
 
 - **YAGNI applies to ADRs themselves.** Apply the evidence-based YAGNI rule from
-  [../../references/yagni-rule.md](../../references/yagni-rule.md). An ADR is worth recording only when there is a
+  [./references/yagni-rule.md](./references/yagni-rule.md). An ADR is worth recording only when there is a
   concrete forcing function today — a real decision the team is actively making, an existing code path or architectural
   choice that will be locked in by this record, an applicable regulation, a customer commitment, or a documented
   incident that drove the choice. ADRs about decisions that don't have to be made yet, "for future flexibility", "best
@@ -27,7 +27,7 @@ allowed-tools:
   user always wins; the rule's job is to make the cost of writing speculative architectural records visible — every ADR
   is a future-reader's load and a pattern future agents will treat as committed.
 - **The companion evidence rule applies to the ADR's supporting evidence.** Apply the evidence rule from
-  [../../references/evidence-rule.md](../../references/evidence-rule.md) to the citations that justify the ADR's
+  [./references/evidence-rule.md](./references/evidence-rule.md) to the citations that justify the ADR's
   decision and rejected alternatives. Name the trust class of each citation (codebase, web, provided); mark
   single-source web claims that drive the chosen option; and when no evidence at any tier supports a claimed trade-off,
   label it rather than presenting it as a weak preference.
@@ -45,7 +45,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Step 1: Determine Mode
@@ -93,7 +93,7 @@ Determine which mode to operate in based on the user's request:
    - **Decision** — What was decided and why?
    - **Alternatives** — What other options were considered?
    - **Forcing function** — What concrete trigger requires this decision _now_? Per
-     [../../references/yagni-rule.md](../../references/yagni-rule.md), an ADR requires evidence that the decision must
+     [./references/yagni-rule.md](./references/yagni-rule.md), an ADR requires evidence that the decision must
      be made today: an active engineering choice, a code path locking in, a regulation taking effect, a customer
      commitment, a documented incident driving the choice. If no forcing function exists, recommend deferring the ADR
      rather than writing it; surface the recommendation to the user with the trigger that would justify revisiting.

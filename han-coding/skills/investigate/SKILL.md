@@ -22,7 +22,7 @@ allowed-tools: Read, Glob, Grep, Agent, Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Investigation Approach
@@ -35,7 +35,7 @@ between the two files, relative-path resolution, and what to do with a file that
   generalists miss.
 - The `han-core:adversarial-validator` agent handles all three validation strategies (challenge evidence, challenge fix,
   challenge assumptions) internally.
-- Apply the evidence rule from [../../references/evidence-rule.md](../../references/evidence-rule.md) to every finding.
+- Apply the evidence rule from [./references/evidence-rule.md](./references/evidence-rule.md) to every finding.
   Codebase findings (file path, line number, log line, test output) carry the trust-class label "codebase" and stand on
   their citation. Web-source context (RFCs, vendor docs, Stack Overflow, blog posts) carries the trust-class label "web"
   and is subject to the corroboration gate when it drives the proposed fix. When the investigation hits a point where no
@@ -81,7 +81,7 @@ every applicable specialist in parallel with the `han-core:evidence-based-invest
    numbered findings keyed to file paths, line numbers, and schema or migration references."
 
 Extra agents named in the project config's `## Extra Agents` list join this conditional-specialist pool under the same
-symptom-driven selection, per [../../references/config-rule.md](../../references/config-rule.md): dispatch one only
+symptom-driven selection, per [./references/config-rule.md](./references/config-rule.md): dispatch one only
 when the classified bug type matches its stated specialty, and skip an entry that does not resolve to a dispatchable
 agent with a one-line note.
 

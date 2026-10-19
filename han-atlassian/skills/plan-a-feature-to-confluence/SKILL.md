@@ -24,7 +24,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 # Plan a Feature to Confluence
@@ -80,7 +80,7 @@ folder under `/tmp/` (for example `/tmp/<feature-slug>/`) rather than into the r
 prompt the user to choose or confirm an output location, because this skill owns that decision. This keeps the working
 plan out of the repo until the user decides to publish it, and because the path is explicit input it outranks any
 `output-directory` the project or personal `.han/config.md` supplies (see
-[../../references/config-rule.md](../../references/config-rule.md)).
+[./references/config-rule.md](./references/config-rule.md)).
 
 Let `han-planning:plan-a-feature` complete its full process. **Capture the exact `/tmp/` paths of every file it wrote:**
 

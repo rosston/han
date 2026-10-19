@@ -18,7 +18,7 @@ allowed-tools:
 ## Operating Principles
 
 - **YAGNI applies to runbooks themselves.** Apply the evidence-based YAGNI rule from
-  [../../references/yagni-rule.md](../../references/yagni-rule.md). A runbook is worth writing only when the scenario is
+  [./references/yagni-rule.md](./references/yagni-rule.md). A runbook is worth writing only when the scenario is
   grounded in something real: an alert that has actually fired, a documented incident, a recurring task that exists, or
   a known failure mode on a service that receives production traffic. Runbooks for hypothetical alerts, "best practice
   says we should have one," or "we'll need this someday" are YAGNI candidates and the runbook should be deferred until
@@ -26,7 +26,7 @@ allowed-tools:
   where data isn't reaching production — alerts that will never fire because no signal flows. The user always wins; the
   rule's job is to make the cost of speculative runbooks visible.
 - **The companion evidence rule applies to the runbook's supporting evidence.** Apply the evidence rule from
-  [../../references/evidence-rule.md](../../references/evidence-rule.md) to the citations that ground the scenario: name
+  [./references/evidence-rule.md](./references/evidence-rule.md) to the citations that ground the scenario: name
   the trust class of each piece of evidence (alert history, incident report, on-call rotation pattern); cite the actual
   artifact (dashboard URL, ticket ID, log query) rather than paraphrased recollection; and surface single-source claims
   as such rather than presenting them as settled.
@@ -53,7 +53,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Step 1: Determine Mode

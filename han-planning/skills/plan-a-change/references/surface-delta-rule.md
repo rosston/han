@@ -127,7 +127,7 @@ entry names the escalation that settled it.
 
 Cross-references:
 
-- [contract-pinning-rule.md](../../../references/contract-pinning-rule.md) — what counts as a contract two parts must
+- [contract-pinning-rule.md](./contract-pinning-rule.md) — what counts as a contract two parts must
   agree on, and what counts as pinning one. A new seam in the delta usually creates one.
-- [scope-justification-rule.md](../../../references/scope-justification-rule.md) — the cut list an out-of-boundary entry
+- [scope-justification-rule.md](./scope-justification-rule.md) — the cut list an out-of-boundary entry
   lands in instead of the delta.

@@ -26,4 +26,4 @@ Still do not settle it: an Open Item is a delegation, not a behavioral commitmen
 The exception exists because rule 3's silence and rule 3's correctness are separable. The mechanic genuinely does not
 belong in the spec, and a contract that leaves this stage unrecorded reaches `plan-implementation` as nothing at all,
 which is how a shared format ends up invented mid-build. Recording it costs one Open Item and gives the next stage an
-item it must close. See [contract-pinning-rule.md](../../../references/contract-pinning-rule.md).
+item it must close. See [contract-pinning-rule.md](./contract-pinning-rule.md).

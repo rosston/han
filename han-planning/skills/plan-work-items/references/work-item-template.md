@@ -65,7 +65,7 @@ SDK or platform caveats that affect acceptance.
 - `**Justification.**` sits immediately before `**References.**`, and is present on every work item.
 - A contract shared across work items is pinned in the item that introduces it and consumed by items that name it under
   `**Depends on.**`, never defined a piece at a time across several items. See
-  [`contract-pinning-rule.md`](../../../references/contract-pinning-rule.md) for what counts as pinned.
+  [`contract-pinning-rule.md`](./contract-pinning-rule.md) for what counts as pinned.
 - `**Summary.**` comes first; `**Acceptance criteria.**` renders at the bottom, immediately before `**Depends on.**`.
   Every block between them supports a criterion; there is no separate `**Tests.**` block — test expectations live
   inside the acceptance criteria.

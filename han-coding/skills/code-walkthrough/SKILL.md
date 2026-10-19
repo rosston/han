@@ -32,7 +32,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Operating Principles
@@ -130,7 +130,7 @@ exists, note that surrounding-code inference applies and pass that into the brie
 **Apply the size override.** If `$size` is not `none provided`, use it: a band value is the band and skips the
 signal-based classification, while `dynamic` forces the signal-based classification even when the project config sets a
 default band. If `$size` is `none provided` and the project config supplies a band via `default-swarm-size` (per
-[../../references/config-rule.md](../../references/config-rule.md)), use that band and name the config as the source in
+[./references/config-rule.md](./references/config-rule.md)), use that band and name the config as the source in
 Step 3's announcement. A conversational override ("walk me through it in detail") is equivalent.
 
 **Gather the input.** For a branch or pull request, capture the change set and its intent:

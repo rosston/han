@@ -30,7 +30,7 @@ The cap counts **chosen specialists**. One seat is filled on every team before a
 **Size override.** If `$size` is non-empty (the user passed `small`, `medium`, `large`, or `dynamic` as the first
 argument), use it: a band value is the size and skips the signal-based classification above, while `dynamic` forces
 signal-based classification even when a config sets a default band. If `$size` is empty and a `.han/config.md` supplies
-a band via `default-swarm-size` (per [../../../references/config-rule.md](../../../references/config-rule.md)), use that
+a band via `default-swarm-size` (per [./config-rule.md](./config-rule.md)), use that
 band and skip the classification. Both caps still scale to the chosen size.
 
 State the chosen size, the recommended team, and the reason in one short message before launching agents — for example
@@ -66,7 +66,7 @@ Select additional specialists up to the cap, based on what the area actually con
   rendered output a person reads.
 
 Extra agents named in a `.han/config.md` `## Extra Agents` list join this pool and compete under the same selection and
-caps, per [../../../references/config-rule.md](../../../references/config-rule.md). Count a selected extra agent against
+caps, per [./config-rule.md](./config-rule.md). Count a selected extra agent against
 the cap, and skip an entry that does not resolve to a dispatchable agent with a one-line note.
 
 ## Domain-scoped briefs
@@ -103,8 +103,8 @@ Give every agent:
   has to be specified to a concrete signature, field layout, or worked example. Flag any that carries only a prose
   description, a field-name list, or the name of a document to be authored during the build.** Every specialist gets
   this, because which one notices an un-pinned contract depends on which side of it their domain sits. The categories
-  are in [../../../references/contract-pinning-rule.md](../../../references/contract-pinning-rule.md).
-- A directive on YAGNI: **apply [../../../references/yagni-rule.md](../../../references/yagni-rule.md) to every part the
+  are in [./contract-pinning-rule.md](./contract-pinning-rule.md).
+- A directive on YAGNI: **apply [./yagni-rule.md](./yagni-rule.md) to every part the
   target state introduces.** Each new type, interface, abstraction layer, extension point, configuration seam, and
   adapter must cite evidence per the rule's test. Parts failing it are returned as **`Category: YAGNI candidate`**
   findings with the reopening trigger named.

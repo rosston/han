@@ -22,7 +22,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 # Project Discovery
@@ -108,7 +108,7 @@ file already covers the project's core attributes, and stop.
 ## Step 5: Keep the `.han/config.md` pointer honest
 
 Han skills read project-local overrides from the project's `.han/config.md` when a project carries one (see
-[../../references/config-rule.md](../../references/config-rule.md)). This step keeps the target file's pointer to that
+[./references/config-rule.md](./references/config-rule.md)). This step keeps the target file's pointer to that
 config accurate, using the same consent gate and deduplication discipline as Step 4. The Project Context probe above
 shows whether the file exists.
 

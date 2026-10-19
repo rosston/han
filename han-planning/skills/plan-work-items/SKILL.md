@@ -23,7 +23,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 # Plan Work Items
@@ -44,14 +44,14 @@ supply. Step 5 is where the judgement comes into play, in dividing up the plan.
   exceptions, and they are the only ones:
   - **The confirmation turn**, taken when no boundary record exists, per Step 0.
   - **The single stop**, taken once when an input only the user can supply is missing and its absence degrades the work
-    items, per [operator-escalation-rule.md](../../references/operator-escalation-rule.md).
+    items, per [operator-escalation-rule.md](./references/operator-escalation-rule.md).
 
   Beyond those two, stop only when the skill genuinely cannot continue: there is no plan or context to work from at all.
   An expected artifact nobody can produce right now is recorded as a gap and does not stop the run.
 
 - **One work-items file, no repository awareness.** This skill produces exactly one `work-items.md`. Beside it, the run
   also writes or updates the boundary record and persists any visual material it receives, per Step 0 and
-  [planning-boundary-rule.md](../../references/planning-boundary-rule.md); those are companion artifacts, not a second
+  [planning-boundary-rule.md](./references/planning-boundary-rule.md); those are companion artifacts, not a second
   breakdown. The skill does not split work by repository, count repositories, or reason about cross-repository
   integration. The breakdown is driven only by the plan or context it is given.
 - **Save incrementally — never lose work.** Write the work-items file as soon as the title and intro are drafted, then
@@ -66,7 +66,7 @@ supply. Step 5 is where the judgement comes into play, in dividing up the plan.
   before the `**References.**` block, never a line of summary prose. It names one of three things: the work-item
   language it descends from, the visual material the operator attached, or the asked-for work it is a necessity of. A
   work item that cannot fill it does not go in the breakdown; it goes in the cut list. Full rule in
-  [scope-justification-rule.md](../../references/scope-justification-rule.md).
+  [scope-justification-rule.md](./references/scope-justification-rule.md).
 - **Unjustifiable work goes in a visible cut list**, in the work-items file and in the closing summary, naming what the
   item would have done in plain language and why it was cut. Do not search outward to a linked, sibling, or closed item
   to find a justification for it.
@@ -102,11 +102,11 @@ supply. Step 5 is where the judgement comes into play, in dividing up the plan.
   its acceptance criteria, and every consumer names that item under `Depends on`. Never split one contract across items
   that each define part of it. When the item's own deliverable **is** the contract document, "the document exists" is
   not a criterion: a criterion names the concrete form the document must carry. Full rule in
-  [contract-pinning-rule.md](../../references/contract-pinning-rule.md).
+  [contract-pinning-rule.md](./references/contract-pinning-rule.md).
 - UI work items, when the plan folder has a `ui-designs/` subfolder, MUST reference the relevant visual material by a
   relative path from the work-items file to the file. See
   [references/work-item-template.md](./references/work-item-template.md). The accepted file set is named in
-  [planning-boundary-rule.md](../../references/planning-boundary-rule.md); a hosted URL the boundary record lists is
+  [planning-boundary-rule.md](./references/planning-boundary-rule.md); a hosted URL the boundary record lists is
   cited by URL, since there is no file to reference.
 - **An absent `ui-designs/` folder is two different situations, not one.** A work item with no UI surface omits the
   design-reference block and that is the end of it. A work item that implements visual work with no material available is
@@ -125,7 +125,7 @@ supply. Step 5 is where the judgement comes into play, in dividing up the plan.
 ### 0. Read the boundary this work descends from
 
 Before anything else, establish the outer boundary of the run. Read
-[planning-boundary-rule.md](../../references/planning-boundary-rule.md) for the record's name, its sections, and the
+[planning-boundary-rule.md](./references/planning-boundary-rule.md) for the record's name, its sections, and the
 accepted visual-material file set, then take one of two paths.
 
 **A boundary record already exists.** Look for `artifacts/scope-boundary.md` in the plan's folder. When it is there, read
@@ -219,7 +219,7 @@ it before the work items are built. For each open item, do one of two things and
 contract these work items will consume, pin it in the introducing work item per the Rules above; otherwise record it in
 the breakdown report as a named gap, saying which work items inherit it. An open item that reaches implementation
 without either is a question the builder answers alone, which is the failure mode
-[contract-pinning-rule.md](../../references/contract-pinning-rule.md) exists to prevent.
+[contract-pinning-rule.md](./references/contract-pinning-rule.md) exists to prevent.
 
 ### 5. Draft the work items
 
@@ -237,7 +237,7 @@ Launch `han-core:plan-synthesizer` (`subagent_type: "han-core:plan-synthesizer"`
   the ones carried forward as named gaps.
 - The Rules section of this skill verbatim.
 - A directive on justification and cutting, quoting
-  [scope-justification-rule.md](../../references/scope-justification-rule.md): every work item names what it descends
+  [scope-justification-rule.md](./references/scope-justification-rule.md): every work item names what it descends
   from, in a `**Justification.**` field of its own. A candidate that cannot name one goes in the cut list with what it
   would have done and why, and is not to be justified by searching outward to a linked, sibling, or closed item. Apply the
   floor: cut subsystems, integrations, and artifacts the work item never asks for, and never cut behavior required to

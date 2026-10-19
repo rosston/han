@@ -27,7 +27,7 @@ allowed-tools:
   critical behaviors a caller depends on, and stop. Do not specify tests for every branch, every private helper, or
   every intermediate value.
 - **YAGNI is a first-class operating principle for tests.** Apply the evidence-based YAGNI rule from
-  [../../references/yagni-rule.md](../../references/yagni-rule.md). A test is worth recommending only when (a) the code
+  [./references/yagni-rule.md](./references/yagni-rule.md). A test is worth recommending only when (a) the code
   under review commits to a behavior the test verifies and (b) the failure mode the test would catch is realistic for
   this codebase. Tests for code paths that don't exist yet, hypothetical adversaries the code doesn't face, hypothetical
   scaling problems the workload doesn't have, "completeness" with existing tests, or symmetry ("we have a test for
@@ -51,7 +51,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Step 1: Determine Scope
@@ -108,7 +108,7 @@ changed-files list whenever the user named no scope, and that list describes the
 **Size override.** If `$size` is non-empty (the user passed `small`, `medium`, `large`, or `dynamic` as the first
 argument), use it: a band value is the size and skips the signal-based classification above, while `dynamic` forces the
 signal-based classification even when the config sets a default band. If `$size` is empty and either `.han/config.md`
-supplies a band via `default-swarm-size` (per [../../references/config-rule.md](../../references/config-rule.md)), use
+supplies a band via `default-swarm-size` (per [./references/config-rule.md](./references/config-rule.md)), use
 that band and skip the signal-based classification. Anything that is not one of the four accepted values is trailing
 context, not a size.
 
@@ -145,7 +145,7 @@ other than `none provided`, include it in every agent prompt so they can focus t
    Do not recommend tests that reach into private methods, internal state, or implementation structure — if two
    implementations would produce the same observable behavior, the test must pass for both. Cover the critical behaviors
    a caller depends on and stop; do not specify a test for every branch, private helper, or intermediate value. Apply
-   the YAGNI rule from [../../references/yagni-rule.md](../../references/yagni-rule.md) — recommend a test only when the
+   the YAGNI rule from [./references/yagni-rule.md](./references/yagni-rule.md) — recommend a test only when the
    code commits to a behavior the test verifies AND the failure mode is realistic for this codebase. Symmetry,
    completeness, and hypothetical scaling are YAGNI; defer those to the Deferred Tests section with the trigger that
    would justify writing them. {any additional context from user arguments}"
@@ -153,7 +153,7 @@ other than `none provided`, include it in every agent prompt so they can focus t
 2. **Launch han-core:edge-case-explorer agent** — prompt: "Explore edge cases for the following files{on branch {branch}
    if applicable}: {file list}. Focus on inputs, integration points, and error paths observable through the public API
    and through interactions with collaborating objects and services — not internal state or private implementation.
-   Apply the YAGNI rule from [../../references/yagni-rule.md](../../references/yagni-rule.md) — raise an edge case only
+   Apply the YAGNI rule from [./references/yagni-rule.md](./references/yagni-rule.md) — raise an edge case only
    when a real caller produces the input, the failure mode has plausible production trigger, or the case is
    critical-path correctness regardless of caller. Hypothetical adversaries the code doesn't face and symmetry-driven
    boundaries go to Dropped Edge Cases with the trigger that would justify revisiting. {any additional context from user
@@ -178,7 +178,7 @@ apply.
    {any additional context from user arguments}"
 
 Extra agents named in the project config's `## Extra Agents` list join this conditional-dispatch pool under the same
-file-list-signal selection, per [../../references/config-rule.md](../../references/config-rule.md): dispatch one only
+file-list-signal selection, per [./references/config-rule.md](./references/config-rule.md): dispatch one only
 when the file list carries a signal matching its stated specialty, and skip an entry that does not resolve to a
 dispatchable agent with a one-line note.
 
@@ -220,7 +220,7 @@ Combine findings from every dispatched agent into a unified, prioritized test pl
    exempt from the cap. If more than 40 non-security items exist, note how many were omitted and recommend running the
    skill again after addressing high-priority items.
 7. **Apply the YAGNI sweep** — walk every test recommendation that survived classification and apply
-   [../../references/yagni-rule.md](../../references/yagni-rule.md). Demote any test whose justification reduces to
+   [./references/yagni-rule.md](./references/yagni-rule.md). Demote any test whose justification reduces to
    "completeness", "best practice", "for future flexibility", symmetry with another test, or hypothetical
    scaling/adversaries the change doesn't touch — these go to the Deferred Tests section with a
    `Reason: YAGNI — {gate failure}` and the trigger that would justify writing the test (a third real customer hits the

@@ -108,14 +108,17 @@ EOF
 }
 
 # Explicit destination rows for path-string references that are not markdown
-# links: the rules the two inline guidance skills read by path, and the whole
-# guidance corpus tree that skill-builder and agent-builder read by path.
+# links, and for the special-case cross-skill vendoring: the rules the two
+# inline guidance skills read by path, plan-a-feature's template vendored for
+# iterative-plan-review (a skill-owned canonical), and the whole guidance
+# corpus tree that skill-builder and agent-builder read by path.
 emit_explicit_rows() {
   local pair src dst rel dir skill_name
   for pair in \
     "han-communication/references/readability-rule.md han-communication/skills/readability-guidance/references/readability-rule.md" \
     "han-communication/references/writing-voice.md han-communication/skills/readability-guidance/references/writing-voice.md" \
-    "han-communication/references/explanation-rule.md han-communication/skills/explanation-guidance/references/explanation-rule.md"; do
+    "han-communication/references/explanation-rule.md han-communication/skills/explanation-guidance/references/explanation-rule.md" \
+    "han-planning/skills/plan-a-feature/references/feature-technical-notes-template.md han-planning/skills/iterative-plan-review/references/feature-technical-notes-template.md"; do
     src=${pair%% *}
     dst=${pair#* }
     [ -f "$src" ] || continue

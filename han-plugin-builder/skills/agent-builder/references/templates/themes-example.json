@@ -1,0 +1,55 @@
+{
+  "name": "Example Theme",
+  "base": "dark",
+  "overrides": {
+    "claude": "#bd93f9",
+    "text": "#f8f8f2",
+    "inverseText": "#282a36",
+    "inactive": "#6272a4",
+    "subtle": "#44475a",
+    "permission": "#ffb86c",
+    "remember": "#8be9fd",
+
+    "success": "#50fa7b",
+    "error": "#ff5555",
+    "warning": "#ffb86c",
+    "merged": "#bd93f9",
+
+    "promptBorder": "#6272a4",
+    "planMode": "#ffb86c",
+    "autoAccept": "#50fa7b",
+    "bashBorder": "#ff79c6",
+    "ide": "#8be9fd",
+    "fastMode": "#f1fa8c",
+
+    "diffAdded": "#14532d",
+    "diffRemoved": "#7f1d1d",
+    "diffAddedDimmed": "#052e16",
+    "diffRemovedDimmed": "#450a0a",
+    "diffAddedWord": "#16a34a",
+    "diffRemovedWord": "#dc2626",
+
+    "userMessageBackground": "#1e1b4b",
+    "selectionBg": "#44475a",
+
+    "claudeShimmer": "#caa9fa",
+    "successShimmer": "#69fb8f",
+    "errorShimmer": "#ff7777",
+    "warningShimmer": "#ffc97a",
+    "mergedShimmer": "#caa9fa",
+    "planModeShimmer": "#ffc97a",
+    "autoAcceptShimmer": "#69fb8f",
+    "bashBorderShimmer": "#ff93d4",
+    "ideShimmer": "#a5eeff",
+    "fastModeShimmer": "#f5fc9a",
+
+    "red_FOR_SUBAGENTS_ONLY": "#ff5555",
+    "blue_FOR_SUBAGENTS_ONLY": "#8be9fd",
+    "green_FOR_SUBAGENTS_ONLY": "#50fa7b",
+    "yellow_FOR_SUBAGENTS_ONLY": "#f1fa8c",
+    "purple_FOR_SUBAGENTS_ONLY": "#bd93f9",
+    "orange_FOR_SUBAGENTS_ONLY": "#ffb86c",
+    "pink_FOR_SUBAGENTS_ONLY": "#ff79c6",
+    "cyan_FOR_SUBAGENTS_ONLY": "#8be9fd"
+  }
+}

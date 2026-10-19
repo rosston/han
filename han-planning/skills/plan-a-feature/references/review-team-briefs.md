@@ -27,7 +27,7 @@ Select the remaining specialists by matching domain to feature, under the size c
 | `han-core:risk-analyst`                 | Significant blast radius, where risks need prioritizing.                                                                                                                                                                  |
 
 Extra agents named in the project config's `## Extra Agents` list join this pool and compete under the same
-domain-to-feature matching and size cap, per [`config-rule.md`](../../../references/config-rule.md). Select one only
+domain-to-feature matching and size cap, per [`config-rule.md`](./config-rule.md). Select one only
 when the feature touches its stated specialty, count it against the cap, brief it with the spec sections relevant to its
 domain, and skip an entry that does not resolve to a dispatchable agent with a one-line note.
 
@@ -87,7 +87,7 @@ Pass this verbatim, in addition to the domain-specific question.
 > leaks implementation mechanics (language primitives, function names, library mechanics, file/line references), raise
 > it as a **"mechanics leaking into spec"** finding regardless of your primary domain.
 >
-> Apply the YAGNI rule per [yagni-rule.md](../../../references/yagni-rule.md). For every behavior, alternate flow, edge
+> Apply the YAGNI rule per [yagni-rule.md](./yagni-rule.md). For every behavior, alternate flow, edge
 > case, coordination, or open item the spec commits to, ask: what evidence supports including it now (user-described
 > need, named direct dependency, existing code path that breaks, applicable regulation, documented incident or measured
 > metric)? If no accepted evidence applies, raise it as a **`Category: YAGNI candidate`** finding. Apply the rule's

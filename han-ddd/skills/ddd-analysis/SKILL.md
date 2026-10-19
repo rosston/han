@@ -26,7 +26,7 @@ allowed-tools: Read, Glob, Grep, Agent, Write, Bash(find *), Bash(date *), Bash(
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A
 read that returns no file is no personal configuration: continue silently. When that file or the
 `project .han/config.md` probe supplies content, apply it per
-[config-rule.md](../../references/config-rule.md), which governs precedence between the two files, relative-path
+[config-rule.md](./references/config-rule.md), which governs precedence between the two files, relative-path
 resolution, and what to do with a file that reads but cannot be used.
 
 ## Operating Principles
@@ -88,7 +88,7 @@ directing note — it biases attention without narrowing scope.
 **Resolve the run folder.** Determine where this run's artifacts will land before dispatching any agent:
 
 1. **Configured `output-directory`**: When the config read above supplied an `output-directory`, resolve it per
-   [config-rule.md](../../references/config-rule.md) (relative path resolves against the file that declared it;
+   [config-rule.md](./references/config-rule.md) (relative path resolves against the file that declared it;
    `~/` expands to home; full path is used as-is). Write the run folder beneath that resolved base.
 2. **No configured value**: Write outside the repository — use `${TMPDIR:-/tmp}` as the base. This keeps an
    unconfigured analysis out of version control, matching the same principle that governs `code-overview`.

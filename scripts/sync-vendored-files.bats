@@ -36,6 +36,8 @@ make_fixture() {
     printf '```\n'
     printf 'Fenced [evidence-rule.md](../../references/evidence-rule.md)\n'
     printf '```\n'
+    # SC2016: the literal text (backticks included) is the fixture content.
+    # shellcheck disable=SC2016
     printf 'Inline code `[yagni-rule.md](../../references/yagni-rule.md)` is not a link.\n'
   } >"$fixture/han-coding/skills/demo/SKILL.md"
   cd "$fixture"
@@ -106,4 +108,17 @@ make_fixture() {
   corpus=$(printf '%s\n' "$output" | grep -c \
     "han-plugin-builder/skills/guidance/references/.*han-plugin-builder/skills/.*/references/" || true)
   [ "$corpus" -eq $((corpus_files * 2)) ]
+}
+
+@test "list carries the special-case vendoring row for the cross-skill template, and no row for the de-linked repo doc" {
+  cd "$BATS_TEST_DIRNAME/.."
+  run bash "$SCRIPT" --list
+  [ "$status" -eq 0 ]
+  printf '%s\n' "$output" | grep -Fq \
+    "han-planning/skills/plan-a-feature/references/feature-technical-notes-template.md	han-planning/skills/iterative-plan-review/references/feature-technical-notes-template.md"
+  # docs/semantic-versioning.md was de-linked, not vendored: no row may mention it
+  if printf '%s\n' "$output" | grep -Fq "semantic-versioning"; then
+    printf 'unexpected row vendoring the repo doc\n' >&2
+    false
+  fi
 }

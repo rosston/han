@@ -64,7 +64,7 @@ decision log and find the outcome.
   field carries the concrete form inline: a worked example, a grammar line, or a field layout. A link to an
   artifact that already exists concretely also closes it. A field-name list, a prose description, the name of a
   document to be authored later, or any phrase from the non-closure list does not. Full rule in
-  [contract-pinning-rule.md](../../../references/contract-pinning-rule.md). -->
+  [contract-pinning-rule.md](./contract-pinning-rule.md). -->
 - **Rationale:** <!-- Why this choice given outcome, constraints, and evidence -->
 - **Evidence:**
   <!-- File paths, ADR IDs, coding standards, metrics, specialist findings, or "user input" / "junior-developer reframing" -->

@@ -24,12 +24,12 @@ argument-hint: "[what to pair on]"
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## The contract this skill runs on
 
-Read [collaborative-stop-rule.md](../../references/collaborative-stop-rule.md) before Step 4. It defines what a stop
+Read [collaborative-stop-rule.md](./references/collaborative-stop-rule.md) before Step 4. It defines what a stop
 presents, when the pre-build ask fires, what makes a choice expensive to walk back, and what to do with the answer. The
 skills this one hands work to follow the same file, which is what makes a stop feel the same whoever performed it.
 

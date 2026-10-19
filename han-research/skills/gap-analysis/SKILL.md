@@ -23,7 +23,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Operating Principles
@@ -38,7 +38,7 @@ between the two files, relative-path resolution, and what to do with a file that
   `han-core:junior-developer` always, plus `han-core:evidence-based-investigator` when the current state is concrete
   enough to verify against. The user may opt out with `no swarm` to fall back to a lightweight gap-analyzer-only pass.
 - **Evidence rule applies to every gap.** Apply the evidence rule from
-  [../../references/evidence-rule.md](../../references/evidence-rule.md) when characterizing the evidence that
+  [./references/evidence-rule.md](./references/evidence-rule.md) when characterizing the evidence that
   establishes each gap. Name the trust class of every citation pair (codebase, web, provided); apply the corroboration
   gate to web-source claims that establish a gap; and label gaps where the desired-state evidence is absent ("the spec
   is silent on X") as a distinct state, not as a weak gap. The `han-core:evidence-based-investigator` dispatched in the
@@ -189,7 +189,7 @@ from:
 
 Extra agents named in the project config's `## Extra Agents` list join this domain-specialist pool and compete under
 the same gap-driven selection and size caps, per
-[../../references/config-rule.md](../../references/config-rule.md): add one only when a gap touches its stated
+[./references/config-rule.md](./references/config-rule.md): add one only when a gap touches its stated
 specialty, count it against the size cap, and skip an entry that does not resolve to a dispatchable agent with a
 one-line note.
 
@@ -209,7 +209,7 @@ example:
 argument), use it: a band value is the size and skips the signal-based classification above, while `dynamic` forces the
 signal-based classification even when the project config sets a default band. If `$size` is empty and the project
 config supplies a band via `default-swarm-size` (per the config rule in
-[../../references/config-rule.md](../../references/config-rule.md)), use that band, skip the signal-based
+[./references/config-rule.md](./references/config-rule.md)), use that band, skip the signal-based
 classification, and announce the config as the source. The swarm composition still scales to the chosen size. If the
 user named specific specialists, honor those. If the user requested a different size in conversation rather than via
 `$size`, accept the override.

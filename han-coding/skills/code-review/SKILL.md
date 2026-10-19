@@ -27,7 +27,7 @@ When running a code review, follow the process outlined here.
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Review Constraints
@@ -214,7 +214,7 @@ clearly require it. When a signal is borderline, stay at the smaller band. Use t
 argument), use it: a band value is the size and skips the signal-based classification, while `dynamic` forces the
 signal-based classification even when the project config sets a default band. If `$size` is empty and the project
 config supplies a band via `default-swarm-size` (per the config rule in
-[../../references/config-rule.md](../../references/config-rule.md)), use that band and skip the signal-based
+[./references/config-rule.md](./references/config-rule.md)), use that band and skip the signal-based
 classification. Otherwise classify from the signals above. Anywhere else in this skill body that mentions a "user
 override" of size, this argument is the override.
 
@@ -253,7 +253,7 @@ Review each file from the Step 1 file list **in alphabetical order**. For each f
    review from Step 1), skip this sub-step — the full file read from sub-step 3 provides all necessary context. Apply
    the review checklist to the entire file content.
 5. **Apply the review checklist** at [review-checklist.md](./references/review-checklist.md). Its YAGNI pass and its
-   Gate 1 evidence test are defined in [../../references/yagni-rule.md](../../references/yagni-rule.md); read that
+   Gate 1 evidence test are defined in [./references/yagni-rule.md](./references/yagni-rule.md); read that
    file from here rather than following the checklist's own link to it.
 
 If the user provided focus areas in their arguments (the `$focus_areas` binding from Step 1), apply extra scrutiny to
@@ -439,7 +439,7 @@ The review is a file, not a conversation message. Resolve where it goes, name it
 
 1. **A configured `output-directory`.** When the config read at the top of this skill supplied one, write the report
    beneath it. Relative-path resolution, `~` expansion, and precedence between the personal and project files are
-   governed by [config-rule.md](../../references/config-rule.md); do not re-derive them here.
+   governed by [config-rule.md](./references/config-rule.md); do not re-derive them here.
 2. **No configured value.** Write it to the `{output_directory}` Step 3 already resolved for the specialists' reports,
    BECAUSE splitting the report from the analysis it was built on makes a run's output harder to find, not easier.
 

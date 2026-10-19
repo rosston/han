@@ -30,7 +30,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Operating Principles
@@ -111,7 +111,7 @@ and `{folder}/api-design.md`. Resolve `{folder}` in this order:
 
 1. If the user specified an output folder, use it.
 2. If the project or personal config sets an `output-directory`, place the run folder under it, per
-   [config-rule.md](../../references/config-rule.md).
+   [config-rule.md](./references/config-rule.md).
 3. Otherwise, choose a 2-to-4-word kebab-case folder named for the interface, under a documentation root surfaced via
    `CLAUDE.md`, `project-discovery.md`, or a Glob fallback (`docs/plans/`, `docs/`).
 
@@ -154,7 +154,7 @@ borderline, stay at the smaller band.
 **Apply the size override.** If `$size` is not `none provided`, use it: a band value is the band and skips the
 signal-based classification above, while `dynamic` forces the signal-based classification even when the project config
 sets a default band. If `$size` is `none provided` and the project config supplies a band via `default-swarm-size` (per
-[config-rule.md](../../references/config-rule.md)), use that band, skip the signal-based classification, and announce
+[config-rule.md](./references/config-rule.md)), use that band, skip the signal-based classification, and announce
 the config as the source. In every case still select specialists by signal: a `large` band does not dispatch agents
 whose domain the contract never touches. A conversational override ("design this large") is equivalent to `$size`.
 
@@ -188,7 +188,7 @@ allows, keep the band's count, prefer the specialists covering the strongest sig
 the design document's summary so the user can re-run larger.
 
 Extra agents named in the project config's `## Extra Agents` list join the signal-selected pool and compete under the
-same signals and band caps, per [config-rule.md](../../references/config-rule.md): add one only when a signal in the
+same signals and band caps, per [config-rule.md](./references/config-rule.md): add one only when a signal in the
 interface matches its stated specialty, count it against the band's cap, and skip an entry that does not resolve to a
 dispatchable agent with a one-line note.
 
@@ -205,7 +205,7 @@ the adjustment.
 
 **Running collaboratively.** When the request asks to review each round as it lands, which is what
 `pairing` does when it hands work here, stop at this point and hand control back instead of continuing. Present the stop
-in the shape [collaborative-stop-rule.md](../../references/collaborative-stop-rule.md) specifies. Absent such a request,
+in the shape [collaborative-stop-rule.md](./references/collaborative-stop-rule.md) specifies. Absent such a request,
 continue as below; an ordinary invocation is unchanged.
 
 For this skill a round is one dispatch step: the discovery wave, the options round, the question round, and the
@@ -226,7 +226,7 @@ so they run concurrently. Each brief must contain:
 Wait for the whole wave to return. Then write `{folder}/context-brief.md`: a numbered list of findings (F1, F2, F3, …),
 each carrying the finding, its provenance (a `file:line` citation, or the label `inferred`), and the agent that reported
 it. Merge duplicates and keep conflicting findings as separate numbered entries with both citations, rather than
-picking a winner. Apply the evidence rule from [../../references/evidence-rule.md](../../references/evidence-rule.md) to
+picking a winner. Apply the evidence rule from [./references/evidence-rule.md](./references/evidence-rule.md) to
 every finding. When a question the design depends on has no evidence at any tier, record it as an open item rather than
 guessing, and carry it into Step 8 alongside the open items the question round produces.
 

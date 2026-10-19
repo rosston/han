@@ -24,7 +24,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Operating Principles
@@ -57,21 +57,21 @@ between the two files, relative-path resolution, and what to do with a file that
   them from the code. Mechanics that do not affect observable behavior are pure implementation and belong in the
   implementation plan, not here.
 - **YAGNI is a first-class operating principle.** Apply the evidence-based YAGNI rule in
-  [yagni-rule.md](../../references/yagni-rule.md) to every commitment the spec carries. An item with no accepted
+  [yagni-rule.md](./references/yagni-rule.md) to every commitment the spec carries. An item with no accepted
   evidence is demoted to `## Deferred (YAGNI)` with its reopening trigger, never silently dropped and never silently
   kept. An item with evidence gets the simpler-version test.
-- **Evidence quality is the companion principle.** Apply [evidence-rule.md](../../references/evidence-rule.md) alongside
+- **Evidence quality is the companion principle.** Apply [evidence-rule.md](./references/evidence-rule.md) alongside
   YAGNI. YAGNI gates inclusion; this one characterizes the quality of what each commitment rests on, through trust
   classes, the corroboration gate on web claims, and a distinct label for no evidence at any tier.
 - **The run stays inside the boundary it descends from.** The skill records the work item's stated scope and exclusions
-  before the interview, per [planning-boundary-rule.md](../../references/planning-boundary-rule.md). Every commitment is
+  before the interview, per [planning-boundary-rule.md](./references/planning-boundary-rule.md). Every commitment is
   checked against it, and anything the boundary excludes lands in a visible cut list, per
-  [scope-justification-rule.md](../../references/scope-justification-rule.md).
+  [scope-justification-rule.md](./references/scope-justification-rule.md).
 - **Visual material the user supplies is kept, and reaches every reviewer.** Persist it beside the spec as it arrives,
   never at document-write time, and pass its paths in every reviewer's brief. The session context is the only copy until
   it reaches disk, and a compaction destroys it. The boundary rule owns the convention.
 - **Questions to the user arrive one at a time, led by the consequence.** Per
-  [operator-escalation-rule.md](../../references/operator-escalation-rule.md). The opening confirmation turn is the one
+  [operator-escalation-rule.md](./references/operator-escalation-rule.md). The opening confirmation turn is the one
   exception, and the one turn that carries more than one ask.
 
 # Plan a Feature
@@ -118,7 +118,7 @@ reference back into the spec with `../feature-specification.md` paths.
 
 ## Step 1.5: Read and Record the Scope Boundary
 
-Read [../../references/planning-boundary-rule.md](../../references/planning-boundary-rule.md) for the record's name, its
+Read [./references/planning-boundary-rule.md](./references/planning-boundary-rule.md) for the record's name, its
 sections, and the accepted visual-material file set. Establish the boundary before you discover anything or ask anything.
 
 **A record already exists** at `{folder}/artifacts/scope-boundary.md`. Read it and use it. Do not re-ask anything it
@@ -196,7 +196,7 @@ For each decision in dependency order:
    the alternatives considered.
 3. **Apply the YAGNI evidence test before surfacing.** A decision that exists only for "completeness", "for future
    flexibility", "we might want to", "best practice", or symmetry with another feature is a YAGNI candidate per
-   [../../references/yagni-rule.md](../../references/yagni-rule.md). When no accepted evidence (user-described need,
+   [./references/yagni-rule.md](./references/yagni-rule.md). When no accepted evidence (user-described need,
    named direct dependency, existing code path, applicable regulation, documented incident/metric) supports the
    decision, the recommended answer is "defer this to the spec's `## Deferred (YAGNI)` section with the reopening
    trigger named" — surfaced to the user with rationale like any other recommendation. When evidence does support the
@@ -303,7 +303,7 @@ This size drives the team-size cap in Step 6:
 
 **Size override.** A non-empty `$size` wins: a band value skips the signal-based classification above, while `dynamic`
 forces it even when a config sets a default band. When `$size` is empty and a config supplies `default-swarm-size` (per
-[config-rule.md](../../references/config-rule.md)), use that band and skip the classification. The team cap scales to
+[config-rule.md](./references/config-rule.md)), use that band and skip the classification. The team cap scales to
 whichever size wins. State the chosen size, the recommended specialists, and the reason in one short message before
 launching agents, naming which of the two config files supplied a band. If the user disagrees, accept their override of
 the size, the specialists, or both.
@@ -360,7 +360,7 @@ same pass. Cut entries flow into Step 8's synthesis alongside everything else.
 
 1. **Escalate only what genuinely needs the user, one question at a time.** For findings that remain open, draft a
    recommended answer with rationale and alternatives, the same way Step 4 surfaces questions. Then present them per
-   [../../references/operator-escalation-rule.md](../../references/operator-escalation-rule.md): one question per turn,
+   [./references/operator-escalation-rule.md](./references/operator-escalation-rule.md): one question per turn,
    waiting for the answer before asking the next, leading with the consequence a person who will not read the code would
    describe, carrying named candidate answers, and keeping paths, identifiers, and line numbers below the question or out
    of it. State how many questions are pending on the first one. Present more than one in a turn only when the user asks
@@ -402,7 +402,7 @@ directly. It must:
 The han-core:plan-synthesizer owns the final synthesis — its output is authoritative.
 
 When the han-core:plan-synthesizer returns, confirm the specification landed before anything reads it, per
-[synthesis-failure-rule.md](../../references/synthesis-failure-rule.md). No specification file means the synthesis did
+[synthesis-failure-rule.md](./references/synthesis-failure-rule.md). No specification file means the synthesis did
 not produce its primary artifact: stop with that file's message and do not run Step 8.5.
 
 ## Step 8.5: Readability Pass

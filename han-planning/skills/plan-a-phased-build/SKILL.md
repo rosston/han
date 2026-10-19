@@ -22,7 +22,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Operating Principles
@@ -53,21 +53,21 @@ between the two files, relative-path resolution, and what to do with a file that
   it. The reader can always answer "where did this phase come from?" without leaving the document.
 - **The run stays inside the boundary it descends from.** Before phasing anything, the skill records the work item's
   stated scope and exclusions, plus whatever scope the user stated when invoking it, per
-  [../../references/planning-boundary-rule.md](../../references/planning-boundary-rule.md). Every phase then names what it
+  [./references/planning-boundary-rule.md](./references/planning-boundary-rule.md). Every phase then names what it
   descends from, and a candidate that cannot name one goes to the deferred list as a scope cut rather than into the
-  sequence. See [../../references/scope-justification-rule.md](../../references/scope-justification-rule.md).
+  sequence. See [./references/scope-justification-rule.md](./references/scope-justification-rule.md).
 - **Scope the user states out loud is part of the boundary.** This skill treats divergence from its source as a feature,
   not a defect, and phasing a roadmap where the user wants something the source lacks is its normal case. A goal the user
   states is a boundary statement in its own right, recorded alongside the work item rather than checked against it.
 - **One stop, and no escalation loop.** This skill has no escalation step and does not gain one. Questions that need a
   decision land in the Open Questions section, where they already belong. The one exception is a single stop for an input
   only the user can supply, per
-  [../../references/operator-escalation-rule.md](../../references/operator-escalation-rule.md).
+  [./references/operator-escalation-rule.md](./references/operator-escalation-rule.md).
 - **Save incrementally — never lose work.** Write the outline file as soon as the executive summary and phase index are
   drafted, then update the file every time a phase is fleshed out. Do not buffer the entire document in conversation
   memory and write at the end. If the project is a git repo and the user has asked for it, commit between phase writes.
 - **YAGNI is a first-class operating principle.** Apply the evidence-based YAGNI rule from
-  [../../references/yagni-rule.md](../../references/yagni-rule.md). A phase, foundation, precondition, or open question
+  [./references/yagni-rule.md](./references/yagni-rule.md). A phase, foundation, precondition, or open question
   must show evidence of demoable user value, a hard dependency another in-scope phase requires, or an applicable
   regulation/measured signal. Phases that exist only for "completeness", "future flexibility", "best practice says we
   should", or symmetry with another effort fail the evidence test and go straight to the deferred-phases list with the
@@ -120,7 +120,7 @@ suffix, or stop. Do not silently overwrite.
 
 ## Step 1.5: Read and Record the Scope Boundary
 
-Read [../../references/planning-boundary-rule.md](../../references/planning-boundary-rule.md) for the record's name, its
+Read [./references/planning-boundary-rule.md](./references/planning-boundary-rule.md) for the record's name, its
 sections, and the accepted visual-material file set. Then establish the boundary before you read the source in depth.
 
 **A record already exists** at `artifacts/scope-boundary.md` in the resolved folder or the source's folder. Read it and
@@ -222,7 +222,7 @@ outcome**. Walk the source artifact section by section and ask, for each cluster
    the foundation. Foundations with no named downstream phase fail the evidence test and become deferrals.
 4. **Is it a deferral the user named in Step 3?** Mark it as deferred; it lands at the end of the index.
 5. **Apply the YAGNI evidence test before keeping the candidate.** Per
-   [../../references/yagni-rule.md](../../references/yagni-rule.md), each candidate phase must cite evidence — a
+   [./references/yagni-rule.md](./references/yagni-rule.md), each candidate phase must cite evidence — a
    user-described need from the source artifact, a named downstream-phase dependency, an applicable regulation, a
    documented incident or measured metric, or an existing system surface that breaks without it. Candidates that exist
    only for "completeness", "for future flexibility", "best practice", or symmetry with another effort go straight to
@@ -230,7 +230,7 @@ outcome**. Walk the source artifact section by section and ask, for each cluster
    phase, ask whether a strictly thinner end-to-end slice (or merging into an adjacent phase) satisfies the same
    evidence; if yes, prefer the thinner slice.
 6. **Apply the scope gate in the same pass.** Per
-   [../../references/scope-justification-rule.md](../../references/scope-justification-rule.md), ask of each candidate:
+   [./references/scope-justification-rule.md](./references/scope-justification-rule.md), ask of each candidate:
    does the recorded boundary ask for this, or exclude it by statement or by silence? A candidate names what it descends
    from, which is one of the work item's own language, the visual material the user attached, or the asked-for work it is
    a necessity of. This gate attaches here, to the reasoning you are already doing; no sweep step is added to this skill.
@@ -347,7 +347,7 @@ Launch the `han-core:information-architect` agent in a single Agent tool call to
   primitives) into the plain-language sections — these are content-rule violations the skill must fix before presenting
   the document.
 - A directive to flag any phase, precondition, or open question that reads as speculative or future-proofing rather than
-  evidence-grounded per [../../references/yagni-rule.md](../../references/yagni-rule.md) — phases justified only by
+  evidence-grounded per [./references/yagni-rule.md](./references/yagni-rule.md) — phases justified only by
   "completeness", symmetry with other efforts, "we should probably also build…", or unnamed future flexibility. Such
   items are YAGNI candidates and belong in the deferred-phases list with a reopening trigger, not in the live phase
   index.

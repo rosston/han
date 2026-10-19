@@ -23,7 +23,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Operating Principles
@@ -33,10 +33,10 @@ between the two files, relative-path resolution, and what to do with a file that
   exception, and it is narrow: a specification is an artifact, not a scope authority, so a commitment it carries for a
   subsystem, integration, or artifact the work item never asks for is cut with the citation rather than planned. The
   license reaches unrequested subsystems and nothing else. See
-  [../../references/scope-justification-rule.md](../../references/scope-justification-rule.md).
+  [./references/scope-justification-rule.md](./references/scope-justification-rule.md).
 - **The run stays inside the boundary it descends from.** Before locating the specification, the skill records the work
   item's stated scope and exclusions, per
-  [../../references/planning-boundary-rule.md](../../references/planning-boundary-rule.md). The scope gate at Step 7.5
+  [./references/planning-boundary-rule.md](./references/planning-boundary-rule.md). The scope gate at Step 7.5
   then reads that record, including commitments the plan inherited from the specification.
 - **Visual material the user supplies is kept, and reaches every reviewer.** Persist it beside the plan as it arrives,
   never at document-write time, and pass its paths in every dispatched specialist's brief. The boundary rule owns the
@@ -44,7 +44,7 @@ between the two files, relative-path resolution, and what to do with a file that
 - **Questions to the user arrive one at a time, led by the consequence.** An escalation carries one question, opens with
   what a person who will not read the code would describe, gives named candidate answers, and puts paths and identifiers
   below the question or leaves them out. Per
-  [../../references/operator-escalation-rule.md](../../references/operator-escalation-rule.md). The opening confirmation
+  [./references/operator-escalation-rule.md](./references/operator-escalation-rule.md). The opening confirmation
   turn is the one exception, and the one turn that carries more than one ask.
 - **The han-core:plan-synthesizer reconciles the specialists, it does not author every section.** It reads what every
   specialist produced, tracks claims and evidence, and commits the decisions the plan records. Specialists own their
@@ -59,7 +59,7 @@ between the two files, relative-path resolution, and what to do with a file that
   point.
 - **YAGNI is a first-class operating principle, applied to _implementation_ choices.** The implementation plan inherits
   the spec's behavioral commitments but applies the evidence-based YAGNI rule from
-  [../../references/yagni-rule.md](../../references/yagni-rule.md) independently to abstractions, configuration knobs,
+  [./references/yagni-rule.md](./references/yagni-rule.md) independently to abstractions, configuration knobs,
   observability, runbooks, infrastructure, rollout machinery, test scaffolding, schema columns, indexes, and any other
   implementation artifact the plan recommends. Items that fail the evidence test get demoted to a `## Deferred (YAGNI)`
   section in `feature-implementation-plan.md` with the reopening trigger named; items where a strictly simpler
@@ -80,7 +80,7 @@ between the two files, relative-path resolution, and what to do with a file that
   above already permits, so the plan carries its concrete form rather than the name of a document somebody will author
   later. This is where the plan stops a writer and a reader from drifting apart, and it is the one thing the altitude
   rule is most often misread as forbidding. See
-  [../../references/contract-pinning-rule.md](../../references/contract-pinning-rule.md).
+  [./references/contract-pinning-rule.md](./references/contract-pinning-rule.md).
 - **Plain language leads; technical detail nests beneath it.** Every section leads with plain-language prose a
   non-author can follow. Technical detail is minimal references only — a path, a contract name, a decision-bearing
   value — placed below or after the plain language it illustrates, never mixed into it and never free-standing. When
@@ -162,7 +162,7 @@ threshold alone.
 
 ## Step 1.5: Read and Record the Scope Boundary
 
-Read [../../references/planning-boundary-rule.md](../../references/planning-boundary-rule.md) for the record's name, its
+Read [./references/planning-boundary-rule.md](./references/planning-boundary-rule.md) for the record's name, its
 sections, and the accepted visual-material file set. Establish the boundary before Step 2 discovery begins.
 
 **A record already exists** at `{same-folder-as-source}/artifacts/scope-boundary.md`, which is the common case when
@@ -323,7 +323,7 @@ For each iteration:
      exposes an unstated assumption or a simpler question the specialists can answer among themselves.
    - **If the reframing resolves it**, record the resolution and move on.
    - **If the reframing does not resolve it**, escalate to the user, one question per turn, per
-     [../../references/operator-escalation-rule.md](../../references/operator-escalation-rule.md). Ask one, wait for the
+     [./references/operator-escalation-rule.md](./references/operator-escalation-rule.md). Ask one, wait for the
      answer, then ask the next, and state how many are pending on the first. Lead with the consequence a person who will
      not read the code would describe. Carry named candidate answers. Put the specialist identifiers, the evidence
      considered, the reframing, and any paths or line numbers **below** the question, or leave them out. Capture the
@@ -358,7 +358,7 @@ For each iteration:
 
    **Running collaboratively.** When the request asks to review each round as it lands, which is what `pairing` does
    when it hands work here, stop at the end of each round and hand control back instead of starting the next. Present
-   the stop in the shape [collaborative-stop-rule.md](../../references/collaborative-stop-rule.md) specifies: the
+   the stop in the shape [collaborative-stop-rule.md](./references/collaborative-stop-rule.md) specifies: the
    round's findings are what the person can check, and the plan edits the round made are what changed. A redirect at
    such a stop does not consume a round against the cap, BECAUSE a round is a unit of review work and a redirect is not.
    Absent such a request, continue as below; an ordinary invocation is unchanged.
@@ -416,7 +416,7 @@ corrections directly. Its input list, what it must do, and the record invariants
 [synthesis-directives.md](./references/synthesis-directives.md). Its output is authoritative.
 
 When the synthesizer returns, confirm the plan landed before anything reads it, per
-[synthesis-failure-rule.md](../../references/synthesis-failure-rule.md). No plan file means the synthesis did not
+[synthesis-failure-rule.md](./references/synthesis-failure-rule.md). No plan file means the synthesis did not
 produce its primary artifact: stop with that file's message and do not run Step 8.5.
 
 ## Step 8.5: Readability Pass

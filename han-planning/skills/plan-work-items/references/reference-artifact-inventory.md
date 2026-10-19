@@ -10,12 +10,12 @@ same folder as the plan and from the plan's links.
   ones: a file or wire format, a persisted schema, a module or CLI signature, a config schema, an error or exit
   contract, and an identity convention all belong here on the same terms. The test is whether two components must
   independently agree on the form, per
-  [`contract-pinning-rule.md`](../../../references/contract-pinning-rule.md).
+  [`contract-pinning-rule.md`](./contract-pinning-rule.md).
 - **Feature specification** (`feature-specification.md`) — sections that define behavior the work item must realize.
 - **Design assets** — Pencil document file paths plus specific frame IDs (when the plan or a sibling doc maps frames to
   UI), screenshot files, Figma URLs, mockup PDFs.
 - **Visual material from `ui-designs/`**, when present. Inventory every file in that folder whose type is in the accepted
-  visual-material set named in [`planning-boundary-rule.md`](../../../references/planning-boundary-rule.md), and map each
+  visual-material set named in [`planning-boundary-rule.md`](./planning-boundary-rule.md), and map each
   one to the work items that realize the behavior it depicts. Use the feature spec as the mapping source: the spec's
   `Visual Reference` table lists every item, and the spec's inline `![alt text](ui-designs/card-empty-state.png)` embeds
   appear next to the prose that describes the depicted state — that prose tells you which work item owns the item. A
@@ -62,7 +62,7 @@ hand it over right now?
 
 **The user can supply it now.** Design frames the run never persisted, a contract only they have, a document on their
 machine. Surface it **before drafting work items**, as part of the single stop described in
-[`operator-escalation-rule.md`](../../../references/operator-escalation-rule.md). Gather every input of this kind into
+[`operator-escalation-rule.md`](./operator-escalation-rule.md). Gather every input of this kind into
 that one stop rather than stopping twice: name what is missing, name in plain language what the work items will be
 missing without it, name the action that would supply it, and offer to continue anyway. Work items that consume an
 undefined contract are not draftable, so say which ones are blocked.

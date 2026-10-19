@@ -83,10 +83,10 @@ This file breaks down the [feature implementation plan](feature-implementation-p
 - **Technical note** — [artifacts/feature-technical-notes.md](artifacts/feature-technical-notes.md): T2 (install scope).
 
 **Acceptance criteria.**
-- [ ] No markdown link in any `.md` file inside a skill folder resolves outside that folder or dangles (guard assertion 2). The link grammar skips fenced code blocks and inline code spans.
-- [ ] Vendored rule copies are byte-identical to their canonical files at both the package level and the skill level (guard assertion 7).
-- [ ] The rewritten link forms are: from `{skill}/SKILL.md`, `./references/<rule>.md`; from a file in `{skill}/references/`, `./<rule>.md`.
-- [ ] The codemod's `--dry-run` diff is reviewable pass by pass before the real run.
+- [x] No markdown link in any `.md` file inside a skill folder resolves outside that folder or dangles (guard assertion 2). The link grammar skips fenced code blocks and inline code spans.
+- [x] Vendored rule copies are byte-identical to their canonical files at both the package level and the skill level (guard assertion 7).
+- [x] The rewritten link forms are: from `{skill}/SKILL.md`, `./references/<rule>.md`; from a file in `{skill}/references/`, `./<rule>.md`.
+- [x] The codemod's `--dry-run` diff is reviewable pass by pass before the real run.
 
 **Depends on.** W-2.
 

@@ -23,7 +23,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 # Investigate to Confluence
@@ -75,7 +75,7 @@ adversarial validation, and the final report) — **except** add two explicit in
 - It must write the resulting investigation report to a file under `/tmp/` (for example `/tmp/<symptom-slug>.md`) rather
   than into the project's docs or plans directory. This keeps the working report out of the repo until the user decides
   to publish it, and because the path is explicit input it outranks any `output-directory` the project or personal
-  `.han/config.md` supplies (see [../../references/config-rule.md](../../references/config-rule.md)).
+  `.han/config.md` supplies (see [./references/config-rule.md](./references/config-rule.md)).
 - It must **stop after producing the report**. `han-coding:investigate` normally ends by presenting the plan for
   approval and can trigger the fix's implementation on approval; this skill wants the report only, so instruct it not to
   implement the fix or change any code — this skill publishes findings, it does not ship them.

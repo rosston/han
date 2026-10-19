@@ -183,7 +183,7 @@ voice; it is the clipped changelog register those entries already use. The two n
 the dispatch prompt as the register model — follow them.
 
 Hard constraints from
-[`han-communication/references/writing-voice.md`](../../../../han-communication/references/writing-voice.md), applied
+[`writing-voice.md`](./writing-voice.md), applied
 verbatim to generated changelog prose:
 
 - No em-dash (`—`) in changelog prose. Entry text is a sentence, not a label-gloss line, so use a colon, comma,

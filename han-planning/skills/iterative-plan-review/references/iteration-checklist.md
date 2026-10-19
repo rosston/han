@@ -58,7 +58,7 @@ a config schema, an error or exit contract, an identity convention.
 
 An `Un-pinned` row is a major finding. So is a linked artifact whose path does not resolve, or that exists as a stub.
 What counts as pinned, and the phrases that never close a contract, are in
-[`contract-pinning-rule.md`](../../../references/contract-pinning-rule.md).
+[`contract-pinning-rule.md`](./contract-pinning-rule.md).
 
 ## Ambiguity Surfaced
 

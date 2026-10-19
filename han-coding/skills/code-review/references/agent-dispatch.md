@@ -37,7 +37,7 @@ these sections as Step 3.2 through Step 3.5.
 - Honor any agent the user named explicitly.
 - Extra agents named in the project config's `## Extra Agents` list join this candidate pool and compete under the same
   signal-based selection as the roster above, per
-  [../../references/config-rule.md](../../../references/config-rule.md): include one only when a signal in the file list
+  [./config-rule.md](./config-rule.md): include one only when a signal in the file list
   matches its stated specialty, justify the inclusion in one line, and skip an entry that does not resolve to a
   dispatchable agent with a one-line note.
 - For each conditional agent included, justify in one line — name the file or signal that triggered inclusion.
@@ -88,7 +88,7 @@ This directive overrides the default review-wide "prefer the higher severity" ru
 >
 > **YAGNI findings are separate from severity.** Apply the two-pass YAGNI procedure documented in
 > [`references/review-checklist.md`](./review-checklist.md) (Pass 1: evidence test against
-> [`../../references/yagni-rule.md`](../../../references/yagni-rule.md) Gate 1; Pass 2: named anti-pattern match) to every
+> [`../../references/yagni-rule.md`](./yagni-rule.md) Gate 1; Pass 2: named anti-pattern match) to every
 > change in the diff regardless of size. The size-based demotion in this Step 3.3 directive does NOT apply to YAGNI
 > findings; they are advisory at every size, listed in a separate section, and not corrected unless the user explicitly
 > requests it. Each finding's body must name (a) the failing evidence type, (b) the matched anti-pattern, and (c) the

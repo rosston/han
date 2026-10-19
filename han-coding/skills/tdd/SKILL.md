@@ -29,7 +29,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Constraints (read before anything else)
@@ -57,7 +57,7 @@ These constraints shape every step and override any instinct to move faster.
   in [references/failure-modes.md](./references/failure-modes.md); pull it when a loop feels off (a test passes on first
   run, no red is shown, the implementation has outrun the test, refactor is being skipped).
 - **YAGNI governs the refactor step and the test list.** Apply the rule in
-  [../../references/yagni-rule.md](../../references/yagni-rule.md): remove duplication, but do not add abstractions,
+  [./references/yagni-rule.md](./references/yagni-rule.md): remove duplication, but do not add abstractions,
   configuration, or indirection without evidence. Speculative structure added "for flexibility" during refactor is a
   YAGNI candidate. Speculative scenarios on the test list are deferred with a reopen trigger, never silently added.
 
@@ -235,7 +235,7 @@ change something, or you state explicitly "no duplication, structure, or standar
 Eliminate the duplication you just created. Bring the code into full conformance with the resolved coding standards and
 ADRs — this is the home for the stylistic and structural standards you deliberately skipped in green.
 
-Apply YAGNI per [../../references/yagni-rule.md](../../references/yagni-rule.md): remove duplication, do not add
+Apply YAGNI per [./references/yagni-rule.md](./references/yagni-rule.md): remove duplication, do not add
 speculative abstraction. Defer speculative structure with the trigger that would reopen it; never add silently, never
 drop silently.
 
@@ -253,7 +253,7 @@ a human.
 
 **Running collaboratively.** When the request asks to review each behavior as it lands, which is what `pairing` does
 when it hands work here, stop at this point and hand control back instead of continuing. Present the stop in the shape
-[collaborative-stop-rule.md](../../references/collaborative-stop-rule.md) specifies. Absent such a request, continue as
+[collaborative-stop-rule.md](./references/collaborative-stop-rule.md) specifies. Absent such a request, continue as
 below; an ordinary invocation is unchanged.
 
 Return to the top of Step 3 with the next item. Continue until the list is empty.

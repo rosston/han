@@ -43,7 +43,7 @@ The same exit-status contract applies, and so does the same rule about the print
 names a promise to author a form later; an `unresolved-open-item:` line names a resolution condition that restates its
 own question; a `missing-artifact:` or `stub-artifact:` line names a document the plan tells a reader to open that is
 not there or holds nothing. A failure here means the plan is not finished: pin the contract per
-[contract-pinning-rule.md](../../../references/contract-pinning-rule.md) and re-run, rather than shipping the plan with the
+[contract-pinning-rule.md](./contract-pinning-rule.md) and re-run, rather than shipping the plan with the
 failure noted.
 
 ## The cross-reference check

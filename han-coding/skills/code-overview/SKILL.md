@@ -30,7 +30,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Operating Principles
@@ -150,7 +150,7 @@ signal is borderline.
 **Apply the size override.** If `$size` is not `none provided`, use it: a band value is the band and skips the
 signal-based classification, while `dynamic` forces the signal-based classification even when the project config sets
 a default band. If `$size` is `none provided` and the project config supplies a band via `default-swarm-size` (per the
-config rule in [../../references/config-rule.md](../../references/config-rule.md)), use that band, skip the
+config rule in [./references/config-rule.md](./references/config-rule.md)), use that band, skip the
 signal-based classification, and name the config as the source in the announcement below. A conversational override
 ("give me a large overview") is equivalent.
 
@@ -314,7 +314,7 @@ The file is named `code-overview-{short-target-slug}.md` wherever it lands. Only
    beneath it. Honor it even when it points inside the repository, and say nothing about that, BECAUSE the person who
    configured a destination chose it, and this skill's own default is not a veto over their choice. Relative-path
    resolution, `~` expansion, and precedence between the personal and project files are governed by
-   [config-rule.md](../../references/config-rule.md); do not re-derive them here.
+   [config-rule.md](./references/config-rule.md); do not re-derive them here.
 2. **No configured value.** Write outside the repository — for example
    `${TMPDIR:-/tmp}/code-overview-{short-target-slug}.md` — BECAUSE an unconfigured overview is an orientation aid
    rather than documentation, and a default inside the repository would land it in a commit sooner or later.

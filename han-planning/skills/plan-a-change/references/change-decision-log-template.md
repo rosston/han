@@ -64,7 +64,7 @@ No Question, Rationale, Evidence, Rejected alternatives, or other fields.
   lifecycle order, a config schema), this field carries the concrete form inline: a signature, a field
   layout, or a worked example. A link to an artifact that already exists concretely also closes it. A
   field-name list, a prose description, or the name of a document to be authored later does not. Full
-  rule in [contract-pinning-rule.md](../../../references/contract-pinning-rule.md). -->
+  rule in [contract-pinning-rule.md](./contract-pinning-rule.md). -->
 - **Rationale:** <!-- Why this choice, given the recorded reason for the change and the evidence -->
 - **Evidence:**
   <!-- C-N findings, file paths, ADR IDs, coding standards, specialist findings, or "user input" /

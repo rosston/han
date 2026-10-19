@@ -24,7 +24,7 @@ allowed-tools:
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Operating Principles
@@ -48,21 +48,21 @@ between the two files, relative-path resolution, and what to do with a file that
 - **A contract two parts must independently agree on is pinned here, not invented during the build.** Splitting one
   type's responsibilities across three creates contracts between them: a call signature, a payload shape, an error
   contract, a lifecycle order. Each is a decision-bearing value the plan carries in concrete form. See
-  [../../references/contract-pinning-rule.md](../../references/contract-pinning-rule.md).
+  [./references/contract-pinning-rule.md](./references/contract-pinning-rule.md).
 - **The run stays inside the boundary it descends from.** Step 1.5 records the work item's stated scope and exclusions,
-  per [../../references/planning-boundary-rule.md](../../references/planning-boundary-rule.md). The scope gate at Step 8
+  per [./references/planning-boundary-rule.md](./references/planning-boundary-rule.md). The scope gate at Step 8
   reads that record. Anything the boundary excludes lands in a visible cut list, per
-  [../../references/scope-justification-rule.md](../../references/scope-justification-rule.md).
-- **YAGNI gates every part the change introduces.** Apply [../../references/yagni-rule.md](../../references/yagni-rule.md)
+  [./references/scope-justification-rule.md](./references/scope-justification-rule.md).
+- **YAGNI gates every part the change introduces.** Apply [./references/yagni-rule.md](./references/yagni-rule.md)
   to each new type, interface, abstraction layer, extension point, configuration seam, and adapter the target state
   proposes. A new abstraction with one implementation and no named second caller is the signature failure of this skill's
   domain: it is the easiest thing to justify from taste and the hardest to remove later. Items failing the evidence test
   land in `## Deferred (YAGNI)` with the reopening trigger named.
 - **Evidence quality is the companion principle.** Apply
-  [evidence-rule.md](../../references/evidence-rule.md) alongside YAGNI. YAGNI gates whether a part is included; this one
+  [evidence-rule.md](./references/evidence-rule.md) alongside YAGNI. YAGNI gates whether a part is included; this one
   characterizes what each claim about the current code rests on.
 - **Questions to the user arrive one at a time, led by the consequence.** Per
-  [../../references/operator-escalation-rule.md](../../references/operator-escalation-rule.md). The Step 1.5 confirmation
+  [./references/operator-escalation-rule.md](./references/operator-escalation-rule.md). The Step 1.5 confirmation
   turn is the one exception, and the one turn that carries more than one ask.
 - **The plan lives in three cross-referenced files.** `change-plan.md` is the deliverable and sits at the root of
   `{folder}/`; `artifacts/change-decision-log.md` and `artifacts/current-state-findings.md` sit beneath it. The plan
@@ -97,7 +97,7 @@ place the skill stops before doing any work.
 ask the user to name one. "Restructure the codebase" is not a valid input.
 
 **Resolve the output location** through the precedence chain in
-[../../references/config-rule.md](../../references/config-rule.md):
+[./references/config-rule.md](./references/config-rule.md):
 
 - A folder the user named wins.
 - Otherwise, the `output-directory` setting from the project or personal `.han/config.md`, with the run's own folder
@@ -123,7 +123,7 @@ append before proceeding.
 
 ## Step 1.5: Read and Record the Scope Boundary
 
-Read [../../references/planning-boundary-rule.md](../../references/planning-boundary-rule.md) for the record's name and
+Read [./references/planning-boundary-rule.md](./references/planning-boundary-rule.md) for the record's name and
 its sections. Establish the boundary before Step 2 discovery begins. This skill plans code structure rather than
 screens, so the rule's visual-material convention does not apply to it: write no `ui-designs/` folder and run no
 completeness gate. A diagram the user supplies is ordinary context.
@@ -204,10 +204,10 @@ shifts data ownership between services. When it is not dispatched, its deferrals
 surfaced in the plan rather than absorbed.
 
 Both get the YAGNI directive in full: every new type, interface, abstraction layer, extension point, and adapter must
-cite evidence per [../../references/yagni-rule.md](../../references/yagni-rule.md), and a proposal whose concern is
+cite evidence per [./references/yagni-rule.md](./references/yagni-rule.md), and a proposal whose concern is
 satisfied by a strictly simpler structure returns the simpler structure. Both also get the contract directive: every
 contract two parts must independently agree on is specified to a concrete signature, field layout, or worked example,
-per [../../references/contract-pinning-rule.md](../../references/contract-pinning-rule.md).
+per [./references/contract-pinning-rule.md](./references/contract-pinning-rule.md).
 
 The architect proposes; this skill decides. Where the proposal and the recorded reason do not line up — a restructure
 larger than the reason justifies, or one that leaves the reason unaddressed — that gap is a decision to settle at Step
@@ -227,7 +227,7 @@ Walk the target state element by element and commit each one as a delta entry. F
    clarifying questions a three-to-five-year generalist would ask. The reframing frequently exposes an unstated
    assumption and settles the question without the user.
 3. **When the reframing does not resolve it, escalate to the user**, one question per turn, per
-   [../../references/operator-escalation-rule.md](../../references/operator-escalation-rule.md). Lead with the
+   [./references/operator-escalation-rule.md](./references/operator-escalation-rule.md). Lead with the
    consequence a person who will not read the code would describe, carry named candidate answers, and put the type
    names, paths, and evidence below the question. State how many are pending on the first. Capture the answer verbatim.
 
@@ -286,14 +286,14 @@ recommendations and a note that the review has reached a plateau.
 Run three gates over every part the target state introduces.
 
 1. **The evidence test.** Each new type, interface, abstraction layer, extension point, configuration seam, and adapter
-   cites evidence per [../../references/yagni-rule.md](../../references/yagni-rule.md): a named finding it resolves, an
+   cites evidence per [./references/yagni-rule.md](./references/yagni-rule.md): a named finding it resolves, an
    existing code path that breaks without it, three current concrete uses, or a measured workload. A new abstraction
    with one implementation and no named second caller fails this test by default. Failures land in
    `## Deferred (YAGNI)` with the reopening trigger named.
 2. **The simpler-version test.** Where a strictly simpler structure satisfies the same evidence, the simpler structure
    is the decision and the larger one goes under `Rejected alternatives:` in its `D-N` entry.
 3. **The scope test.** Every entry is checked against `artifacts/scope-boundary.md` per
-   [../../references/scope-justification-rule.md](../../references/scope-justification-rule.md). Entries the boundary
+   [./references/scope-justification-rule.md](./references/scope-justification-rule.md). Entries the boundary
    excludes land in `## Cut for Scope` with the citation.
 
 An item lands in one section or the other, never both, and never silently disappears.

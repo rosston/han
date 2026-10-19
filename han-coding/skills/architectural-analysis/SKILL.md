@@ -25,7 +25,7 @@ allowed-tools: Read, Glob, Grep, Agent, Bash(find *), Bash(bash "${CLAUDE_PLUGIN
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](../../references/config-rule.md), which governs precedence
+probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Operating Principles
@@ -124,7 +124,7 @@ borderline, stay at the smaller band.
 **Apply the size override.** If `$size` is not `none provided`, use it: a band value is the band and skips the
 signal-based classification above, while `dynamic` forces the signal-based classification even when the project config
 sets a default band. If `$size` is `none provided` and the project config supplies a band via `default-swarm-size`
-(per the config rule in [../../references/config-rule.md](../../references/config-rule.md)), use that band, skip the
+(per the config rule in [./references/config-rule.md](./references/config-rule.md)), use that band, skip the
 signal-based classification, and announce the config as the source. In every case still select specialists by signal
 (a `large` band does not dispatch agents whose domain the code never touches). A conversational override ("run this
 large") is equivalent to `$size`.
@@ -165,7 +165,7 @@ and `han-core:on-call-engineer` are signalled, prefer `han-core:on-call-engineer
 source and `han-core:devops-engineer` if it is infrastructure or pipelines; include both at large size only.
 
 Extra agents named in the project config's `## Extra Agents` list join the signal-selected specialist pool and compete
-under the same signals and band caps, per [../../references/config-rule.md](../../references/config-rule.md): add one
+under the same signals and band caps, per [./references/config-rule.md](./references/config-rule.md): add one
 only when a signal in the focus area matches its stated specialty, count it against the band's cap, and skip an entry
 that does not resolve to a dispatchable agent with a one-line note.
 
