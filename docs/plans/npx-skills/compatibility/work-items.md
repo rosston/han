@@ -160,9 +160,9 @@ This file breaks down the [feature implementation plan](feature-implementation-p
 - **Technical note** — [artifacts/feature-technical-notes.md](artifacts/feature-technical-notes.md): T1 (discovery mechanism).
 
 **Acceptance criteria.**
-- [ ] Each marketplace entry's declared `./skills/<name>` set equals the sorted on-disk inventory of its source (guard assertion 3).
-- [ ] The `han` meta entry declares no `skills` array.
-- [ ] No package `.claude-plugin/plugin.json` declares a `skills` key.
+- [x] Each marketplace entry's declared `./skills/<name>` set equals the sorted on-disk inventory of its source (guard assertion 3).
+- [x] The `han` meta entry declares no `skills` array.
+- [x] No package `.claude-plugin/plugin.json` declares a `skills` key.
 - [ ] The array shape matches Prettier's expanded form, and `npm run lint` is green.
 
 **Depends on.** None.

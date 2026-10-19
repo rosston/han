@@ -168,6 +168,64 @@ EOF
   fi
 }
 
+# Seed of release-guard assertion 3 (plan D-5/D-9), landed by W-6 with the
+# declarations it guards. The CLI discovers skills from the root marketplace
+# manifest, so each han-* entry's declared ./skills/<name> set must equal the
+# sorted on-disk inventory of its source — the grouped listing is only true if
+# the declaration restates the tree. Prettier owns the JSON bytes, so this
+# parses with Node and compares sets; it never byte-greps the arrays. The `han`
+# meta entry declares none; no package plugin.json declares skills.
+check_manifest_declarations() {
+  node -e '
+    const fs = require("fs"), path = require("path");
+    const root = process.argv[1];
+    const catalog = path.join(root, ".claude-plugin", "marketplace.json");
+    if (!fs.existsSync(catalog)) { console.error("missing manifest: " + catalog); process.exit(1); }
+    const m = JSON.parse(fs.readFileSync(catalog, "utf8"));
+    let bad = 0;
+    const fail = (msg) => { console.error(msg); bad = 1; };
+    for (const e of m.plugins) {
+      if (!e.name.startsWith("han-")) continue;
+      const dir = path.join(root, e.source, "skills");
+      if (!fs.existsSync(dir)) { fail("entry source has no skills folder: " + e.name); continue; }
+      const disk = fs.readdirSync(dir).filter((n) => fs.statSync(path.join(dir, n)).isDirectory()).sort();
+      const decl = (e.skills || []).map((s) => s.replace(/^\.\/skills\//, "")).sort();
+      if (decl.join("|") !== disk.join("|")) {
+        fail("declared skills differ from inventory in " + e.name + ": declared=[" + decl.join(", ") + "] disk=[" + disk.join(", ") + "]");
+      }
+      const pj = path.join(root, e.source, ".claude-plugin", "plugin.json");
+      if (fs.existsSync(pj) && "skills" in JSON.parse(fs.readFileSync(pj, "utf8"))) {
+        fail("package plugin.json declares skills: " + e.source + "/.claude-plugin/plugin.json");
+      }
+    }
+    const meta = m.plugins.find((e) => e.name === "han");
+    if (meta && "skills" in meta) fail("han meta entry declares skills");
+    process.exit(bad ? 1 : 0);
+  ' "$1"
+}
+
+@test "the manifest skills declarations match the packages on disk" {
+  check_manifest_declarations "$REPO_ROOT"
+}
+
+@test "the manifest check fails on a built fixture whose declaration omits a skill" {
+  root="$BATS_TEST_TMPDIR/manifest"
+  node -e '
+    const fs = require("fs"), path = require("path");
+    const root = process.argv[1];
+    fs.mkdirSync(path.join(root, ".claude-plugin"), { recursive: true });
+    for (const d of ["alpha", "beta"]) fs.mkdirSync(path.join(root, "han-fixture", "skills", d), { recursive: true });
+    fs.writeFileSync(
+      path.join(root, ".claude-plugin", "marketplace.json"),
+      JSON.stringify({ name: "t", plugins: [{ name: "han-fixture", source: "./han-fixture", version: "0.0.0", skills: ["./skills/alpha"] }] })
+    );
+  ' "$root"
+  if check_manifest_declarations "$root"; then
+    echo "manifest check passed on a fixture whose declaration omits a skill" >&2
+    false
+  fi
+}
+
 # The one line allowed to carry a configuration-home literal, matched byte for
 # byte (spec D5, plan D-4). scripts/han-config-dir.bats is the pinner of this
 # literal in the 45 plugin skills; here it is the whitelist for assertion 5, so
