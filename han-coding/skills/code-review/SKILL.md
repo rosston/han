@@ -114,7 +114,7 @@ for use in Steps 2, 5, and 6. Continue without any keys that remain unfound.
 Check the `git installed` value from Project Context above. If it is empty or reads `not installed`, skip directly to
 **Mode C** below.
 
-1. Run `${CLAUDE_SKILL_DIR}/scripts/detect-review-context.sh` to detect the git environment. Capture the output — it
+1. Run `scripts/detect-review-context.sh` to detect the git environment. Capture the output — it
    contains key-value pairs describing git availability, branch name, default branch, and changed files.
 
 Use the script output to determine the review mode. If the script reports `git-available: false`, skip to **Mode C**.

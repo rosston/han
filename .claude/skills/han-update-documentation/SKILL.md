@@ -34,7 +34,7 @@ operator which marker is missing and stop. Do not attempt to operate on a differ
 
 ## Step 1: Detect mode and scope
 
-Run `${CLAUDE_SKILL_DIR}/scripts/detect-doc-update-context.sh` and read its output. Branch on the `mode:` line.
+Run `scripts/detect-doc-update-context.sh` and read its output. Branch on the `mode:` line.
 
 The script also emits the **skill roots** (between `skill-roots-start` and `skill-roots-end`) and the **agent root**
 (the `agent-root:` line), both discovered dynamically from disk. These are the authoritative roots for the rest of this

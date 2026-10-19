@@ -456,7 +456,7 @@ optional.
 Summarize for the user:
 
 Before you summarize, execute the completeness gate by running
-`${CLAUDE_SKILL_DIR}/scripts/verify-design-images.sh {folder}/artifacts/scope-boundary.md {folder}/ui-designs`.
+`scripts/verify-design-images.sh {folder}/artifacts/scope-boundary.md {folder}/ui-designs`.
 Capture its exit status and its output.
 
 It reads the record rather than your memory of the run, because a compaction leaves the memory empty and a remembered

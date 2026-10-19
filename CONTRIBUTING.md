@@ -177,7 +177,8 @@ Long-form docs always live under `docs/` regardless of which plugin the entity s
 2. Write the `SKILL.md`:
    - Frontmatter with `name`, `description`, `allowed-tools`. See
      [skill-description-frontmatter.md](./han-plugin-builder/skills/guidance/references/skill-building-guidance/skill-description-frontmatter.md).
-   - Body: numbered steps, `${CLAUDE_SKILL_DIR}` paths for script references, extracted references under `references/`.
+   - Body: numbered steps, skill-root-relative paths (`scripts/foo.sh`, `references/x.md`) for bundled references,
+     extracted references under `references/`.
    - If the skill reads `.han/config.md`, copy the pinned `personal config directory` line and the
      `project .han/config.md` read instruction from any existing skill, byte for byte — the resolver script is not
      probed anymore, and both lines are pinned exactly by `scripts/han-config-dir.bats`. The resolution must live in

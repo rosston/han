@@ -53,7 +53,7 @@ Guidance for authoring and hardening `SKILL.md` files and their companion folder
   — The `` !`command` `` syntax that runs a shell command at skill load time and injects its output as runtime context.
   Read when a skill needs dynamic environment data (dates, git state, branch names) available to its steps.
 - [Script Execution Instructions](.claude/skills/plugin-guidance/references/skill-building-guidance/script-execution-instructions.md)
-  — How to describe script invocations in SKILL.md as numbered prose with `${CLAUDE_SKILL_DIR}` paths, rather than
+  — How to describe script invocations in SKILL.md as numbered prose with skill-root-relative script paths, rather than
   fenced code blocks. Read when a skill runs shell scripts during its steps.
 - [Hardening: Fuzzy vs. Deterministic](.claude/skills/plugin-guidance/references/skill-building-guidance/hardening-fuzzy-vs-deterministic.md)
   — The framework for classifying each skill step as fuzzy (keep as an LLM instruction) or deterministic (extract to a

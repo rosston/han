@@ -15,24 +15,24 @@ The guidance documents live in this skill's own `references/` directory. Use thi
 specific file(s) you need:
 
 - Deciding whether something should be a skill, agent, or hook →
-  `${CLAUDE_SKILL_DIR}/references/plugin-entity-taxonomy.md`.
+  `references/plugin-entity-taxonomy.md`.
 - Authoring or hardening a skill (descriptions, frontmatter, progressive disclosure, allowed-tools, scripts,
-  composition, testing, troubleshooting) → the files under `${CLAUDE_SKILL_DIR}/references/skill-building-guidance/`.
+  composition, testing, troubleshooting) → the files under `references/skill-building-guidance/`.
 - Authoring an agent (domain focus, self-containment, model selection, multi-agent economics, graceful degradation) →
-  the files under `${CLAUDE_SKILL_DIR}/references/agent-building-guidelines/`.
+  the files under `references/agent-building-guidelines/`.
 - Plugin or marketplace configuration files (plugin.json, marketplace.json, monitors.json, themes.json) → the files
-  under `${CLAUDE_SKILL_DIR}/references/claude-marketplace-and-plugin-configuration/`.
+  under `references/claude-marketplace-and-plugin-configuration/`.
 - Versioning, README structure, local development, the iterative development process, and
-  specialization-versus-model-tier reasoning → the top-level files in `${CLAUDE_SKILL_DIR}/references/`.
+  specialization-versus-model-tier reasoning → the top-level files in `references/`.
 - Writing the instructions for a target model (how Sonnet 5, Opus 5, and Fable 5 differ in following instructions, which
   instructions to leave out, and how to calibrate length, narration, and scope) →
-  `${CLAUDE_SKILL_DIR}/references/per-model-authoring.md`.
-- Copyable starter files → `${CLAUDE_SKILL_DIR}/references/templates/`.
+  `references/per-model-authoring.md`.
+- Copyable starter files → `references/templates/`.
 
 Steps:
 
 1. Identify what the user is building or asking about.
-2. List the relevant subdirectory under `${CLAUDE_SKILL_DIR}/references/` to see the available documents, using the map
+2. List the relevant subdirectory under `references/` to see the available documents, using the map
    above.
 3. Read only the document(s) that directly apply.
 4. Apply the guidance to the user's situation. Cite the document you used so the user can read it in full if they want.

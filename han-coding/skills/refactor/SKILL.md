@@ -81,7 +81,7 @@ burns the whole run.
 
 **Resolve commands.** Read CLAUDE.md's `## Project Discovery` section for the test command (under
 `### Commands and Tests`), the lint command, the build command, language, and framework. If absent, fall back to
-`project-discovery.md`. If still absent, run `${CLAUDE_SKILL_DIR}/scripts/detect-refactor-context.sh` and parse its
+`project-discovery.md`. If still absent, run `scripts/detect-refactor-context.sh` and parse its
 output for git state and manifest-inferred commands. A missing test command is a hard blocker: exhaust inference, then
 ask the user, because this skill cannot run without a way to verify behavior. Also note any type-check command the
 project has; where one exists it runs alongside the tests as a second behavior-preservation check.

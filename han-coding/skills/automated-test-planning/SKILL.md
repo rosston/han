@@ -73,7 +73,7 @@ Store found values for use in later steps.
 **Scope determination:** Check `git installed` from Project Context. If empty or `not installed`, skip to **Mode C**
 below.
 
-Run `${CLAUDE_SKILL_DIR}/scripts/detect-test-context.sh` and parse its output. If `git-available: false`, skip to **Mode
+Run `scripts/detect-test-context.sh` and parse its output. If `git-available: false`, skip to **Mode
 C** below.
 
 **Mode A: Full git context** — `git-available: true` and the output contains a `changed-files-start` block with content.

@@ -186,9 +186,9 @@ This file breaks down the [feature implementation plan](feature-implementation-p
 - **Technical note** — [artifacts/feature-technical-notes.md](artifacts/feature-technical-notes.md): T6 (skill-root-relative references).
 
 **Acceptance criteria.**
-- [ ] No skill `.md` file contains `CLAUDE_SKILL_DIR` (guard assertion 9).
-- [ ] The rewritten forms are skill-root-relative: `scripts/foo.sh` and `references/x.md`.
-- [ ] `npm run lint` is green.
+- [x] No skill `.md` file contains `CLAUDE_SKILL_DIR` (guard assertion 9).
+- [x] The rewritten forms are skill-root-relative: `scripts/foo.sh` and `references/x.md`.
+- [x] `npm run lint` is green.
 - [ ] A maintainer end-to-end pass observes a script-invoking skill (for example `tdd`) running on a non-Claude agent, and its script step succeeds.
 
 **Depends on.** W-3.

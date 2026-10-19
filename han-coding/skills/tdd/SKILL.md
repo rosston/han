@@ -73,7 +73,7 @@ These constraints shape every step and override any instinct to move faster.
 **Resolve commands.** Read CLAUDE.md's `## Project Discovery` section for the test command (under
 `### Commands and Tests`, not `### Frameworks and Tooling`), the lint command, the build command, language, and
 framework. If absent, fall back to `project-discovery.md`. If still absent, run
-`${CLAUDE_SKILL_DIR}/scripts/detect-tdd-context.sh` and parse its output for git state and manifest-inferred commands.
+`scripts/detect-tdd-context.sh` and parse its output for git state and manifest-inferred commands.
 Store the resolved test, lint, and build commands for use in every later step.
 
 **Resolve standards and decisions.** Resolve the coding-standards directory and ADR directory the same way: read

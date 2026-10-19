@@ -60,7 +60,7 @@ This fails with an error if the skill is invoked outside a git repository, stopp
 ```markdown
 ## Step 1: Identify Changes
 
-Run `${CLAUDE_SKILL_DIR}/scripts/detect-review-context.sh` to detect the git environment. Use the output to determine
+Run `scripts/detect-review-context.sh` to detect the git environment. Use the output to determine
 the review mode.
 
 **Mode A: Full git context** — script reports `git-available: true` and changed files list has content.

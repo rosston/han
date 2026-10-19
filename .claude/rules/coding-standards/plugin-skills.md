@@ -65,7 +65,7 @@ standard if needed. Loading standards that do not apply burns context and dilute
   Read when deciding where new content goes in a skill, or when a SKILL.md is growing too large.
 - [Script Execution Instructions in SKILL.md](../../../han-plugin-builder/skills/guidance/references/skill-building-guidance/script-execution-instructions.md)
   — How to describe script invocations as numbered prose instructions, not fenced code blocks, with explicit
-  `${CLAUDE_SKILL_DIR}` paths. Read when a skill calls a shell script from its steps.
+  skill-root-relative paths. Read when a skill calls a shell script from its steps.
 - [Security Restrictions](../../../han-plugin-builder/skills/guidance/references/skill-building-guidance/security-restrictions.md)
   — Frontmatter restrictions that prevent prompt injection and silent failures, including no XML angle brackets in YAML.
   Read when editing any field in a skill's YAML frontmatter.

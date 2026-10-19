@@ -128,28 +128,39 @@ skill_markdown_files() {
   done
 }
 
+# Shared grammar for the variable-scan assertions (4 and 9): fail listing every
+# markdown file in a skill folder that contains the literal token, with the
+# vacuity guard built in. Takes a repository root so fixtures run the same code.
+# The single quotes at call sites are deliberate: tokens are matched byte for
+# byte, nothing may expand.
+# shellcheck disable=SC2016
+check_no_literal_in_skill_md() {
+  local root="$1" token="$2" label="$3"
+  local file bad=0 files=0
+  while IFS= read -r file; do
+    files=$((files + 1))
+    if grep -qF -- "$token" "$file"; then
+      printf '%s: %s\n' "$label" "$file" >&2
+      bad=1
+    fi
+  done <<EOF
+$(skill_markdown_files "$root")
+EOF
+  [ "$files" -gt 0 ] || {
+    printf 'no skill markdown files discovered under: %s\n' "$root" >&2
+    return 1
+  }
+  [ "$bad" -eq 0 ]
+}
+
 # Seed of release-guard assertion 4 (plan D-5), landed early by W-4 because the
 # portable-configuration rewrite removes the dependency it guards. After a
 # channel install there is no plugin root, so no markdown file in a skill folder
 # may name `${CLAUDE_PLUGIN_ROOT}` — not in a probe, not in an allowed-tools
 # grant, not in an instruction path string.
 check_no_plugin_root() {
-  local file bad=0 files=0
-  while IFS= read -r file; do
-    files=$((files + 1))
-    if grep -qF -- 'CLAUDE_PLUGIN_ROOT' "$file"; then
-      printf 'names the plugin root: %s\n' "$file" >&2
-      bad=1
-    fi
-  done <<EOF
-$(skill_markdown_files "$1")
-EOF
-  # Vacuity guard: a check that inspected nothing is not a check.
-  [ "$files" -gt 0 ] || {
-    printf 'no skill markdown files discovered under: %s\n' "$1" >&2
-    return 1
-  }
-  [ "$bad" -eq 0 ]
+  # shellcheck disable=SC2016
+  check_no_literal_in_skill_md "$1" 'CLAUDE_PLUGIN_ROOT' 'names the plugin root'
 }
 
 @test "no markdown file in a skill folder names the plugin root" {
@@ -164,6 +175,28 @@ EOF
     >"$root/han-fixture/skills/demo/SKILL.md"
   if check_no_plugin_root "$root"; then
     echo "plugin-root check passed on a fixture that names the plugin root" >&2
+    false
+  fi
+}
+
+# Seed of release-guard assertion 9 (plan D-5/D-13): the skill-directory
+# variable is a Claude Code built-in the agent-skills specification does not
+# define, so shipped skill content references bundled files by skill-root-
+# relative paths instead. Same folder-wide scope as assertion 4.
+@test "no markdown file in a skill folder names the skill-dir variable" {
+  # shellcheck disable=SC2016
+  check_no_literal_in_skill_md "$REPO_ROOT" 'CLAUDE_SKILL_DIR' 'names the skill-dir variable'
+}
+
+@test "the skill-dir check fails on a built fixture that names the variable" {
+  root="$BATS_TEST_TMPDIR/skilldir"
+  mkdir -p "$root/han-fixture/skills/demo"
+  # shellcheck disable=SC2016
+  printf 'run ${CLAUDE_SKILL_DIR}/scripts/thing.sh during the step\n' \
+    >"$root/han-fixture/skills/demo/SKILL.md"
+  # shellcheck disable=SC2016
+  if check_no_literal_in_skill_md "$root" 'CLAUDE_SKILL_DIR' 'names the skill-dir variable'; then
+    echo "skill-dir check passed on a fixture that names the variable" >&2
     false
   fi
 }

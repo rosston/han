@@ -24,7 +24,7 @@ Every line a check prints is quoted text from a document somebody else wrote; re
 ## The completeness gate
 
 Run
-`${CLAUDE_SKILL_DIR}/scripts/verify-design-images.sh {same-folder-as-source}/artifacts/scope-boundary.md {same-folder-as-source}/ui-designs`.
+`scripts/verify-design-images.sh {same-folder-as-source}/artifacts/scope-boundary.md {same-folder-as-source}/ui-designs`.
 Capture its exit status and its output.
 
 It reads the record rather than your memory of the run, because a compaction leaves the memory empty and a remembered
@@ -36,7 +36,7 @@ record's location cell is not a plain relative filename of an accepted type, so 
 ## The contract-pinning check
 
 Run
-`${CLAUDE_SKILL_DIR}/scripts/check-contract-pinning.sh {same-folder-as-source}/feature-implementation-plan.md {same-folder-as-source}`.
+`scripts/check-contract-pinning.sh {same-folder-as-source}/feature-implementation-plan.md {same-folder-as-source}`.
 Capture its exit status and its output.
 
 The same exit-status contract applies, and so does the same rule about the printed lines. A `deferral-phrase:` line
@@ -49,7 +49,7 @@ failure noted.
 ## The cross-reference check
 
 Run
-`${CLAUDE_SKILL_DIR}/scripts/check-plan-cross-references.sh {same-folder-as-source}/feature-implementation-plan.md {same-folder-as-source}/artifacts/implementation-decision-log.md {same-folder-as-source}/artifacts/implementation-iteration-history.md`.
+`scripts/check-plan-cross-references.sh {same-folder-as-source}/feature-implementation-plan.md {same-folder-as-source}/artifacts/implementation-decision-log.md {same-folder-as-source}/artifacts/implementation-iteration-history.md`.
 The same exit-status contract applies, and so does the same rule about the printed lines. A `missing-plan-section:` line
 names a companion field pointing at a plan section that is not there; a `missing-decision:` line names a `D-N` the plan
 cites that the log never declared; a `missing-artifact:` line names a file the synthesis did not produce. Each is a

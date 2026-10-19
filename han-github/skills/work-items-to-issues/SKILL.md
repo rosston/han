@@ -162,7 +162,7 @@ issue-number annotations after publishing.
 ### 6. Publish each per-repo file to GitHub
 
 For each per-repo file, publish it by running
-`${CLAUDE_SKILL_DIR}/scripts/publish-work-items.sh <per-repo-work-items-file> <org>/<target-repo> <plan-folder> [--label <name>] [--assignee <user>]`.
+`scripts/publish-work-items.sh <per-repo-work-items-file> <org>/<target-repo> <plan-folder> [--label <name>] [--assignee <user>]`.
 Pass the per-repo work-items file written in Step 5, the target repo as `<org>/<target-repo>`, and the plan folder that
 contains the `ui-designs/` subfolder.
 

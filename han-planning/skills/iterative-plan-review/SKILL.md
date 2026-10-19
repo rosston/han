@@ -430,7 +430,7 @@ guard the output has, and it is not optional.
 
 **Preserve the cross-reference invariants across all files.** The two a check can settle are executed rather than
 walked by hand: run
-`${CLAUDE_SKILL_DIR}/scripts/check-cross-references.sh {plan-dir}/artifacts/review-findings.md {plan-dir}/artifacts/review-iteration-history.md`
+`scripts/check-cross-references.sh {plan-dir}/artifacts/review-findings.md {plan-dir}/artifacts/review-iteration-history.md`
 and capture its exit status and its output.
 
 It reports two failures separately, because you fix them differently. A `missing-target:` line means an identifier is
@@ -446,7 +446,7 @@ quoted text kept to a line inside a fenced block.
 Use the legacy root-level paths when the companion files live at the plan folder's root rather than in `artifacts/`.
 
 **Check the plan for a contract nobody pinned**, once per iteration: run
-`${CLAUDE_SKILL_DIR}/scripts/check-contract-pinning.sh {plan-file} {plan-dir}` and capture its exit status and its
+`scripts/check-contract-pinning.sh {plan-file} {plan-dir}` and capture its exit status and its
 output. What counts as pinned is in
 [contract-pinning-rule.md](./references/contract-pinning-rule.md).
 

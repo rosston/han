@@ -364,7 +364,7 @@ The commit is on GitHub and no tag exists yet. Everything past this point is irr
 2. **Classify every tag against the remote** in one call:
 
    ```
-   ${CLAUDE_SKILL_DIR}/scripts/remote-tag-state.sh {release commit} {tag name}...
+   scripts/remote-tag-state.sh {release commit} {tag name}...
    ```
 
    It prints `{tag}\t{state}\t{sha}` per tag. Exit 2 means the remote could not be read: stop, because a run that cannot

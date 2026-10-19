@@ -29,7 +29,7 @@ each finding with the file path and a concrete fix; do not paper over discrepanc
    still names a removed step or omits a new one, update the description.
 3. **`allowed-tools` matches actual usage.** Every tool the steps call is listed; tools no longer used are removed. Each
    Bash command prefix is a separate `Bash()` entry.
-4. **Referenced scripts exist.** Every `${CLAUDE_SKILL_DIR}/scripts/...` path resolves to a real file under the skill's
+4. **Referenced scripts exist.** Every `scripts/...` path resolves to a real file under the skill's
    `scripts/`.
 5. **Referenced files exist.** Every `references/...` or `docs/...` link in the body resolves.
 6. **No stale directives.** If the SKILL.md tells the agent to use a renamed flag, a removed script, an abandoned

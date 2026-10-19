@@ -42,24 +42,24 @@ The guidance documents live in this skill's own `references/` directory. Use thi
 specific file(s) you need:
 
 - Deciding whether something should be a skill, agent, or hook →
-  `${CLAUDE_SKILL_DIR}/references/plugin-entity-taxonomy.md`.
+  `references/plugin-entity-taxonomy.md`.
 - Authoring or hardening a skill (descriptions, frontmatter, progressive disclosure, allowed-tools, scripts,
-  composition, testing, troubleshooting) → the files under `${CLAUDE_SKILL_DIR}/references/skill-building-guidance/`.
+  composition, testing, troubleshooting) → the files under `references/skill-building-guidance/`.
 - Authoring an agent (domain focus, self-containment, model selection, multi-agent economics, graceful degradation) →
-  the files under `${CLAUDE_SKILL_DIR}/references/agent-building-guidelines/`.
+  the files under `references/agent-building-guidelines/`.
 - Plugin or marketplace configuration files (plugin.json, marketplace.json, monitors.json, themes.json) → the files
-  under `${CLAUDE_SKILL_DIR}/references/claude-marketplace-and-plugin-configuration/`.
+  under `references/claude-marketplace-and-plugin-configuration/`.
 - Versioning, README structure, local development, the iterative development process, and
-  specialization-versus-model-tier reasoning → the top-level files in `${CLAUDE_SKILL_DIR}/references/`.
+  specialization-versus-model-tier reasoning → the top-level files in `references/`.
 - Writing the instructions for a target model (how Sonnet 5, Opus 5, and Fable 5 differ in following instructions, which
   instructions to leave out, and how to calibrate length, narration, and scope) →
-  `${CLAUDE_SKILL_DIR}/references/per-model-authoring.md`.
-- Copyable starter files → `${CLAUDE_SKILL_DIR}/references/templates/`.
+  `references/per-model-authoring.md`.
+- Copyable starter files → `references/templates/`.
 
 Steps:
 
 1. Identify what the user is building or asking about.
-2. List the relevant subdirectory under `${CLAUDE_SKILL_DIR}/references/` to see the available documents, using the map
+2. List the relevant subdirectory under `references/` to see the available documents, using the map
    above.
 3. Read only the document(s) that directly apply.
 4. Apply the guidance to the user's situation. Cite the document you used so the user can read it in full if they want.
@@ -69,7 +69,8 @@ Steps:
 Install the plugin-building skills into the current repository so anyone using the repo can run them and consult the
 guidance, with no dependency on this plugin remaining installed.
 
-1. Run `${CLAUDE_SKILL_DIR}/scripts/init-guidance.sh` from the repository root. The script vendors three skills into
+1. With the repository root as your working directory, run this skill's `scripts/init-guidance.sh`. The script vendors
+   three skills into
    `.claude/skills/` under a `plugin-` prefix so they never collide with this plugin's own slash commands: a
    guidance-only `plugin-guidance` skill (whose `references/` directory is the single in-repo copy of the guidance
    documents), `plugin-skill-builder`, and `plugin-agent-builder` (with their names, cross-references, and guidance
@@ -98,7 +99,8 @@ index — but it first confirms the skills are actually installed before touchin
    user the skills are not installed at the expected location (`.claude/skills/plugin-guidance/` and
    `.claude/rules/plugin-building-guidance.md`) and ask whether they want to install them now. If they confirm, switch
    to **Initialization Mode** and run its steps. If they decline, stop without writing anything.
-3. If the skills **are** installed, run `${CLAUDE_SKILL_DIR}/scripts/init-guidance.sh` from the repository root. The
+3. If the skills **are** installed, run this skill's `scripts/init-guidance.sh` with the repository root as the
+   working directory. The
    script removes each vendored skill directory and re-copies it fresh from the plugin source, so every `SKILL.md` and
    every guidance document under `plugin-guidance/references/` is replaced with the current version (and any file the
    plugin has since removed is dropped), then regenerates the rule index at `.claude/rules/plugin-building-guidance.md`.

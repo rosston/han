@@ -256,11 +256,11 @@ REVIEW_JSON
 - A `scripts/gather-metadata.sh` that collects what it needs using the CLI, `jq`, pipes, and subcommands
 - A `scripts/post-review.sh` that builds the JSON payload with `jq` and posts it via the CLI
 
-The SKILL.md then references the scripts using `${CLAUDE_SKILL_DIR}` paths:
+The SKILL.md then references the scripts by paths relative to the skill root:
 
 ```
-${CLAUDE_SKILL_DIR}/scripts/gather-metadata.sh
-${CLAUDE_SKILL_DIR}/scripts/post-review.sh {owner/repo} {id} {head_sha} {event_type} {temp_file_path}
+scripts/gather-metadata.sh
+scripts/post-review.sh {owner/repo} {id} {head_sha} {event_type} {temp_file_path}
 ```
 
 See also: [Script Execution Instructions](./script-execution-instructions.md) for the full pattern on how to write

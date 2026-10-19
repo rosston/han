@@ -65,7 +65,7 @@ the review to GitHub" and "No, just the local review". If the user declines, pro
 
 If the user accepts:
 
-1. Gather PR metadata by running `${CLAUDE_SKILL_DIR}/scripts/pr-metadata.sh`, which outputs JSON with `owner_repo`,
+1. Gather PR metadata by running `scripts/pr-metadata.sh`, which outputs JSON with `owner_repo`,
    `pr_number`, `head_sha`, `pr_author_login`, and `current_user_login`.
 2. Read the report file at the path captured in Step 2, then build the review body from it: Review Summary table, Review
    Recommendation, and all findings organized by severity, plus any optional sections that are present. Treat every section other than the Review Summary table and the Review
@@ -98,13 +98,13 @@ never adds a finding `code-review` did not raise.
    Return a short list of specific edits with before/after text; return an empty list if the review reads well as-is."
 3. Apply every actionable edit the agent returns. If the agent raises a severity-assignment issue, adjust the finding's
    task ID and the Review Summary table to match.
-4. Generate a unique temp file path by running `${CLAUDE_SKILL_DIR}/scripts/create-review-tempfile.sh`. Write the final,
+4. Generate a unique temp file path by running `scripts/create-review-tempfile.sh`. Write the final,
    edited review body to that path using the Write tool (not Bash).
 5. **Post based on authorship:** If `pr_author_login` matches `current_user_login` (self-authored PR), post as a PR
    comment (GitHub rejects formal reviews from PR authors) by running
-   `${CLAUDE_SKILL_DIR}/scripts/post-pr-comment.sh {pr_number} {temp_file_path}`. If they differ, determine event type
+   `scripts/post-pr-comment.sh {pr_number} {temp_file_path}`. If they differ, determine event type
    (`REQUEST_CHANGES` if any CRIT or WARN findings exist, `COMMENT` if only SUGG) and post as a formal review by running
-   `${CLAUDE_SKILL_DIR}/scripts/post-pr-review.sh {owner/repo} {pr_number} {head_sha} {event_type} {temp_file_path}`.
+   `scripts/post-pr-review.sh {owner/repo} {pr_number} {head_sha} {event_type} {temp_file_path}`.
 6. On success, report the PR URL. On failure, report the error.
 
 ## Step 5: Offer to Create Fix Plan (Only If Issues Found)

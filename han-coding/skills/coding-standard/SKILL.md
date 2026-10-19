@@ -158,7 +158,7 @@ already documented. Include the topic, scope, and docs/coding-standards director
    implementations related to {topic} across {scope}. Return concrete places that illustrate the convention in practice
    (Correct-usage candidates), places that violate or contradict the convention (What-to-avoid candidates), and any
    places where the convention is applied inconsistently across the codebase. For each place, return a file path, a line
-   range, and one or more greppable durable anchors — read `${CLAUDE_SKILL_DIR}/references/durable-references.md` and
+   range, and one or more greppable durable anchors — read `references/durable-references.md` and
    follow its Rules 1 and 2 to derive them; where Rule 2 reaches escalation, return the place flagged for engineer
    review instead of an anchor. Focus on real files; do not invent examples."
 
