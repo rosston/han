@@ -1,8 +1,20 @@
 #!/usr/bin/env bats
 #
-# Packaging guard for the `npx skills` compatibility contract. Grows with the
-# work items in docs/plans/npx-skills/compatibility/work-items.md; W-9 lands
-# the full nine assertions. Portability constraints inherited from
+# Packaging guard for the `npx skills` compatibility contract — the nine
+# assertions of plan D-5, landed alongside work items W-4 through W-9:
+#   1 frontmatter name unique/non-empty/equals folder basename
+#   2 links neither escape the skill folder nor dangle at missing shipped files
+#   3 marketplace declarations equal the on-disk inventory (meta none, no
+#     package plugin.json skills)
+#   4 no CLAUDE_PLUGIN_ROOT in any skill .md
+#   5 no configuration-home literal outside the pinned portable line
+#   6 discovery set exactly 45 plugin skills + 2 marked internal
+#   7 vendored copies byte-identical to canonical at package and skill level
+#   8 README names both channels, the update command, and the internal opt-in
+#   9 no CLAUDE_SKILL_DIR in any skill .md
+# Every check is root-parameterized and the composite fixture at the tail
+# violates all nine at once: the guard is observed failing there before the
+# clean suite passes. Portability constraints inherited from
 # test/codex-packaging.bats: bash 3.2 (no mapfile, declare -A, or globstar),
 # grep one named file at a time, never -r. The guard never invokes the
 # `npx skills` CLI.
@@ -22,13 +34,48 @@ marker_is_last_frontmatter_key() {
   [ "$last_two" = "$(printf 'metadata:\n  internal: true')" ]
 }
 
+# Shared link grammar (same as scripts/sync-vendored-files.sh): every ](...)
+# outside fenced code blocks and outside inline code spans; URLs, anchors, and
+# absolute paths ignored; fragments stripped. One walker, two consumers — the
+# escape check and the dangling check must never drift apart.
+md_link_targets() {
+  awk '
+    /^[ \t]*(```|~~~)/ { fence = !fence; next }
+    fence { next }
+    function strip_code(s, out, c, i, j, len, code) {
+      out = ""; code = 0; i = 1; len = length(s)
+      while (i <= len) {
+        c = substr(s, i, 1)
+        if (c == "`") {
+          j = i
+          while (j <= len && substr(s, j, 1) == "`") j++
+          if ((j - i) % 2 == 1) code = !code
+          i = j
+          continue
+        }
+        if (!code) out = out c
+        i++
+      }
+      return out
+    }
+    {
+      s = strip_code($0)
+      while (match(s, /\]\([^)]+\)/)) {
+        t = substr(s, RSTART + 2, RLENGTH - 3)
+        sub(/#.*/, "", t)
+        if (t != "" && t !~ /^https?:/ && t !~ /^mailto:/ && t !~ /^\//)
+          print t
+        s = substr(s, RSTART + RLENGTH)
+      }
+    }' "$1"
+}
+
 # True when no markdown link in any .md file inside a skill folder resolves to
-# a path outside that folder. Shared link grammar with the sync script: every
-# ](...) outside fenced code blocks and outside inline code spans; URLs,
-# anchors, and absolute paths ignored; fragments stripped.
+# a path outside that folder (assertion 2, escape clause). Takes a repository
+# root so fixtures run the same code.
 no_links_escape_skill_folders() {
-  local dir file target resolved d seg bad=0
-  for dir in han-*/skills/*/ .claude/skills/*/; do
+  local root="$1" dir file target resolved d seg bad=0
+  for dir in "$root"/han-*/skills/*/ "$root"/.claude/skills/*/; do
     [ -d "$dir" ] || continue
     while IFS= read -r file; do
       while IFS= read -r target; do
@@ -51,35 +98,7 @@ no_links_escape_skill_folders() {
             ;;
         esac
       done <<EOF
-$(awk '
-          /^[ \t]*(```|~~~)/ { fence = !fence; next }
-          fence { next }
-          function strip_code(s, out, c, i, j, len, code) {
-            out = ""; code = 0; i = 1; len = length(s)
-            while (i <= len) {
-              c = substr(s, i, 1)
-              if (c == "`") {
-                j = i
-                while (j <= len && substr(s, j, 1) == "`") j++
-                if ((j - i) % 2 == 1) code = !code
-                i = j
-                continue
-              }
-              if (!code) out = out c
-              i++
-            }
-            return out
-          }
-          {
-            s = strip_code($0)
-            while (match(s, /\]\([^)]+\)/)) {
-              t = substr(s, RSTART + 2, RLENGTH - 3)
-              sub(/#.*/, "", t)
-              if (t != "" && t !~ /^https?:/ && t !~ /^mailto:/ && t !~ /^\//)
-                print t
-              s = substr(s, RSTART + RLENGTH)
-            }
-          }' "$file")
+$(md_link_targets "$file")
 EOF
     done <<EOF
 $(find "$dir" -name '*.md' -type f)
@@ -88,8 +107,176 @@ EOF
   [ "$bad" -eq 0 ]
 }
 
+# Assertion 2, dangling clause. A skill folder ships SKILL.md, references/,
+# scripts/, and assets/; a link resolving to one of those shapes must point at
+# a file that exists (the F6 class: a linked rule that never got vendored).
+# Two classes of links are excluded by design, not by grudge:
+#  - Scaffold files: templates and assets whose content is copied into the
+#    user's tree and links to artifacts that exist only after instantiation
+#    (*-template.md, template.md, the work-items format doc, anything under
+#    templates/ or assets/).
+#  - Placeholder and destination-layout targets: {curly} / [bracket] / <angle> /
+#    ... examples, and links resolving outside the shipped shapes (docs/...,
+#    artifacts/..., .claude/..., skill-root siblings) — those are contracts of
+#    the destination repository, not of the skill folder.
+no_links_dangle_shipped_content() {
+  local root="$1" dir file target resolved d seg rel base bad=0
+  for dir in "$root"/han-*/skills/*/ "$root"/.claude/skills/*/; do
+    [ -d "$dir" ] || continue
+    while IFS= read -r file; do
+      base=$(basename "$file")
+      case "$file" in
+        */templates/*|*/assets/*) continue ;;
+      esac
+      case "$base" in
+        *-template.md|template.md|work-items-file-format.md) continue ;;
+      esac
+      while IFS= read -r target; do
+        [ -n "$target" ] || continue
+        case "$target" in
+          http:*|https:*|mailto:*|/*|\#*) continue ;;
+        esac
+        case "$target" in
+          *'{'*|*'['*|*'<'*|*...*) continue ;;
+        esac
+        d=$(dirname "$file")
+        seg=$target
+        while [ "${seg#"../"}" != "$seg" ]; do
+          d=$(dirname "$d")
+          seg=${seg#"../"}
+        done
+        while [ "${seg#"./"}" != "$seg" ]; do
+          seg=${seg#"./"}
+        done
+        resolved="$d/$seg"
+        rel=${resolved#"$dir"}
+        case "$rel" in
+          references/*|scripts/*|assets/*|SKILL.md) : ;;
+          *) continue ;;
+        esac
+        if [ ! -e "$resolved" ]; then
+          printf 'dangling shipped-content link: %s -> %s\n' "$file" "$target" >&2
+          bad=1
+        fi
+      done <<EOF
+$(md_link_targets "$file")
+EOF
+    done <<EOF
+$(find "$dir" -name '*.md' -type f)
+EOF
+  done
+  [ "$bad" -eq 0 ]
+}
+
+# Assertion 1: the CLI installs the folder, so the folder name is the installed
+# identity; the agent-skills specification requires the frontmatter name to
+# match it, names to be unique, and descriptions non-empty (inline value, or a
+# folded block with content).
+check_frontmatter_names() {
+  local root="$1" f name base dup names=""
+  for f in "$root"/han-*/skills/*/SKILL.md "$root"/.claude/skills/*/SKILL.md; do
+    [ -f "$f" ] || continue
+    name=$(awk '/^---/{c++; if (c > 1) exit; next} c == 1 && /^name:/{v = substr($0, 7); gsub(/"/, "", v); gsub(/[[:space:]]+$/, "", v); print v; exit}' "$f")
+    base=$(basename "$(dirname "$f")")
+    if [ -z "$name" ]; then
+      printf 'empty or missing frontmatter name: %s\n' "$f" >&2
+      return 1
+    fi
+    if [ "$name" != "$base" ]; then
+      printf 'name does not match folder basename: %s (name=%s folder=%s)\n' "$f" "$name" "$base" >&2
+      return 1
+    fi
+    names="$names$name
+"
+  done
+  dup=$(printf '%s' "$names" | sort | uniq -d)
+  if [ -n "$dup" ]; then
+    printf 'duplicate skill names: %s\n' "$dup" >&2
+    return 1
+  fi
+}
+
+check_frontmatter_descriptions() {
+  local root="$1" f val
+  for f in "$root"/han-*/skills/*/SKILL.md "$root"/.claude/skills/*/SKILL.md; do
+    [ -f "$f" ] || continue
+    val=$(awk '/^---/{c++; if (c > 1) exit; next} c == 1 && /^description:/{v = substr($0, 14); gsub(/^[[:space:]]+|["\x27]+$/, "", v); print v; exit}' "$f")
+    case "$val" in
+      "" | "|" | ">" | "|-" | ">-")
+        # folded or literal block: content must follow on indented lines
+        val=$(awk '/^description:/{d = 1; next} d && /^---/{exit} d && /^[[:space:]]+[^[:space:]]/{print "folded"; exit}' "$f")
+        ;;
+    esac
+    if [ -z "$val" ]; then
+      printf 'empty description: %s\n' "$f" >&2
+      return 1
+    fi
+  done
+}
+
+# Assertion 6, discovery shape (the in-repo proxy for the CLI's discovery per
+# D-7): exactly 45 plugin skills through marketplace sources, exactly 2 marked
+# internal skills through the .claude container.
+check_discovery_shape() {
+  local root="$1" plugin internal
+  plugin=$( (cd "$root" && find han-*/skills -mindepth 1 -maxdepth 1 -type d 2>/dev/null) | wc -l)
+  internal=$( (cd "$root" && find .claude/skills -mindepth 1 -maxdepth 1 -type d 2>/dev/null) | wc -l)
+  if [ "$plugin" -ne 45 ]; then
+    printf 'expected 45 plugin skills, found %s\n' "$plugin" >&2
+    return 1
+  fi
+  if [ "$internal" -ne 2 ]; then
+    printf 'expected 2 internal skills, found %s\n' "$internal" >&2
+    return 1
+  fi
+}
+
 @test "no markdown link in a skill folder resolves outside that folder" {
-  no_links_escape_skill_folders
+  no_links_escape_skill_folders "$REPO_ROOT"
+}
+
+@test "no markdown link in a skill folder points at a missing shipped file" {
+  no_links_dangle_shipped_content "$REPO_ROOT"
+}
+
+@test "the dangling check fails on a built fixture that links a missing reference" {
+  root="$BATS_TEST_TMPDIR/dangle"
+  mkdir -p "$root/han-fixture/skills/demo/references"
+  printf -- '---\nname: demo\ndescription: A demo.\n---\n\n[x](./references/gamma.md)\n' \
+    >"$root/han-fixture/skills/demo/SKILL.md"
+  if no_links_dangle_shipped_content "$root"; then
+    echo "dangling check passed on a fixture linking a missing reference" >&2
+    false
+  fi
+}
+
+# Both directions of the exclusion: scaffold and destination-layout links pass,
+# and a real shipped-content link still fails in the same fixture.
+@test "the dangling check ignores scaffolds but still catches shipped-content links" {
+  root="$BATS_TEST_TMPDIR/whitelist"
+  mkdir -p "$root/han-fixture/skills/demo/references"
+  printf -- '---\nname: demo\ndescription: A demo.\n---\n\nSee the plan [p](../feature-specification.md) and the installed docs at [d](docs/skills/skill-name.md).\n' \
+    >"$root/han-fixture/skills/demo/SKILL.md"
+  printf '# Template\nLinks [x](./feature-technical-notes.md) and {placeholder} examples.\n' \
+    >"$root/han-fixture/skills/demo/references/scaffold-template.md"
+  no_links_dangle_shipped_content "$root"
+  printf '\nMissing shipped file [y](./references/absent.md).\n' >>"$root/han-fixture/skills/demo/SKILL.md"
+  if no_links_dangle_shipped_content "$root"; then
+    echo "dangling check passed after a shipped-content link went missing beside the scaffolds" >&2
+    false
+  fi
+}
+
+@test "every skill frontmatter name is unique and equals its folder basename" {
+  check_frontmatter_names "$REPO_ROOT"
+}
+
+@test "every skill frontmatter description is non-empty" {
+  check_frontmatter_descriptions "$REPO_ROOT"
+}
+
+@test "the discovery set is exactly 45 plugin skills plus 2 internal skills" {
+  check_discovery_shape "$REPO_ROOT"
 }
 
 # Read --list rows on stdin; fail if any managed destination is absent or
@@ -406,4 +593,64 @@ EOF
     echo "identity check passed on a drifted repository" >&2
     false
   fi
+}
+
+# W-9: the deliberately broken repository fixture. One tree violating every
+# assertion at once; the guard must fail each check it is pointed at before
+# the clean suite is allowed to pass. This is the "observe the guard failing"
+# step of the work item; the clean-suite pass is the rest of npm test.
+@test "the packaging guard fails on a deliberately broken repository fixture" {
+  root="$BATS_TEST_TMPDIR/broken"
+  mkdir -p "$root/.claude-plugin" "$root/han-fixture/skills/alpha" \
+    "$root/han-core/references" "$root/han-fixture/references"
+  cat >"$root/.claude-plugin/marketplace.json" <<'MFEST'
+{
+  "plugins": [
+    { "name": "han", "source": "./han", "version": "0.0.0" },
+    { "name": "han-fixture", "source": "./han-fixture", "version": "0.0.0", "skills": ["./skills/wrong"] }
+  ]
+}
+MFEST
+  cat >"$root/han-fixture/skills/alpha/SKILL.md" <<'SKILL'
+---
+name: beta
+description: ""
+---
+
+One line names ${CLAUDE_PLUGIN_ROOT} and ${CLAUDE_SKILL_DIR},
+another hardcodes ~/.claude/thing, one links [x](./references/gamma.md),
+and one escapes [y](../../../../escape.md).
+SKILL
+  cat >"$root/README.md" <<'README'
+# Han
+Install with /plugin install han@han.
+README
+  printf 'CANONICAL\n' >"$root/han-core/references/config-rule.md"
+  printf 'DRIFTED\n' >"$root/han-fixture/references/config-rule.md"
+
+  expect_fail() {
+    local label="$1"
+    shift
+    if "$@" >/dev/null 2>&1; then
+      printf '%s passed on the broken fixture\n' "$label" >&2
+      return 1
+    fi
+  }
+  check_vendored_row() {
+    (cd "$root" &&
+      printf 'han-core/references/config-rule.md\than-fixture/references/config-rule.md\n' |
+      check_vendored_placement_and_identity)
+  }
+  expect_fail "assertion 1 (name equals folder)" check_frontmatter_names "$root"
+  expect_fail "assertion 1 (description non-empty)" check_frontmatter_descriptions "$root"
+  expect_fail "assertion 2 (escape clause)" no_links_escape_skill_folders "$root"
+  expect_fail "assertion 2 (dangling clause)" no_links_dangle_shipped_content "$root"
+  expect_fail "assertion 3 (manifest declarations)" check_manifest_declarations "$root"
+  expect_fail "assertion 4 (plugin root)" check_no_plugin_root "$root"
+  expect_fail "assertion 5 (configuration home)" check_no_hardcoded_home "$root"
+  expect_fail "assertion 6 (discovery shape)" check_discovery_shape "$root"
+  expect_fail "assertion 7 (vendored identity)" check_vendored_row
+  expect_fail "assertion 8 (README channels)" check_readme_channels "$root/README.md"
+  expect_fail "assertion 9 (skill-dir variable)" \
+    check_no_literal_in_skill_md "$root" 'CLAUDE_SKILL_DIR' 'names the skill-dir variable'
 }

@@ -30,7 +30,7 @@ This file breaks down the [feature implementation plan](feature-implementation-p
 **Acceptance criteria.**
 - [x] The marker block appears byte-exact as the last frontmatter key in both repo-maintenance skills' SKILL.md files.
 - [x] Each skill stops with a message naming the Han repository when run outside it.
-- [ ] The discovery set lists exactly 45 public plugin skills plus the 2 marked-internal repo skills, with the byte-exact marker on exactly those 2 (guard assertion 6).
+- [x] The discovery set lists exactly 45 public plugin skills plus the 2 marked-internal repo skills, with the byte-exact marker on exactly those 2 (guard assertion 6).
 
 **Depends on.** None.
 
@@ -243,9 +243,9 @@ This file breaks down the [feature implementation plan](feature-implementation-p
 - **Spec section** — [feature-specification.md](feature-specification.md): D7 (packaging guard).
 
 **Acceptance criteria.**
-- [ ] `npm test` is green, including the new guard.
-- [ ] The guard has been observed failing on a deliberately broken fixture before the clean suite passes.
-- [ ] The nine assertions are enumerated and passing.
+- [x] `npm test` is green, including the new guard.
+- [x] The guard has been observed failing on a deliberately broken fixture before the clean suite passes.
+- [x] The nine assertions are enumerated and passing.
 
 **Depends on.** W-1, W-2, W-3, W-4, W-6, W-7, W-8.
 
