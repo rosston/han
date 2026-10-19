@@ -48,7 +48,8 @@ they register as `example.core:agent-name`.
 
 A bare name resolves only when it is unique across every installed plugin plus the user and project agent scopes.
 Generic names like `data-engineer`, `test-engineer`, or `software-architect` can collide with an agent from another
-installed plugin or a user's own `~/.claude/agents`, and the resolver returns whichever it reaches first. Qualifying the
+installed plugin or a user's own agents directory inside their configuration home, and the resolver returns whichever
+it reaches first. Qualifying the
 name removes that ambiguity.
 
 ## Correct and incorrect

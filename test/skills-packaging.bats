@@ -7,6 +7,8 @@
 # grep one named file at a time, never -r. The guard never invokes the
 # `npx skills` CLI.
 
+REPO_ROOT="${BATS_TEST_DIRNAME}/.."
+
 # True when the SKILL.md's frontmatter ends with the byte-exact CLI
 # internal-skill marker block: `metadata:` followed by `  internal: true`,
 # appended as the last frontmatter key (implementation decision D-12).
@@ -111,6 +113,139 @@ check_vendored_placement_and_identity() {
 
 @test "every managed vendored copy is placed on disk and byte-identical to its canonical source" {
   bash scripts/sync-vendored-files.sh --list | check_vendored_placement_and_identity
+}
+
+# Every markdown file inside a skill folder: the SKILL.md itself plus its
+# references and assets. The two `.claude` repo-maintenance skills are included
+# on the same terms as assertion 2's link check, so a future plugin-root
+# reference there reddens the guard too. Takes the repository root so a built
+# fixture can be checked with the same function.
+skill_markdown_files() {
+  local dir
+  for dir in "$1"/han-*/skills/*/ "$1"/.claude/skills/*/; do
+    [ -d "$dir" ] || continue
+    find "$dir" -name '*.md' -type f
+  done
+}
+
+# Seed of release-guard assertion 4 (plan D-5), landed early by W-4 because the
+# portable-configuration rewrite removes the dependency it guards. After a
+# channel install there is no plugin root, so no markdown file in a skill folder
+# may name `${CLAUDE_PLUGIN_ROOT}` — not in a probe, not in an allowed-tools
+# grant, not in an instruction path string.
+check_no_plugin_root() {
+  local file bad=0 files=0
+  while IFS= read -r file; do
+    files=$((files + 1))
+    if grep -qF -- 'CLAUDE_PLUGIN_ROOT' "$file"; then
+      printf 'names the plugin root: %s\n' "$file" >&2
+      bad=1
+    fi
+  done <<EOF
+$(skill_markdown_files "$1")
+EOF
+  # Vacuity guard: a check that inspected nothing is not a check.
+  [ "$files" -gt 0 ] || {
+    printf 'no skill markdown files discovered under: %s\n' "$1" >&2
+    return 1
+  }
+  [ "$bad" -eq 0 ]
+}
+
+@test "no markdown file in a skill folder names the plugin root" {
+  check_no_plugin_root "$REPO_ROOT"
+}
+
+# shellcheck disable=SC2016
+@test "the plugin-root check fails on a built fixture that names the plugin root" {
+  root="$BATS_TEST_TMPDIR/proot"
+  mkdir -p "$root/han-fixture/skills/demo"
+  printf 'run bash "${CLAUDE_PLUGIN_ROOT}/scripts/thing.sh" from the probe\n' \
+    >"$root/han-fixture/skills/demo/SKILL.md"
+  if check_no_plugin_root "$root"; then
+    echo "plugin-root check passed on a fixture that names the plugin root" >&2
+    false
+  fi
+}
+
+# The one line allowed to carry a configuration-home literal, matched byte for
+# byte (spec D5, plan D-4). scripts/han-config-dir.bats is the pinner of this
+# literal in the 45 plugin skills; here it is the whitelist for assertion 5, so
+# a skill body may use the resolved directory but never the home path itself.
+# shellcheck disable=SC2016
+PINNED_LINE='- personal config directory: $CLAUDE_CONFIG_DIR when that variable is set, otherwise $HOME/.claude (the agent'\''s own configuration-directory override and its default)'
+
+# Seed of release-guard assertion 5 (plan D-5): no configuration-home literal
+# outside the pinned portable line. Hardcoded homes break skills on agents
+# whose configuration home is not `~/.claude` (finding F4); the resolution the
+# pinned line carries replaces every such path.
+check_no_hardcoded_home() {
+  local file line matches bad=0 files=0
+  while IFS= read -r file; do
+    files=$((files + 1))
+    # The single quotes are deliberate: these are literal SKILL.md text
+    # patterns, matched byte for byte, nothing inside them may expand. The
+    # `|| true` keeps a file with no literal from tripping the shell's error
+    # halt: absence is the passing case here, per file. The tilde is a literal
+    # character of the matched text, never a home-directory expression.
+    # shellcheck disable=SC2016,SC2088
+    matches=$(grep -F -e '~/.claude' -e '$HOME/.claude' -e '${HOME}/.claude' "$file" 2>/dev/null || true)
+    while IFS= read -r line; do
+      [ -n "$line" ] || continue
+      [ "$line" = "$PINNED_LINE" ] && continue
+      printf 'hardcodes the configuration home (%s): %s\n' "$file" "$line" >&2
+      bad=1
+    done <<EOF
+$matches
+EOF
+  done <<EOF
+$(skill_markdown_files "$1")
+EOF
+  # Vacuity guard: a check that inspected nothing is not a check.
+  [ "$files" -gt 0 ] || {
+    printf 'no skill markdown files discovered under: %s\n' "$1" >&2
+    return 1
+  }
+  [ "$bad" -eq 0 ]
+}
+
+@test "no markdown file in a skill folder hardcodes the configuration home outside the pinned line" {
+  check_no_hardcoded_home "$REPO_ROOT"
+}
+
+@test "the configuration-home check fails on a built fixture that hardcodes the home" {
+  root="$BATS_TEST_TMPDIR/home"
+  mkdir -p "$root/han-fixture/skills/demo"
+  printf 'write the report to ~/.claude/reports/{filename}\n' \
+    >"$root/han-fixture/skills/demo/SKILL.md"
+  if check_no_hardcoded_home "$root"; then
+    echo "configuration-home check passed on a fixture that hardcodes the home" >&2
+    false
+  fi
+}
+
+# Whitelist teeth, both directions: the pinned portable line may carry the
+# literal (accept side) and nothing else may (reject side). Written from the
+# same PINNED_LINE constant the check uses, so the fixture and the whitelist
+# cannot drift apart.
+@test "the configuration-home check whitelists exactly the pinned line" {
+  root="$BATS_TEST_TMPDIR/whitelist"
+  mkdir -p "$root/han-fixture/skills/demo/references"
+  {
+    printf '%s\n' "$PINNED_LINE"
+    printf 'a relative path in the personal file resolves against it\n'
+  } >"$root/han-fixture/skills/demo/SKILL.md"
+  check_no_hardcoded_home "$root"
+  # The single quotes are deliberate: this fixture line must carry the literal
+  # path and backticks verbatim, exactly what the reject side of the whitelist
+  # is supposed to catch.
+  # shellcheck disable=SC2016
+  printf 'prose naming the default: `~/.claude/.han/config.md` does not qualify\n' \
+    >"$root/han-fixture/skills/demo/references/some-rule.md"
+  if check_no_hardcoded_home "$root"; then
+    echo "configuration-home check passed with a non-pinned literal in references/some-rule.md" >&2
+    false
+  fi
 }
 
 @test "han-release SKILL.md carries the byte-exact internal marker as the last frontmatter key" {

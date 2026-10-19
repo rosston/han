@@ -7,8 +7,7 @@ description: >
   update PR descriptions — use update-pr-description for that.
 argument-hint: "[optional context about the PR or areas to focus on]"
 allowed-tools:
-  Bash(jq *), Bash(gh *), Bash(git *), Bash(make *), Bash(npm *), Read, Write, Grep, Glob, Skill, Agent,
-  Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh")
+  Bash(jq *), Bash(gh *), Bash(git *), Bash(make *), Bash(npm *), Read, Write, Grep, Glob, Skill, Agent
 ---
 
 When running a PR code review, follow the process outlined here.
@@ -26,12 +25,12 @@ be installed. In either case, immediately stop.
 - current branch: !`git branch --show-current 2>/dev/null || echo unknown`
 - default branch: !`git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null || echo unknown`
 - changed files: !`gh pr diff --name-only 2>/dev/null || echo "no pr"`
-- personal config directory: !`bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh" 2>/dev/null || echo "$HOME/.claude"`
-- project .han/config.md: !`cat .han/config.md 2>/dev/null || echo ""`
+- personal config directory: $CLAUDE_CONFIG_DIR when that variable is set, otherwise $HOME/.claude (the agent's own configuration-directory override and its default)
+- project .han/config.md: use the Read tool on .han/config.md in the directory the skill runs from; a read that returns no file is no project configuration
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
+read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Step 1: Validate PR State

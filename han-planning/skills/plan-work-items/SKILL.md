@@ -9,8 +9,7 @@ description: >
   plan-a-phased-build for that. Does not write code — use tdd to implement a work item.
 argument-hint: "[implementation plan path or feature name, optional; output folder, optional]"
 allowed-tools:
-  Read, Write, Edit, Glob, Grep, Agent, Bash(find *), Bash(mkdir *), Bash(cp *),
-  Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh")
+  Read, Write, Edit, Glob, Grep, Agent, Bash(find *), Bash(mkdir *), Bash(cp *)
 ---
 
 ## Project Context
@@ -18,12 +17,12 @@ allowed-tools:
 - CLAUDE.md: !`find . -maxdepth 1 -name "CLAUDE.md" -type f`
 - project-discovery.md: !`find . -maxdepth 3 -name "project-discovery.md" -type f`
 - feature-implementation-plan.md: !`find . -maxdepth 5 -name "feature-implementation-plan.md" -type f`
-- personal config directory: !`bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh" 2>/dev/null || echo "$HOME/.claude"`
-- project .han/config.md: !`cat .han/config.md 2>/dev/null || echo ""`
+- personal config directory: $CLAUDE_CONFIG_DIR when that variable is set, otherwise $HOME/.claude (the agent's own configuration-directory override and its default)
+- project .han/config.md: use the Read tool on .han/config.md in the directory the skill runs from; a read that returns no file is no project configuration
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
+read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 # Plan Work Items

@@ -36,14 +36,15 @@ Requires Claude Code v2.1.105 or later.
 
 The `command` field supports these substitution variables:
 
-| Variable                | Description                                                   |
-| ----------------------- | ------------------------------------------------------------- |
-| `${CLAUDE_PLUGIN_ROOT}` | Absolute path to the plugin install directory                 |
-| `${CLAUDE_PLUGIN_DATA}` | Persistent data directory at `~/.claude/plugins/data/{id}/`   |
-| `${user_config.KEY}`    | User config values defined in the plugin's `userConfig` field |
-| `${ENV_VAR}`            | Any environment variable                                      |
+| Variable                    | Description                                                    |
+| --------------------------- | -------------------------------------------------------------- |
+| Plugin install dir (braced) | Absolute path to the plugin install directory                  |
+| `${CLAUDE_PLUGIN_DATA}`     | Persistent data directory under the agent's configuration home |
+| `${user_config.KEY}`        | User config values defined in the plugin's `userConfig` field  |
+| `${ENV_VAR}`                | Any environment variable                                       |
 
-To run the command from the plugin's own directory, prefix with `cd "${CLAUDE_PLUGIN_ROOT}" && `.
+The plugin install directory's exact spelling appears in [templates/monitors-example.json](../templates/monitors-example.json).
+To run the command from the plugin's own directory, prefix the command with a `cd` into it, as that example shows.
 
 ## Behavior
 

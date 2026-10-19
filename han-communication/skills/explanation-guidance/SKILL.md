@@ -8,17 +8,17 @@ description: >
   in a turn, where readability-guidance governs the shape of a written deliverable. Runs in the caller's context and
   hands control straight back; it does not produce a deliverable of its own, rewrite anything, or judge the caller's
   work. Carries guidance only and adds no self-check step.
-allowed-tools: Read, Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh")
+allowed-tools: Read
 ---
 
 ## Project Context
 
-- personal config directory: !`bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh" 2>/dev/null || echo "$HOME/.claude"`
-- project .han/config.md: !`cat .han/config.md 2>/dev/null || echo ""`
+- personal config directory: $CLAUDE_CONFIG_DIR when that variable is set, otherwise $HOME/.claude (the agent's own configuration-directory override and its default)
+- project .han/config.md: use the Read tool on .han/config.md in the directory the skill runs from; a read that returns no file is no project configuration
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
+read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 # Explanation Guidance
@@ -40,7 +40,7 @@ source through `han-communication:readability-guidance`. A run often needs both,
 
 ## Step 1: Read the standard
 
-Read `${CLAUDE_PLUGIN_ROOT}/references/explanation-rule.md` so its full content enters your context. It carries the
+Read `./references/explanation-rule.md` so its full content enters your context. It carries the
 concrete-outcome requirement, the four-part form for a question shaped like data entry, the unintroduced-term test, and
 the rule that the consequence comes before the technical detail.
 

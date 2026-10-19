@@ -7,19 +7,19 @@ description: >
   paths — use investigate for debugging, diagnosis, and root cause analysis. Does not plan features or build solutions —
   use plan-a-feature or plan-implementation for that.
 argument-hint: "[issue text, bug report, or path to a report file; optional output path]"
-allowed-tools: Read, Write, Bash(find *), Bash(mkdir *), Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh")
+allowed-tools: Read, Write, Bash(find *), Bash(mkdir *)
 ---
 
 ## Project Context
 
 - CLAUDE.md: !`find . -maxdepth 1 -name "CLAUDE.md" -type f`
 - project-discovery.md: !`find . -maxdepth 3 -name "project-discovery.md" -type f`
-- personal config directory: !`bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh" 2>/dev/null || echo "$HOME/.claude"`
-- project .han/config.md: !`cat .han/config.md 2>/dev/null || echo ""`
+- personal config directory: $CLAUDE_CONFIG_DIR when that variable is set, otherwise $HOME/.claude (the agent's own configuration-directory override and its default)
+- project .han/config.md: use the Read tool on .han/config.md in the directory the skill runs from; a read that returns no file is no project configuration
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
+read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Triage Approach
@@ -143,10 +143,11 @@ Decide the single recommendation using the issue type from Step 1 and the gaps f
 Resolve the output path:
 
 - If the user specified an output path, use it.
-- Otherwise use `$HOME/.claude/triages/{kebab-case-summary}.md`, where `{kebab-case-summary}` is the Step 2 Summary
-  lowercased with non-alphanumeric runs replaced by single hyphens.
+- Otherwise use `<config-home>/triages/{kebab-case-summary}.md`, where `{kebab-case-summary}` is the Step 2 Summary
+  lowercased with non-alphanumeric runs replaced by single hyphens, and `<config-home>` is the directory named by the
+  `personal config directory` line of Project Context — never a hardcoded path.
 
-Run `mkdir -p` on the directory that will contain the file (for the default, `mkdir -p "$HOME/.claude/triages"`). Write
+Run `mkdir -p` on the directory that will contain the file (for the default, `mkdir -p "<config-home>/triages"`). Write
 the report using the template at [template.md](./references/template.md), filling every section from Steps 1-6 and
 writing the Step 6 result verbatim into Recommended Next Step. Omit the Suspected Areas section if Step 5 determined
 nothing is inferable, and omit Severity and Reproducibility per the Step 4 omit rule.

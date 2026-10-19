@@ -124,9 +124,9 @@ Eight colors for distinguishing subagents visually. Suffix `_FOR_SUBAGENTS_ONLY`
 
 - Unknown tokens and invalid color values are silently ignored
 - Tokens absent from `overrides` inherit from the `base` preset
-- Claude Code auto-reloads themes from `~/.claude/themes/` when files change
+- Claude Code auto-reloads themes from the user's theme directory inside the configuration home when files change
 - Selecting a plugin theme stores `custom:<plugin-name>:<slug>` in user config
-- Pressing Ctrl+E on a plugin theme copies it to `~/.claude/themes/` for local editing
+- Pressing Ctrl+E on a plugin theme copies it to the user's theme directory for local editing
 
 ## Official Reference
 

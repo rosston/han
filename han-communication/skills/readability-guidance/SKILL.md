@@ -9,17 +9,17 @@ description: >
   deliverable of its own, rewrite anything, or judge the caller's work. Does not run the adversarial rewrite pass —
   dispatch the readability-editor agent for that, or use edit-for-readability to rewrite an existing target. Does not
   cover explaining technical work to a reader who will not implement it — use explanation-guidance for that.
-allowed-tools: Read, Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh")
+allowed-tools: Read
 ---
 
 ## Project Context
 
-- personal config directory: !`bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh" 2>/dev/null || echo "$HOME/.claude"`
-- project .han/config.md: !`cat .han/config.md 2>/dev/null || echo ""`
+- personal config directory: $CLAUDE_CONFIG_DIR when that variable is set, otherwise $HOME/.claude (the agent's own configuration-directory override and its default)
+- project .han/config.md: use the Read tool on .han/config.md in the directory the skill runs from; a read that returns no file is no project configuration
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
+read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 # Readability Guidance
@@ -52,14 +52,14 @@ First resolve which writing-voice profile this run uses:
     the two configuration files declared it, and ask whether to use the built-in Han voice or skip the writing voice
     entirely for this run. Honor the answer: fall back to the built-in profile, or proceed with no voice profile at all.
 - When neither probe supplied a `writing-voice` value, the built-in profile at
-  `${CLAUDE_PLUGIN_ROOT}/references/writing-voice.md` applies.
+  `./references/writing-voice.md` applies.
 
 Then read the reference files, in this order, so their full content enters your context:
 
-1. `${CLAUDE_PLUGIN_ROOT}/references/readability-rule.md` — the Human-Readable Output Standard: the audience frame, the
+1. `./references/readability-rule.md` — the Human-Readable Output Standard: the audience frame, the
    output properties, the length guidance, the prose-only and fidelity rules, and the standardized self-check.
 2. The resolved writing-voice profile — the configured file, or the built-in
-   `${CLAUDE_PLUGIN_ROOT}/references/writing-voice.md`, whose "Avoided words and phrases" and "AI slop to avoid"
+   `./references/writing-voice.md`, whose "Avoided words and phrases" and "AI slop to avoid"
    sections are the authoritative vocabulary blocklist the rule points to. A configured profile stands in for the
    built-in one wholesale: apply whatever voice and vocabulary guidance it carries. When the user chose to skip the
    writing voice, read only the readability rule and apply it with no voice profile and no vocabulary blocklist.

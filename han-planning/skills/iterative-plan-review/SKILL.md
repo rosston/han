@@ -10,20 +10,19 @@ description: >
 arguments: size
 argument-hint: "[size: small | medium | large | dynamic] [context or path to plan file]"
 allowed-tools:
-  Read, Write, Edit, Glob, Grep, Agent, Bash(find *),
-  Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh")
+  Read, Write, Edit, Glob, Grep, Agent, Bash(find *)
 ---
 
 ## Project Context
 
 - CLAUDE.md: !`find . -maxdepth 1 -name "CLAUDE.md" -type f`
 - project-discovery.md: !`find . -maxdepth 3 -name "project-discovery.md" -type f`
-- personal config directory: !`bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh" 2>/dev/null || echo "$HOME/.claude"`
-- project .han/config.md: !`cat .han/config.md 2>/dev/null || echo ""`
+- personal config directory: $CLAUDE_CONFIG_DIR when that variable is set, otherwise $HOME/.claude (the agent's own configuration-directory override and its default)
+- project .han/config.md: use the Read tool on .han/config.md in the directory the skill runs from; a read that returns no file is no project configuration
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
+read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Review Approach
@@ -69,9 +68,10 @@ between the two files, relative-path resolution, and what to do with a file that
 
 ## Step 1: Locate the Plan and Set Up Companion Files
 
-Find the plan file from the user's argument. If no path was provided, use `Glob` to find `~/.claude/plans/*.md` — Glob
-returns files sorted by modification time, so the first result is the most recent plan. Read the full plan file and
-understand its structure, scope, and current state before proceeding.
+Find the plan file from the user's argument. If no path was provided, use `Glob` to find `<config-home>/plans/*.md` —
+`<config-home>` is the directory named by the `personal config directory` line of Project Context, never a hardcoded
+path — and Glob returns files sorted by modification time, so the first result is the most recent plan. Read the full
+plan file and understand its structure, scope, and current state before proceeding.
 
 Resolve project config: read CLAUDE.md's `## Project Discovery` section for language, framework, docs, ADR, and
 coding-standards directories; fall back to project-discovery.md; fall back to Glob defaults (`docs/`, `docs/adr/`,

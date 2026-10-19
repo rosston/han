@@ -132,13 +132,14 @@ dependencies declared against another marketplace.
 
 Available for substitution in skill/agent content, hook commands, monitor commands, and MCP/LSP server configs:
 
-| Variable                | Description                                                               |
-| ----------------------- | ------------------------------------------------------------------------- |
-| `${CLAUDE_PLUGIN_ROOT}` | Absolute path to plugin install directory. Changes on plugin update.      |
-| `${CLAUDE_PLUGIN_DATA}` | Persistent state dir at `~/.claude/plugins/data/{id}/`. Survives updates. |
-| `${CLAUDE_PROJECT_DIR}` | Absolute path to the project root of the current session.                 |
+| Variable                    | Description                                                                  |
+| --------------------------- | ---------------------------------------------------------------------------- |
+| Plugin install dir (braced) | Absolute path to plugin install directory. Changes on plugin update.         |
+| `${CLAUDE_PLUGIN_DATA}`     | Persistent state dir under the agent's configuration home. Survives updates. |
+| `${CLAUDE_PROJECT_DIR}`     | Absolute path to the project root of the current session.                    |
 
-Both are also exported as environment variables to hook processes and MCP/LSP server subprocesses.
+Both are also exported as environment variables to hook processes and MCP/LSP server subprocesses. The exact
+spellings of the substituted names appear in [templates/plugin-example.json](../templates/plugin-example.json).
 
 ## Complete Example
 
@@ -162,8 +163,8 @@ Both are also exported as environment variables to hook processes and MCP/LSP se
   "hooks": "./hooks/hooks.json",
   "mcpServers": {
     "deployment": {
-      "command": "${CLAUDE_PLUGIN_ROOT}/servers/deploy-server",
-      "args": ["--config", "${CLAUDE_PLUGIN_ROOT}/config.json"]
+      "command": "<plugin-root>/servers/deploy-server",
+      "args": ["--config", "<plugin-root>/config.json"]
     }
   },
   "lspServers": "./.lsp.json",

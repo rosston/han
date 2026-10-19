@@ -147,31 +147,33 @@ directory, or anywhere holding credentials is the read most likely to draw a ref
 carries no such risk to the skill: the step handles a read that returns nothing and carries on.
 
 Han shipped this mistake once. Forty skills read an optional personal config through a probe pointed at the Claude Code
-configuration directory, and the refusal that followed took whole skills down before they did any work:
+configuration directory, and the refusal that followed took whole skills down before they did any work. In the quoted
+pattern below, `<default-config-home>` elides the historical default directory the probe spelled out:
 
 ```
 Error: Shell command permission check failed for pattern
-"!`cat "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/.han/config.md" 2>/dev/null || echo ""`":
+"!`cat "${CLAUDE_CONFIG_DIR:-<default-config-home>}/.han/config.md" 2>/dev/null || echo ""`":
 Permission for this action was denied by the Claude Code auto mode classifier.
 Reason: Blocked by classifier.
 ```
 
 Resolving a path in a probe stays fine, because `echo` opens no file. Reading through it does not.
 
-**Prefer (probe resolves the location, a step reads the file):**
+**Prefer (the instructions resolve the location; nothing reads it at load time):**
 
 ```
-- personal config directory: !`bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh" 2>/dev/null || echo "$HOME/.claude"`
+- personal config directory: $CLAUDE_CONFIG_DIR when that variable is set, otherwise $HOME/.claude (the agent's own configuration-directory override and its default)
 ```
 
-That line reads an environment variable inside a script rather than in the probe text, which is the only measured way
-to reach one. See "Rule: Reach an environment variable through a script, not through probe text" below.
+This line is instruction text: no command runs at load, so no permission decision can abort the skill, and a step
+later reads the file with the Read tool. Han's earlier pattern ran a resolver script from a probe instead; the rule
+below shows how such a probe must be spelled, and why the portable line replaced it.
 
 **Avoid (probe reads outside the project):**
 
 ```
 !`cat "$HOME/.someconfig" 2>/dev/null || echo ""`
-!`cat "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/.han/config.md" 2>/dev/null || echo ""`
+!`cat "${CLAUDE_CONFIG_DIR:-<default-config-home>}/.han/config.md" 2>/dev/null || echo ""`
 ```
 
 ### Rule: Reach an environment variable through a script, not through probe text
@@ -180,42 +182,45 @@ The loader inspects the probe's text before anything runs. A variable named ther
 narrower than the error message suggests. These results are measured on Claude Code `2.1.234`, each form written into a
 scratch skill and invoked from a fresh session:
 
-| Probe form                                         | Result |
-| -------------------------------------------------- | ------ |
-| `echo hello`                                       | loads  |
-| `echo "$HOME"`                                     | loads  |
-| `echo "$HOME/.claude"`                             | loads  |
-| `echo ~/.claude`                                   | loads  |
-| `echo "${HOME}"`                                   | aborts |
-| `echo "${HOME:-/tmp}"`                             | aborts |
-| `echo "$CLAUDE_CONFIG_DIR"`                        | aborts |
-| `echo "$FOOBAR_NOT_REAL"`                          | aborts |
-| `echo "${CLAUDE_CONFIG_DIR:-$HOME/.claude}"`       | aborts |
-| `printenv HOME`                                    | aborts |
-| `printenv CLAUDE_CONFIG_DIR \|\| echo "~/.claude"` | aborts |
+| Probe form                                          | Result |
+| --------------------------------------------------- | ------ |
+| `echo hello`                                        | loads  |
+| `echo "$HOME"`                                      | loads  |
+| `echo "$HOME/projects"`                             | loads  |
+| `echo ~/projects`                                   | loads  |
+| `echo "${HOME}"`                                    | aborts |
+| `echo "${HOME:-/tmp}"`                              | aborts |
+| `echo "$CLAUDE_CONFIG_DIR"`                         | aborts |
+| `echo "$FOOBAR_NOT_REAL"`                           | aborts |
+| `echo "${CLAUDE_CONFIG_DIR:-$HOME/projects}"`       | aborts |
+| `printenv HOME`                                     | aborts |
+| `printenv CLAUDE_CONFIG_DIR \|\| echo "~/projects"` | aborts |
 
 Three rules explain every row. A bare `$HOME` is permitted. Brace syntax is refused even for `$HOME`, so the form
 matters as much as the name. Every variable other than `HOME` is refused, including one that does not exist, so the
-loader is not resolving values and reacting to them.
+loader is not resolving values and reacting to them. The rules describe the shape of the expansion, not the path that
+follows it; the trailing directory here is representative of any.
 
 An `allowed-tools` grant does not help here. The refusal happens on the text, before any permission question is asked.
 
-To reach a variable, put it in a script and run the script from the probe:
+To reach a variable, put it in a script and run the script from the probe. Below, `<plugin-root>` stands for the
+braced plugin install directory substitution — its exact spelling appears in the MCP server commands of
+[templates/plugin-example.json](../templates/plugin-example.json):
 
 ```
-- personal config directory: !`bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh" 2>/dev/null || echo "$HOME/.claude"`
+- personal config directory: !`bash "<plugin-root>/scripts/han-config-dir.sh" 2>/dev/null || echo <default-config-home>`
 ```
 
 ```yaml
-allowed-tools: Read, Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh")
+allowed-tools: Read, Bash(bash "<plugin-root>/scripts/han-config-dir.sh")
 ```
 
 Four things make that work, and leaving any of them out aborts the skill:
 
 1. **Grant the exact command.** A script probe is refused without a grant, even with no variable anywhere in it. This
    is the second route to auto-approval described in the first rule on this page, and it is the one a script needs.
-2. **Use the braced `${CLAUDE_PLUGIN_ROOT}`.** It is a harness substitution, replaced before the permission check runs,
-   so the check never sees a variable reference. The unbraced `$CLAUDE_PLUGIN_ROOT` is not substituted and is refused.
+2. **Use the braced substitution form.** It is a harness substitution, replaced before the permission check runs,
+   so the check never sees a variable reference. The unbraced spelling is not substituted and is refused.
 3. **Stay inside a plugin.** Both spellings abort in a skill under `.claude/skills/`, where nothing defines the
    substitution. Verify a script probe as an installed plugin, never as a local skill.
 4. **Guard the command.** A missing or failing script aborts the skill exactly as a refused probe does. The
@@ -347,10 +352,10 @@ pattern for documentation purposes.
 | Process substitution                             | `<(command)`, `>(command)`                              | Refused every time (`Contains process_substitution`), even when declared                                                                                       |
 | Subshell or background                           | `( cmd )`, `cmd &`                                      | Refused as "not a simple read-only command"                                                                                                                    |
 | Dangerous tool flags                             | `find ... -exec`, `find ... -delete`, `sed -i`          | Refused even with a matching `Bash()` prefix rule                                                                                                              |
-| An environment variable named in probe text      | `echo "${CLAUDE_CONFIG_DIR:-$HOME/.claude}"`            | Refused (`Contains expansion`) for every variable except a bare `$HOME`, and refused for `$HOME` itself in brace form. No `allowed-tools` grant changes this   |
+| An environment variable named in probe text      | `echo "${CLAUDE_CONFIG_DIR:-<default-config-home>}"`    | Refused (`Contains expansion`) for every variable except a bare `$HOME`, and refused for `$HOME` itself in brace form. No `allowed-tools` grant changes this   |
 | `printenv` anywhere in a probe                   | `printenv HOME`                                         | Refused whatever variable it names, so it is not a way around the rule above                                                                                   |
 | A script probe with no matching grant            | `bash ./scripts/thing.sh`                               | Aborts the skill load even with no variable in the command. Grant the exact command in `allowed-tools`                                                         |
-| An unguarded script probe                        | `bash "${CLAUDE_PLUGIN_ROOT}/scripts/thing.sh"`         | Aborts the skill if the script is missing or exits non-zero. Append `2>/dev/null \|\| echo <fallback>`                                                         |
+| An unguarded script probe                        | `bash <plugin-root>/scripts/thing.sh`                   | Aborts the skill if the script is missing or exits non-zero. Append `2>/dev/null \|\| echo <fallback>`                                                         |
 | A stage that is neither allowlisted nor declared | `command \| custom-bin`                                 | Aborts the whole skill load; the error names only the offending stage                                                                                          |
 | Large injected output                            | full `git diff`, unbounded `git log`, whole-tree `find` | Bound at the source (`-n`, `--stat`, `--name-only`, `-maxdepth`); a big value persists in context for the whole run. `\| head -N` is a last resort, not broken |
 | A read reaching outside the project              | `cat "$HOME/.config/thing"`                             | Stakes the skill load on a permission decision with no fallback; resolve the path in a probe and read the file with the Read tool during the run               |

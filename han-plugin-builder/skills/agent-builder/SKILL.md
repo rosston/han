@@ -8,18 +8,17 @@ description: >
   or subagent. Does not build a skill or slash command — use skill-builder. Does not serve, vendor, or refresh the
   authoring guidance itself — use guidance.
 allowed-tools:
-  Read, Write, Edit, Glob, Grep, Bash(find *), Bash(mkdir *),
-  Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh")
+  Read, Write, Edit, Glob, Grep, Bash(find *), Bash(mkdir *)
 ---
 
 ## Project Context
 
-- personal config directory: !`bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh" 2>/dev/null || echo "$HOME/.claude"`
-- project .han/config.md: !`cat .han/config.md 2>/dev/null || echo ""`
+- personal config directory: $CLAUDE_CONFIG_DIR when that variable is set, otherwise $HOME/.claude (the agent's own configuration-directory override and its default)
+- project .han/config.md: use the Read tool on .han/config.md in the directory the skill runs from; a read that returns no file is no project configuration
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
+read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 ## Guidance Location
@@ -28,8 +27,8 @@ The authoritative agent-authoring guidance ships in this plugin. Read the specif
 decision is on the table — never read them all up front, because that defeats progressive disclosure and burns context
 on guidance the current agent does not touch.
 
-- Plugin-building guidance root: `${CLAUDE_PLUGIN_ROOT}/skills/guidance/references/`
-- Agent-specific guidance: `${CLAUDE_PLUGIN_ROOT}/skills/guidance/references/agent-building-guidelines/`
+- Plugin-building guidance root: `./references/`
+- Agent-specific guidance: `./references/agent-building-guidelines/`
 
 Map from decision to governing document (read just-in-time):
 
@@ -72,7 +71,7 @@ Read the user's argument and the conversation to extract what the agent should d
 nothing else yet.
 
 **Confirm the entity type before anything else.** Read
-`${CLAUDE_PLUGIN_ROOT}/skills/guidance/references/plugin-entity-taxonomy.md` and apply its decision heuristic. An agent
+`./references/plugin-entity-taxonomy.md` and apply its decision heuristic. An agent
 is the thinking layer: it applies contextual judgment, taste, and discernment ("Does this require reasoning about
 context?" → agent). If the work is a deterministic, flowchartable process, it is a skill — stop and recommend
 `skill-builder`. If it fires automatically on an event, it is a hook.

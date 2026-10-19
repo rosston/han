@@ -2,7 +2,7 @@
 
 ## Contents
 
-- The two files, the two probes, and the personal read
+- The two files, the pinned resolution, and the two reads
 - Schema
 - How a configured path resolves
 - Precedence
@@ -16,24 +16,26 @@ adjusts them for that project. Each participating skill finds both through its `
 defines how every skill interprets what that block yields, so one pair of files resolves identically across the whole
 suite. Every vendored copy of this file is byte-identical to the canonical `han-core/references/config-rule.md`.
 
-## The two files, the two probes, and the personal read
+## The two files, the pinned resolution, and the two reads
 
-The `## Project Context` block carries two probe lines and directs one Read-tool call. This rule refers to each by the
+The `## Project Context` block carries the pinned `personal config directory` line, directs the personal Read-tool
+call, and carries the project read instruction. This rule refers to each by the
 label it injects under, or by the file it reads.
 
-- `personal config directory` (probe): the Claude Code configuration directory, resolved for this run. Named by the
-  `CLAUDE_CONFIG_DIR` environment variable when that variable is set, and `~/.claude` when it is not. This value is not
+- `personal config directory` (pinned line): the Claude Code configuration directory, resolved for this run. Named by the
+  `CLAUDE_CONFIG_DIR` environment variable when that variable is set, and the agent's own default configuration
+  directory when it is not — the same resolution the pinned portable line spells out. This value is not
   a setting. It is the folder a relative path in the personal file resolves against.
 - The personal `.han/config.md` (Read tool): the content of `.han/config.md` inside that directory, or nothing. The
   skill reads this file itself as its first action rather than through a probe. A probe runs at skill load, where it
   cannot prompt and cannot degrade, so a permission decision against it aborts the skill instead of falling back to
   defaults. The personal file is the one lookup that reaches outside the project, so it is the one lookup a probe
   cannot safely carry.
-- `project .han/config.md` (probe): the content of `.han/config.md` in the directory the skill is running from, or
-  nothing.
+- `project .han/config.md` (read instruction): the skill reads `.han/config.md` in the directory it runs from, per the
+  Project Context line; a read that returns no file is no project configuration.
 
 The two directories can both exist on one machine and point at different places, so the variable wins whenever it is
-set. A personal file sitting in `~/.claude/.han/config.md` does not apply to a person who has pointed
+set. A personal file sitting in the agent's default configuration directory does not apply to a person who has pointed
 `CLAUDE_CONFIG_DIR` somewhere else.
 
 Neither lookup walks up the directory tree. The project file is found only in the directory the skill runs from, the
@@ -79,7 +81,7 @@ Both `output-directory` and `writing-voice` name a path, and both resolve the sa
 
 - **A relative path resolves against the folder holding the file that declared it.** A relative path in the project
   file resolves against the working directory. A relative path in the personal file resolves against the
-  `personal config directory` value the probe supplied. This is what lets one personal writing-voice profile, kept
+  `personal config directory` value the pinned line supplied. This is what lets one personal writing-voice profile, kept
   beside the personal config, apply in every project.
 - **A full path is used as it stands**, including one that points outside the project.
 - **A leading `~` expands to the home directory before the value is used.** Resolve it in the run rather than leaving
@@ -131,10 +133,10 @@ name, so a message that omits which one leaves the reader opening both.
 
 - Malformed frontmatter, or a file unreadable as text: ignore the unusable portion, resolve those settings from the
   rest of the precedence chain, and note what was ignored and which file held it.
-- The `personal config directory` probe reporting the home directory when `CLAUDE_CONFIG_DIR` names somewhere else:
-  the probe runs a resolver script, and its guard falls back to the home directory if that script is missing or fails.
-  Nothing detects this, and no note is shown, because the probe cannot tell a failed resolution from a person who never
-  set the variable. The personal file at the configured location stops applying until the script is restored.
+- The `personal config directory` the run cannot resolve, because the agent cannot tell whether `CLAUDE_CONFIG_DIR` is
+  set: fall back to the agent's default configuration directory and say so in one line. The pinned line is the whole
+  resolution, so a run that cannot read the variable names the fallback rather than silently dropping the configured
+  location. The personal file at the configured location stops applying until the resolution works.
 - A setting name the suite does not recognize: ignore it with a note; recognized settings in the same file still apply.
 - A recognized setting with a blank or unusable value: ignore it with a note and fall through the precedence chain.
 - A setting that does not apply to the running skill (it writes no markdown deliverable, or selects no agents): ignore

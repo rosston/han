@@ -110,12 +110,12 @@ This file breaks down the [feature implementation plan](feature-implementation-p
 - **Technical note** — [artifacts/feature-technical-notes.md](artifacts/feature-technical-notes.md): T5 (agent-specific setup probes).
 
 **Acceptance criteria.**
-- [ ] The pinned line appears byte-identically in the Project Context block of all 45 plugin skills:
+- [x] The pinned line appears byte-identically in the Project Context block of all 45 plugin skills:
   `- personal config directory: $CLAUDE_CONFIG_DIR when that variable is set, otherwise $HOME/.claude (the agent's own configuration-directory override and its default)`
-- [ ] No skill `.md` file contains `CLAUDE_PLUGIN_ROOT` (guard assertion 4).
-- [ ] No configuration-home literal (`~/.claude`, `$HOME/.claude`, `${HOME}/.claude`) appears outside the pinned portable line (guard assertion 5).
-- [ ] `scripts/han-config-dir.bats` is green under `npm test`.
-- [ ] `npm run lint` is green.
+- [x] No skill `.md` file contains `CLAUDE_PLUGIN_ROOT` (guard assertion 4).
+- [x] No configuration-home literal (`~/.claude`, `$HOME/.claude`, `${HOME}/.claude`) appears outside the pinned portable line (guard assertion 5).
+- [x] `scripts/han-config-dir.bats` is green under `npm test`.
+- [x] `npm run lint` is green.
 
 **Depends on.** W-2.
 

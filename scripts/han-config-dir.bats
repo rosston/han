@@ -1,25 +1,21 @@
 #!/usr/bin/env bats
 #
-# Guards the config-directory probe. The command that resolves the personal
-# config directory appears twice in every skill that uses it: once in the
-# allowed-tools grant and once in the probe. A grant that stops matching its
-# probe aborts the skill silently, so these checks keep the two in step and
-# keep the script they name reachable from each plugin.
+# Guards the portable configuration resolution and the resolver script that
+# the plugin channel still ships. The probe/grant pairing tests retired with
+# the W-4 rewrite (plan D-10): no skill probes the plugin root anymore, the
+# resolution is one byte-exact instruction line every agent executes, and the
+# plugin-root and configuration-home checks that supersede the pairing tests
+# live in test/skills-packaging.bats.
 
 REPO_ROOT="${BATS_TEST_DIRNAME}/.."
 SCRIPT_REL='scripts/han-config-dir.sh'
-# The grant and probe are literal SKILL.md text, matched byte for byte, so the
-# single quotes are deliberate: nothing inside them may expand here.
+# The portable resolution line, adopted as exact bytes (spec D5, plan D-4). It
+# replaces the probe in every plugin skill's Project Context, so the resolution
+# lives in instruction text every agent executes rather than in a probe block
+# only one agent's skill format runs. The apostrophe is escaped because the
+# single quotes must keep `$CLAUDE_CONFIG_DIR` and `$HOME` unexpanded.
 # shellcheck disable=SC2016
-GRANT='Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh")'
-# shellcheck disable=SC2016
-PROBE='- personal config directory: !`bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh" 2>/dev/null || echo "$HOME/.claude"`'
-
-# Every SKILL.md that carries the probe, one per line.
-probe_skills() {
-  cd "$REPO_ROOT" || return 1
-  grep -rlF -- "${SCRIPT_REL}\" 2>/dev/null" ./*/skills/*/SKILL.md
-}
+PINNED_LINE='- personal config directory: $CLAUDE_CONFIG_DIR when that variable is set, otherwise $HOME/.claude (the agent'\''s own configuration-directory override and its default)'
 
 @test "the shared resolver script exists and is executable" {
   [ -x "${REPO_ROOT}/${SCRIPT_REL}" ]
@@ -37,39 +33,60 @@ probe_skills() {
   [ "$output" = "/tmp/probe-home/.claude" ]
 }
 
-@test "at least one skill carries the probe" {
-  run probe_skills
-  [ "$status" -eq 0 ]
-  [ -n "$output" ]
-}
-
-@test "every skill carrying the probe uses the exact guarded form" {
+# Every plugin skill must resolve the personal configuration directory with the
+# same instruction text, byte for byte, so the resolution behaves identically on
+# agents that never run a command-substitution probe.
+@test "every plugin skill pins the portable resolution line byte-identically" {
   cd "$REPO_ROOT" || return 1
-  for skill in $(probe_skills); do
-    grep -qF -- "$PROBE" "$skill" || {
-      echo "probe line does not match the canonical form in: $skill"
+  skills=0
+  for skill in ./*/skills/*/SKILL.md; do
+    [ -f "$skill" ] || continue
+    grep -qF -- "$PINNED_LINE" "$skill" || {
+      echo "the Project Context is missing the pinned portable line in: $skill"
       return 1
     }
+    skills=$((skills + 1))
+  done
+  [ "$skills" -eq 45 ] || {
+    echo "expected 45 plugin skills, counted $skills"
+    return 1
+  }
+}
+
+# Spec D5 and plan D-4: the project-configuration read is instruction text every
+# agent executes, not a command-substitution probe only one agent's skill format
+# runs. The probe spelling is forbidden outright; one byte-exact Read-tool
+# instruction replaces it in every skill.
+# shellcheck disable=SC2016
+@test "every plugin skill resolves the project configuration through instruction text, not a probe" {
+  cd "$REPO_ROOT" || return 1
+  local skill
+  PROJECT_LINE='- project .han/config.md: use the Read tool on .han/config.md in the directory the skill runs from; a read that returns no file is no project configuration'
+  for skill in ./*/skills/*/SKILL.md; do
+    grep -qF -- "$PROJECT_LINE" "$skill" || {
+      echo "missing the project-config read instruction in: $skill"
+      return 1
+    }
+    if grep -qF -- '- project .han/config.md: !' "$skill"; then
+      echo "still probes for the project configuration in: $skill"
+      return 1
+    fi
   done
 }
 
-@test "every skill carrying the probe grants the same command" {
+# The plugin channel is unchanged (plan D-10), so every plugin that ships the
+# resolver symlink must ship one that resolves. This is keyed on the symlinks
+# themselves, not on any skill probe: the probes the old keying hung on are gone.
+@test "every plugin shipping the resolver symlink ships a resolvable target" {
   cd "$REPO_ROOT" || return 1
-  for skill in $(probe_skills); do
-    grep -qF -- "$GRANT" "$skill" || {
-      echo "allowed-tools is missing the matching grant in: $skill"
-      return 1
-    }
-  done
-}
-
-@test "every plugin holding such a skill can reach the resolver script" {
-  cd "$REPO_ROOT" || return 1
-  for skill in $(probe_skills); do
-    plugin="${skill#./}"
-    plugin="${plugin%%/*}"
-    [ -f "${plugin}/${SCRIPT_REL}" ] || {
-      echo "missing or unresolvable ${plugin}/${SCRIPT_REL} for: $skill"
+  links=(han-*/scripts/han-config-dir.sh)
+  [ "${#links[@]}" -gt 0 ] || {
+    echo "no plugin ships ${SCRIPT_REL}"
+    return 1
+  }
+  for link in "${links[@]}"; do
+    [ -e "$link" ] || {
+      echo "broken or missing symlink: $link"
       return 1
     }
   done

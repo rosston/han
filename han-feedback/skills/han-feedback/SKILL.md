@@ -7,19 +7,18 @@ description: >
   or research options; use code-review, investigate, or research for those. Does not provide feedback on skills or
   agents from non-Han plugins.
 allowed-tools:
-  Read, Write, Bash(ls *), Bash(mkdir *), Bash(gh *), Bash(date *),
-  Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh")
+  Read, Write, Bash(ls *), Bash(mkdir *), Bash(gh *), Bash(date *)
 ---
 
 ## Project Context
 
 - Today's date: !`date +%Y-%m-%d`
-- personal config directory: !`bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh" 2>/dev/null || echo "$HOME/.claude"`
-- project .han/config.md: !`cat .han/config.md 2>/dev/null || echo ""`
+- personal config directory: $CLAUDE_CONFIG_DIR when that variable is set, otherwise $HOME/.claude (the agent's own configuration-directory override and its default)
+- project .han/config.md: use the Read tool on .han/config.md in the directory the skill runs from; a read that returns no file is no project configuration
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above. A read
 that returns no file is no personal configuration: continue silently. When that file or the `project .han/config.md`
-probe supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
+read supplies content, apply it per [config-rule.md](./references/config-rule.md), which governs precedence
 between the two files, relative-path resolution, and what to do with a file that reads but cannot be used.
 
 # Capture Feedback
@@ -67,12 +66,14 @@ without writing any file.
 
 ## Step 2: Create the feedback directory if it does not exist
 
-Check whether `~/.claude/han-feedback/` exists by running `ls ~/.claude/han-feedback/ 2>/dev/null`. If the command fails
-(directory absent), run `mkdir -p ~/.claude/han-feedback/` before proceeding.
+Throughout this skill, `<config-home>` means the directory named by the `personal config directory` line of Project
+Context — never a hardcoded path. Check whether `<config-home>/han-feedback/` exists by running
+`ls <config-home>/han-feedback/ 2>/dev/null`. If the command fails (directory absent), run
+`mkdir -p <config-home>/han-feedback/` before proceeding.
 
 ## Step 3: Check for existing feedback today
 
-Run `ls ~/.claude/han-feedback/ 2>/dev/null` and identify any files whose name begins with today's date (from Project
+Run `ls <config-home>/han-feedback/ 2>/dev/null` and identify any files whose name begins with today's date (from Project
 Context). A file already covering a component used this session is the file this run updates, not a reason to skip.
 
 Read each matching file, then decide between two paths:
@@ -109,7 +110,7 @@ Example: a session with `han-planning:plan-a-feature` and `han-coding:code-revie
 
 ## Step 5: Read the format reference
 
-Run `ls -t ~/.claude/han-feedback/ 2>/dev/null | grep '\.md$' | head -1` to identify the feedback file with the most
+Run `ls -t <config-home>/han-feedback/ 2>/dev/null | grep '\.md$' | head -1` to identify the feedback file with the most
 recent modification time.
 
 If a file is found, read it to confirm the current output structure before writing. If no `.md` files exist in the
@@ -148,7 +149,7 @@ lists, any newly-used skill or agent onto the `**Skills used:**` and `**Agents u
 only where this session's evidence actually changed it. Add an `## Update {TIME}` heading before the new material when
 the session's story changed rather than merely lengthened, so a reader can see what arrived later. Then continue to Step 8.
 
-**Otherwise** write the file to `~/.claude/han-feedback/{filename}` using this structure:
+**Otherwise** write the file to `<config-home>/han-feedback/{filename}` using this structure:
 
 ```markdown
 # Han Feedback — {TODAY}
@@ -196,7 +197,7 @@ agents ran, write `**Agents used:** none`.
 Keep it honest and specific. Generic praise or criticism is not useful. Cite concrete moments from the session.
 
 If the write fails, tell the user: "The write failed. The file was being written to
-`$HOME/.claude/han-feedback/{filename}`. Run `ls ~/.claude/han-feedback/` and delete any file at that path before
+`<config-home>/han-feedback/{filename}`. Run `ls <config-home>/han-feedback/` and delete any file at that path before
 retrying." Do not proceed to the checklist or posting steps.
 
 When this run updated an existing file, say so in the same message that reports the path: name the file and name what you
@@ -225,10 +226,10 @@ present.
 **If the response is a clear affirmative:** proceed to Step 10.
 
 **If sensitive content is confirmed or the response is ambiguous:** confirm the file is saved at
-`~/.claude/han-feedback/{filename}`, provide the ready-to-run command below for manual use after editing, and stop.
+`<config-home>/han-feedback/{filename}`, provide the ready-to-run command below for manual use after editing, and stop.
 
 ```
-gh issue create --repo testdouble/han --title "Han Feedback: {skill-name} ({TODAY})" --body-file $HOME/.claude/han-feedback/{filename}
+gh issue create --repo testdouble/han --title "Han Feedback: {skill-name} ({TODAY})" --body-file <config-home>/han-feedback/{filename}
 ```
 
 ## Step 10: Offer to post as a GitHub issue
@@ -248,7 +249,7 @@ clock).
 Run:
 
 ```
-gh issue create --repo testdouble/han --title "Han Feedback: {skill-name} ({TODAY})" --body-file $HOME/.claude/han-feedback/{filename}
+gh issue create --repo testdouble/han --title "Han Feedback: {skill-name} ({TODAY})" --body-file <config-home>/han-feedback/{filename}
 ```
 
 **If the environment refuses to run the command** (the tool call is denied, a permission or sandbox layer blocks it, the
@@ -263,21 +264,21 @@ time, and a second attempt spends a turn to learn nothing.
 Then hand over the command to run by hand, filled in rather than templated, so it can be pasted as it stands:
 
 ```
-gh issue create --repo testdouble/han --title "Han Feedback: {skill-name} ({TODAY})" --body-file $HOME/.claude/han-feedback/{filename}
+gh issue create --repo testdouble/han --title "Han Feedback: {skill-name} ({TODAY})" --body-file <config-home>/han-feedback/{filename}
 ```
 
-Confirm the file is saved at `~/.claude/han-feedback/{filename}` and stop.
+Confirm the file is saved at `<config-home>/han-feedback/{filename}` and stop.
 
 **If `gh` is not found** (command not found or not installed): Report that the `gh` CLI is not installed. To post
 manually, visit `https://github.com/testdouble/han/issues/new` and paste the file contents.
 
 **If the command exits with a non-zero code**: Display the error message without modification. Confirm the file is saved
-at `~/.claude/han-feedback/{filename}`. Provide the posting command above. If the error contains "auth" or "login", add:
+at `<config-home>/han-feedback/{filename}`. Provide the posting command above. If the error contains "auth" or "login", add:
 "Run `gh auth login` and retry."
 
 **If the command exits successfully but no URL is parseable in the output**: Say "The issue was likely created. Check
 https://github.com/testdouble/han/issues to confirm. Do not retry — running the command again would create a duplicate
 issue."
 
-**If no:** Confirm the file is saved at `~/.claude/han-feedback/{filename}`. Provide the posting command above for later
+**If no:** Confirm the file is saved at `<config-home>/han-feedback/{filename}`. Provide the posting command above for later
 use.

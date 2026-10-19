@@ -348,11 +348,11 @@ See [AskUserQuestion Bug](./allowed-tools-AskUserQuestion.md) for details.
 **Symptom:** A skill fails on load, naming one context injection command, with an error ending in
 `Permission for this action was denied by the Claude Code auto mode classifier. Reason: Blocked by classifier.` The
 command uses an allowlisted read-only tool such as `cat`, so the allowlist says it should have been fine. The observed
-case:
+case; in the quoted pattern, `<default-config-home>` elides the historical default directory the probe spelled out:
 
 ```
 Error: Shell command permission check failed for pattern
-"!`cat "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/.han/config.md" 2>/dev/null || echo ""`":
+"!`cat "${CLAUDE_CONFIG_DIR:-<default-config-home>}/.han/config.md" 2>/dev/null || echo ""`":
 Permission for this action was denied by the Claude Code auto mode classifier.
 Reason: Blocked by classifier.
 ```
@@ -365,23 +365,25 @@ the refusal aborted the whole skill instead of degrading.
 Note the error text differs from the two failure modes below and above: it names an auto mode classifier rather than
 `This command requires approval`. Search on either phrase lands here.
 
-**Fix:** Resolve the path in the probe, and read the file with the Read tool during the run.
+**Fix:** Do not read outside the project from a probe. Resolve the configuration location in instruction text, and
+read the file with the Read tool during the run.
 
 **Before (broken — probe reads outside the project):**
 
 ```markdown
-- personal config: !`cat "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/.han/config.md" 2>/dev/null || echo ""`
+- personal config: !`cat "${CLAUDE_CONFIG_DIR:-<default-config-home>}/.han/config.md" 2>/dev/null || echo ""`
 ```
 
-**After (correct — probe resolves the location only):**
+**After (correct — the resolution is instruction text; no probe reads outside at load):**
 
 ```markdown
-- personal config directory: !`bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh" 2>/dev/null || echo "$HOME/.claude"`
+- personal config directory: $CLAUDE_CONFIG_DIR when that variable is set, otherwise $HOME/.claude (the agent's own configuration-directory override and its default)
 
 As your first action, use the Read tool on `.han/config.md` inside the `personal config directory` path above.
 ```
 
-The probe runs a script because naming an environment variable in probe text is refused outright. See the next section.
+Han's skills used to resolve this line through a script probe instead; see the next section for why a probe that
+must run a script reads the variable inside that script, never in probe text.
 
 See [Context Injection Commands](./context-injection-commands.md) for the full rule.
 
@@ -390,7 +392,7 @@ See [Context Injection Commands](./context-injection-commands.md) for the full r
 **Symptom:** The skill aborts at load with
 
 ```
-Shell command permission check failed for pattern "!`echo "${CLAUDE_CONFIG_DIR:-$HOME/.claude}"`": Contains expansion
+Shell command permission check failed for pattern "!`echo "${CLAUDE_CONFIG_DIR:-<default-config-home>}"`": Contains expansion
 ```
 
 In a non-interactive run there is no symptom at all. A `claude -p` session exits successfully with `is_error: false`,
@@ -405,13 +407,15 @@ Permission mode does not rescue it either. `default`, `plan`, `acceptEdits`, and
 `bypassPermissions` lets it through, which is why a probe can look fine in one session and break for everyone else.
 
 **Fix:** Move the variable into a script and run the script from the probe, behind a grant naming that exact command.
+Below, `<plugin-root>` stands for the braced plugin install directory substitution; its exact spelling appears in the
+MCP server commands of [templates/plugin-example.json](../templates/plugin-example.json).
 
 ```markdown
-- personal config directory: !`bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh" 2>/dev/null || echo "$HOME/.claude"`
+- personal config directory: !`bash "<plugin-root>/scripts/han-config-dir.sh" 2>/dev/null || echo <default-config-home>`
 ```
 
 ```yaml
-allowed-tools: Read, Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh")
+allowed-tools: Read, Bash(bash "<plugin-root>/scripts/han-config-dir.sh")
 ```
 
 See [Context Injection Commands](./context-injection-commands.md) for the measured results table and the four
@@ -431,11 +435,11 @@ conditions that form has to meet.
 aborting:
 
 ```markdown
-- personal config directory: !`bash "${CLAUDE_PLUGIN_ROOT}/scripts/han-config-dir.sh" 2>/dev/null || echo "$HOME/.claude"`
+- personal config directory: !`bash "<plugin-root>/scripts/han-config-dir.sh" 2>/dev/null || echo <default-config-home>`
 ```
 
-Verify a script probe as an installed plugin rather than as a local skill under `.claude/skills/`. `${CLAUDE_PLUGIN_ROOT}`
-is only defined inside a plugin, and the same line aborts outside one.
+Verify a script probe as an installed plugin rather than as a local skill under `.claude/skills/`. The plugin install
+directory substitution is only defined inside a plugin, and the same line aborts outside one.
 
 ## Context Injection Syntax in Prose Triggers Execution
 
